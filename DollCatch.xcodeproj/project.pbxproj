@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		080279EF8AC0EB4073B5DFA6 /* Pods_DollCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA169EBB26F5426526CB9F3 /* Pods_DollCatch.framework */; };
-		9FA4895926CB9B5E0012E7AE /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4895826CB9B5E0012E7AE /* SideBarViewController.swift */; };
-		9FA4895D26CBB3080012E7AE /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4895C26CBB3080012E7AE /* MainVC.swift */; };
 		9FA4896526CCB9120012E7AE /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4896426CCB9120012E7AE /* RootViewController.swift */; };
+		9FA4898F26CF80330012E7AE /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */; };
+		9FA4899126D33FF90012E7AE /* MySecondCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */; };
+		9FA4899326D361760012E7AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899226D361760012E7AE /* LoginViewController.swift */; };
 		9FE5E35426CA159C00170372 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35326CA159C00170372 /* AppDelegate.swift */; };
 		9FE5E35626CA159C00170372 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35526CA159C00170372 /* SceneDelegate.swift */; };
 		9FE5E35826CA159C00170372 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35726CA159C00170372 /* HomePageViewController.swift */; };
@@ -45,9 +46,10 @@
 		78005C94677EC87D49CB167B /* Pods-DollCatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DollCatch.debug.xcconfig"; path = "Target Support Files/Pods-DollCatch/Pods-DollCatch.debug.xcconfig"; sourceTree = "<group>"; };
 		832DDB8F17BFBC6F4FBF92BA /* Pods-DollCatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DollCatch.release.xcconfig"; path = "Target Support Files/Pods-DollCatch/Pods-DollCatch.release.xcconfig"; sourceTree = "<group>"; };
 		9FA169EBB26F5426526CB9F3 /* Pods_DollCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DollCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9FA4895826CB9B5E0012E7AE /* SideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
-		9FA4895C26CBB3080012E7AE /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		9FA4896426CCB9120012E7AE /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
+		9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondCollectionViewCell.swift; sourceTree = "<group>"; };
+		9FA4899226D361760012E7AE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9FE5E35026CA159C00170372 /* DollCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DollCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FE5E35326CA159C00170372 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FE5E35526CA159C00170372 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,8 +136,9 @@
 				9FE5E35526CA159C00170372 /* SceneDelegate.swift */,
 				9FE5E35726CA159C00170372 /* HomePageViewController.swift */,
 				9FA4896426CCB9120012E7AE /* RootViewController.swift */,
-				9FA4895C26CBB3080012E7AE /* MainVC.swift */,
-				9FA4895826CB9B5E0012E7AE /* SideBarViewController.swift */,
+				9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */,
+				9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */,
+				9FA4899226D361760012E7AE /* LoginViewController.swift */,
 				9FE5E36726CA1C1A00170372 /* SearchViewController.swift */,
 				9FE5E36926CA1C9800170372 /* MapViewController.swift */,
 				9FE5E36B26CA1E6100170372 /* RegisterViewController.swift */,
@@ -144,13 +147,13 @@
 				9FE5E37126CA1FD800170372 /* EditPersonalViewController.swift */,
 				9FE5E37326CA205000170372 /* ChangePasswordViewController.swift */,
 				9FE5E37526CA21A300170372 /* MineManagementViewController.swift */,
+				9FE5E38526CA302F00170372 /* MachineIntroViewController.swift */,
 				9FE5E37726CA22AD00170372 /* MineShopMachineViewController.swift */,
 				9FE5E37926CA265200170372 /* NotificationHistoryViewController.swift */,
 				9FE5E37B26CA268D00170372 /* PaymentRecordViewController.swift */,
 				9FE5E37D26CA2EF100170372 /* ChoosePlanViewController.swift */,
 				9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */,
 				9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */,
-				9FE5E38526CA302F00170372 /* MachineIntroViewController.swift */,
 				9FE5E38326CA2FBB00170372 /* ShopPlanViewController.swift */,
 				9FE5E38726CA304100170372 /* ShopIntroViewController.swift */,
 				9FE5E38926CA310800170372 /* NotificationReceiveViewController.swift */,
@@ -282,13 +285,14 @@
 			files = (
 				9FE5E37626CA21A300170372 /* MineManagementViewController.swift in Sources */,
 				9FE5E38C26CA321C00170372 /* NewTrackViewController.swift in Sources */,
+				9FA4898F26CF80330012E7AE /* MyCollectionViewCell.swift in Sources */,
+				9FA4899126D33FF90012E7AE /* MySecondCollectionViewCell.swift in Sources */,
 				9FE5E38626CA302F00170372 /* MachineIntroViewController.swift in Sources */,
+				9FA4899326D361760012E7AE /* LoginViewController.swift in Sources */,
 				9FE5E35826CA159C00170372 /* HomePageViewController.swift in Sources */,
-				9FA4895D26CBB3080012E7AE /* MainVC.swift in Sources */,
 				9FE5E35426CA159C00170372 /* AppDelegate.swift in Sources */,
 				9FE5E38A26CA310800170372 /* NotificationReceiveViewController.swift in Sources */,
 				9FE5E36826CA1C1A00170372 /* SearchViewController.swift in Sources */,
-				9FA4895926CB9B5E0012E7AE /* SideBarViewController.swift in Sources */,
 				9FE5E37426CA205000170372 /* ChangePasswordViewController.swift in Sources */,
 				9FA4896526CCB9120012E7AE /* RootViewController.swift in Sources */,
 				9FE5E38426CA2FBB00170372 /* ShopPlanViewController.swift in Sources */,

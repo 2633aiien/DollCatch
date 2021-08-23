@@ -1,18 +1,16 @@
 //
-//  SearchViewController.swift
+//  LoginViewController.swift
 //  DollCatch
 //
-//  Created by allen on 2021/8/16.
+//  Created by allen on 2021/8/23.
 //
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.navigationBar.isHidden = true
 
         // Do any additional setup after loading the view.
     }
