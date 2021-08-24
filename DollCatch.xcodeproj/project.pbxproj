@@ -12,6 +12,7 @@
 		9FA4898F26CF80330012E7AE /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */; };
 		9FA4899126D33FF90012E7AE /* MySecondCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */; };
 		9FA4899326D361760012E7AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899226D361760012E7AE /* LoginViewController.swift */; };
+		9FA4899526D4C5910012E7AE /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899426D4C5900012E7AE /* SearchCollectionViewCell.swift */; };
 		9FE5E35426CA159C00170372 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35326CA159C00170372 /* AppDelegate.swift */; };
 		9FE5E35626CA159C00170372 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35526CA159C00170372 /* SceneDelegate.swift */; };
 		9FE5E35826CA159C00170372 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35726CA159C00170372 /* HomePageViewController.swift */; };
@@ -50,6 +51,7 @@
 		9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FA4899226D361760012E7AE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		9FA4899426D4C5900012E7AE /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FE5E35026CA159C00170372 /* DollCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DollCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FE5E35326CA159C00170372 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FE5E35526CA159C00170372 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				9FA4896426CCB9120012E7AE /* RootViewController.swift */,
 				9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */,
 				9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */,
+				9FA4899426D4C5900012E7AE /* SearchCollectionViewCell.swift */,
 				9FA4899226D361760012E7AE /* LoginViewController.swift */,
 				9FE5E36726CA1C1A00170372 /* SearchViewController.swift */,
 				9FE5E36926CA1C9800170372 /* MapViewController.swift */,
@@ -297,6 +300,7 @@
 				9FA4896526CCB9120012E7AE /* RootViewController.swift in Sources */,
 				9FE5E38426CA2FBB00170372 /* ShopPlanViewController.swift in Sources */,
 				9FE5E36C26CA1E6100170372 /* RegisterViewController.swift in Sources */,
+				9FA4899526D4C5910012E7AE /* SearchCollectionViewCell.swift in Sources */,
 				9FE5E37026CA1F4600170372 /* VerificationCodeViewController.swift in Sources */,
 				9FE5E38826CA304100170372 /* ShopIntroViewController.swift in Sources */,
 				9FE5E36A26CA1C9800170372 /* MapViewController.swift in Sources */,
