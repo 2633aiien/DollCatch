@@ -8,11 +8,48 @@
 import UIKit
 import SideMenu
 
-class HomePageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class HomePageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NewMachineModelDelegate, NewShopModelDelegate {
+    
+    
+    var bool = true
+    
+    var newMachineModel = NewMachineModel()
+    var newMachines = [newMachine]()
+    var newShopModel = NewShopModel()
+    var newShops = [newShop]()
     
     var nameOfTableView = ""
+    func itemsDownloaded(machines: [newMachine]) {
+        self.newMachines = machines
+        DispatchQueue.main.async {
+            self.newestCollectionView.reloadData()
+        }
+    }
+    func itemsDownloaded(shops: [newShop]) {
+        self.newShops = shops
+        DispatchQueue.main.async {
+            self.newestShopCollectionView.reloadData()
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        var count = 0
+        if collectionView == self.hottestCollectionView {
+            count = 10
+        } else if collectionView == self.newestCollectionView {
+        if newMachines.count == 0{
+            count = newMachines.count
+        } else {
+            count = 10
+        }
+        } else if collectionView == self.newestShopCollectionView {
+            if newShops.count == 0{
+                count = newShops.count
+            } else {
+                count = 10
+            }
+        }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -48,10 +85,18 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
             // 設置 cell 內容 (即自定義元件裡 增加的圖片與文字元件)
             cell.myImageView.image =
                 UIImage(systemName: "cart")
-            cell.myTitleLabel.text = "阿翔的恐龍台~灰熊好夾"
-            cell.myLocationLabel.text = "新北市土城"
-            cell.myNameLabel.text = "小魚"
-            cell.myTimeLabel.text = "08/01 18:49"
+            cell.myTitleLabel.text = newMachines[indexPath.row].title
+            let str = newMachines[indexPath.row].address_machine
+            if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
+                let index = str.firstIndex(of: "區")
+                let str3 = str[...index!]
+                cell.myLocationLabel.text = String(str3)
+            } else {
+                cell.myLocationLabel.text = newMachines[indexPath.row].address_machine
+            }
+            
+            cell.myNameLabel.text = newMachines[indexPath.row].manager
+            cell.myTimeLabel.text = newMachines[indexPath.row].updateDate
             
             cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(12)
             cell.myNameLabel.font = cell.myNameLabel.font.withSize(12)
@@ -64,10 +109,17 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
             
             cell.myImageView.image =
                 UIImage(systemName: "cart")
-            cell.myTitleLabel.text = "阿翔的恐龍台~灰熊好夾"
-            cell.myLocationLabel.text = "新北市三峽"
-            cell.myNameLabel.text = "小魚"
-            cell.myTimeLabel.text = "08/01 18:49"
+            cell.myTitleLabel.text = newShops[indexPath.row].title
+            let str = newShops[indexPath.row].address_shop
+            if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
+                let index = str.firstIndex(of: "區")
+                let str3 = str[...index!]
+                cell.myLocationLabel.text = String(str3)
+            } else {
+                cell.myLocationLabel.text = newShops[indexPath.row].address_shop
+            }
+            cell.myNameLabel.text = newShops[indexPath.row].manager
+            cell.myTimeLabel.text = newShops[indexPath.row].updateDate
             cell.myTitleLabel.numberOfLines = 1
             cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(14)
             cell.myNameLabel.font = cell.myNameLabel.font.withSize(14)
@@ -77,6 +129,27 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
         return myCell
         
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self.hottestCollectionView {
+            
+        } else if collectionView == self.newestCollectionView {
+            if let controller = storyboard?.instantiateViewController(withIdentifier: "machineIntro") {
+                //self.navigationController?.pushViewController(controller, animated: true)
+                let navigationController = UINavigationController(rootViewController: controller)
+                navigationController.modalPresentationStyle = .fullScreen
+                present(navigationController, animated: true, completion: nil)
+            }
+
+            
+        } else if collectionView == self.newestShopCollectionView {
+            if let controller = storyboard?.instantiateViewController(withIdentifier: "shopIntro") {
+                //self.navigationController?.pushViewController(controller, animated: true)
+                let navigationController = UINavigationController(rootViewController: controller)
+                navigationController.modalPresentationStyle = .fullScreen
+                present(navigationController, animated: true, completion: nil)
+            }
+        }
     }
     
     @IBOutlet weak var hottestCollectionView: UICollectionView!
@@ -93,15 +166,31 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     
     @IBOutlet weak var pageControl: UIPageControl!
-    let menu = SideMenuNavigationController(rootViewController: RootViewController())
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+    }
     
     
     override func viewDidLoad() {
         super .viewDidLoad()
         
-//        let vc = storyboard!.instantiateViewController(withIdentifier: "begin") as! HomePageViewController
-//        let navigationController = UINavigationController(rootViewController: vc)
-//        self.present(navigationController, animated: true, completion: nil)
+        let backItem = UIBarButtonItem()
+            backItem.title = ""
+            navigationItem.backBarButtonItem = backItem
+        
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "rootView")
+        let menu = SideMenuNavigationController(rootViewController: viewController!)
+        
+        newMachineModel.getNewMachineItems()
+        newMachineModel.delegate = self
+        
+        newShopModel.getNewShopItems()
+        newShopModel.delegate = self
         
         // sidebar
         menu.presentationStyle = .menuSlideIn
@@ -170,19 +259,71 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         newestShopCollectionView.dataSource = self
         
     }
+    @IBAction func moreNewShop(_ sender: Any) {
+        bool = true
+//        if let controller = storyboard?.instantiateViewController(withIdentifier: "newMachine") {
+//            let navigationController = UINavigationController(rootViewController: controller)
+//            navigationController.modalPresentationStyle = .fullScreen
+//            present(navigationController, animated: true, completion: nil)
+//        }
+    }
+    
+    @IBAction func moreNewMachine(_ sender: Any) {
+        bool = false
+//        if let controller = storyboard?.instantiateViewController(withIdentifier: "newMachine") {
+//            let navigationController = UINavigationController(rootViewController: controller)
+//            navigationController.modalPresentationStyle = .fullScreen
+//            present(navigationController, animated: true, completion: nil)
+//        }
+        
+    }
+    
+    
     
     @IBAction func hamburgerBtn(_ sender: Any) {
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "rootView")
+        let menu = SideMenuNavigationController(rootViewController: viewController!)
         menu.leftSide = true
         menu.settings.presentationStyle = .menuSlideIn
         menu.menuWidth = 330
         present(menu, animated: true, completion: nil)
         //        dismiss(animated: true, completion: nil)
     }
+    @IBAction func searchBtn(_ sender: Any) {
+        if let controller = storyboard?.instantiateViewController(withIdentifier: "searchView") {
+            let navigationController = UINavigationController(rootViewController: controller)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func shareBtn(_ sender: Any) {
+        let activityVC = UIActivityViewController(activityItems: ["Let me recommend you this application https://www.surveyx.tw/"], applicationActivities: nil)
+            // 顯示出我們的 activityVC。
+            self.present(activityVC, animated: true, completion: nil)
+    }
+    @IBAction func notifyBtn(_ sender: Any) {
+        if let controller = storyboard?.instantiateViewController(withIdentifier: "notify") {
+            let navigationController = UINavigationController(rootViewController: controller)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+        }
+
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let controller = segue.destination as? NewMachineViewController
+        controller?.isShop = bool
+        
+    }
+        
+    
+    
     
 }
 
 //page...
 extension HomePageViewController: UIScrollViewDelegate{
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let page = scrollView.contentOffset.x / scrollView.bounds.width
         pageControl.currentPage = Int(page)

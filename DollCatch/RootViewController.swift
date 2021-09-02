@@ -33,6 +33,7 @@ class RootViewController: UIViewController {
         loginBtn.setTitle("   登入        >", for: .normal)
         loginBtn.setTitleColor(.label, for: .normal)
         loginBtn.contentHorizontalAlignment = .left
+        loginBtn.addTarget(self, action: #selector(loginBtnPressed), for: .touchUpInside)
         //loginBtn.backgroundColor = .green
         //loginBtn.setImage(UIImage(named: "user-1"), for: .normal)
         self.view.addSubview(loginBtn)
@@ -66,6 +67,14 @@ class RootViewController: UIViewController {
         self.view.addSubview(contactBtn)
         
     }
+    @objc func loginBtnPressed() {
+        print("login")
+        let controller = storyboard?.instantiateViewController(withIdentifier: "login")
+        let navigationController = UINavigationController(rootViewController: controller!)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: false, completion: nil)
+            
+    }
     @objc func AnnouncementBtnPressed() {
         announcementBtn.backgroundColor = .tertiaryLabel
         QABtn.backgroundColor = .clear
@@ -96,8 +105,8 @@ class RootViewController: UIViewController {
         print("聯絡我們")
     }
     
+   
     
-
     /*
     // MARK: - Navigation
 

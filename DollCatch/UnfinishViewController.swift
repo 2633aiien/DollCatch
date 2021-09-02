@@ -1,13 +1,13 @@
 //
-//  NotificationHistoryViewController.swift
+//  UnfinishViewController.swift
 //  DollCatch
 //
-//  Created by allen on 2021/8/16.
+//  Created by allen on 2021/8/26.
 //
 
 import UIKit
 
-class NotificationHistoryViewController: UIViewController {
+class UnfinishViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

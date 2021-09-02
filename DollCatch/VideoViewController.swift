@@ -1,23 +1,23 @@
 //
-//  MineTrackViewController.swift
+//  VideoViewController.swift
 //  DollCatch
 //
-//  Created by allen on 2021/8/16.
+//  Created by allen on 2021/8/25.
 //
 
 import UIKit
+import WebKit
 import SideMenu
 
-class MineTrackViewController: UIViewController {
-    @IBOutlet var containerViews: [UIView]!
-    
-    
-    
+class VideoViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     let menu = SideMenuNavigationController(rootViewController: RootViewController())
+    let urlString = "https://www.surveyx.tw/funchip/my_video.php"
+    
+    
 
+    @IBOutlet weak var myWebView: WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // sidebar
         menu.presentationStyle = .menuSlideIn
         menu.menuWidth = 330
@@ -25,9 +25,17 @@ class MineTrackViewController: UIViewController {
         
         SideMenuManager.default.addPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
+        
+        myWebView.uiDelegate = self
+        myWebView.navigationDelegate = self
+        let url = URL(string:urlString)
+        let urlRequest = URLRequest(url: url!)
+        myWebView.load(urlRequest)
 
         // Do any additional setup after loading the view.
     }
+    
+    
     @IBAction func hamburgerBtn(_ sender: Any) {
         menu.leftSide = true
         menu.settings.presentationStyle = .menuSlideIn
@@ -35,15 +43,12 @@ class MineTrackViewController: UIViewController {
         present(menu, animated: true, completion: nil)
     }
     
-    @IBAction func changeView(_ sender: UISegmentedControl) {
-        containerViews.forEach {
-               $0.isHidden = true
-            }
-            containerViews[sender.selectedSegmentIndex].isHidden = false
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if !navigationAction.targetFrame!.isMainFrame {
+            webView.load(navigationAction.request)
         }
-    
-    
-    
+        return nil
+    }
     
 
     /*
@@ -57,5 +62,3 @@ class MineTrackViewController: UIViewController {
     */
 
 }
-
-

@@ -13,6 +13,17 @@
 		9FA4899126D33FF90012E7AE /* MySecondCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */; };
 		9FA4899326D361760012E7AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899226D361760012E7AE /* LoginViewController.swift */; };
 		9FA4899526D4C5910012E7AE /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899426D4C5900012E7AE /* SearchCollectionViewCell.swift */; };
+		9FA4899726D602E80012E7AE /* MineTrackFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899626D602E70012E7AE /* MineTrackFirstViewController.swift */; };
+		9FA4899926D603000012E7AE /* MineTrackSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899826D603000012E7AE /* MineTrackSecondViewController.swift */; };
+		9FA4899B26D614600012E7AE /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899A26D614600012E7AE /* VideoViewController.swift */; };
+		9FA4899F26D62C6F0012E7AE /* MineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899E26D62C6F0012E7AE /* MineCollectionViewCell.swift */; };
+		9FA489A126D7733B0012E7AE /* UnfinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489A026D773390012E7AE /* UnfinishViewController.swift */; };
+		9FA489A326D77C630012E7AE /* NewMachineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489A226D77C620012E7AE /* NewMachineModel.swift */; };
+		9FA489A526D77D2C0012E7AE /* JsonStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489A426D77D2C0012E7AE /* JsonStruct.swift */; };
+		9FA489A926DCB7930012E7AE /* NewMachineFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489A826DCB78E0012E7AE /* NewMachineFirstViewController.swift */; };
+		9FA489AB26DCB7DC0012E7AE /* NewMachineSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489AA26DCB7DC0012E7AE /* NewMachineSecondViewController.swift */; };
+		9FA489AD26DCC52F0012E7AE /* NewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489AC26DCC52E0012E7AE /* NewCollectionViewCell.swift */; };
+		9FA489B226DF391A0012E7AE /* NewShopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489B126DF391A0012E7AE /* NewShopModel.swift */; };
 		9FE5E35426CA159C00170372 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35326CA159C00170372 /* AppDelegate.swift */; };
 		9FE5E35626CA159C00170372 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35526CA159C00170372 /* SceneDelegate.swift */; };
 		9FE5E35826CA159C00170372 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35726CA159C00170372 /* HomePageViewController.swift */; };
@@ -34,8 +45,8 @@
 		9FE5E38026CA2F4F00170372 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */; };
 		9FE5E38226CA2FA200170372 /* MachinePlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */; };
 		9FE5E38426CA2FBB00170372 /* ShopPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38326CA2FBB00170372 /* ShopPlanViewController.swift */; };
-		9FE5E38626CA302F00170372 /* MachineIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38526CA302F00170372 /* MachineIntroViewController.swift */; };
-		9FE5E38826CA304100170372 /* ShopIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38726CA304100170372 /* ShopIntroViewController.swift */; };
+		9FE5E38626CA302F00170372 /* ShopIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38526CA302F00170372 /* ShopIntroViewController.swift */; };
+		9FE5E38826CA304100170372 /* MachineIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38726CA304100170372 /* MachineIntroViewController.swift */; };
 		9FE5E38A26CA310800170372 /* NotificationReceiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38926CA310800170372 /* NotificationReceiveViewController.swift */; };
 		9FE5E38C26CA321C00170372 /* NewTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38B26CA321C00170372 /* NewTrackViewController.swift */; };
 		9FE5E38E26CA323800170372 /* NewMachineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38D26CA323800170372 /* NewMachineViewController.swift */; };
@@ -52,6 +63,17 @@
 		9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySecondCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FA4899226D361760012E7AE /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9FA4899426D4C5900012E7AE /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		9FA4899626D602E70012E7AE /* MineTrackFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineTrackFirstViewController.swift; sourceTree = "<group>"; };
+		9FA4899826D603000012E7AE /* MineTrackSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineTrackSecondViewController.swift; sourceTree = "<group>"; };
+		9FA4899A26D614600012E7AE /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		9FA4899E26D62C6F0012E7AE /* MineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineCollectionViewCell.swift; sourceTree = "<group>"; };
+		9FA489A026D773390012E7AE /* UnfinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfinishViewController.swift; sourceTree = "<group>"; };
+		9FA489A226D77C620012E7AE /* NewMachineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMachineModel.swift; sourceTree = "<group>"; };
+		9FA489A426D77D2C0012E7AE /* JsonStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonStruct.swift; sourceTree = "<group>"; };
+		9FA489A826DCB78E0012E7AE /* NewMachineFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMachineFirstViewController.swift; sourceTree = "<group>"; };
+		9FA489AA26DCB7DC0012E7AE /* NewMachineSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMachineSecondViewController.swift; sourceTree = "<group>"; };
+		9FA489AC26DCC52E0012E7AE /* NewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionViewCell.swift; sourceTree = "<group>"; };
+		9FA489B126DF391A0012E7AE /* NewShopModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShopModel.swift; sourceTree = "<group>"; };
 		9FE5E35026CA159C00170372 /* DollCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DollCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FE5E35326CA159C00170372 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FE5E35526CA159C00170372 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,8 +97,8 @@
 		9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachinePlanViewController.swift; sourceTree = "<group>"; };
 		9FE5E38326CA2FBB00170372 /* ShopPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopPlanViewController.swift; sourceTree = "<group>"; };
-		9FE5E38526CA302F00170372 /* MachineIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineIntroViewController.swift; sourceTree = "<group>"; };
-		9FE5E38726CA304100170372 /* ShopIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopIntroViewController.swift; sourceTree = "<group>"; };
+		9FE5E38526CA302F00170372 /* ShopIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopIntroViewController.swift; sourceTree = "<group>"; };
+		9FE5E38726CA304100170372 /* MachineIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineIntroViewController.swift; sourceTree = "<group>"; };
 		9FE5E38926CA310800170372 /* NotificationReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReceiveViewController.swift; sourceTree = "<group>"; };
 		9FE5E38B26CA321C00170372 /* NewTrackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrackViewController.swift; sourceTree = "<group>"; };
 		9FE5E38D26CA323800170372 /* NewMachineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMachineViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +135,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9FA489B026DF388C0012E7AE /* PhpConnection */ = {
+			isa = PBXGroup;
+			children = (
+				9FA489A226D77C620012E7AE /* NewMachineModel.swift */,
+				9FA489B126DF391A0012E7AE /* NewShopModel.swift */,
+			);
+			path = PhpConnection;
+			sourceTree = "<group>";
+		};
 		9FE5E34726CA159C00170372 = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +167,8 @@
 			children = (
 				9FE5E35326CA159C00170372 /* AppDelegate.swift */,
 				9FE5E35526CA159C00170372 /* SceneDelegate.swift */,
+				9FA489B026DF388C0012E7AE /* PhpConnection */,
+				9FA489A426D77D2C0012E7AE /* JsonStruct.swift */,
 				9FE5E35726CA159C00170372 /* HomePageViewController.swift */,
 				9FA4896426CCB9120012E7AE /* RootViewController.swift */,
 				9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */,
@@ -150,7 +183,9 @@
 				9FE5E37126CA1FD800170372 /* EditPersonalViewController.swift */,
 				9FE5E37326CA205000170372 /* ChangePasswordViewController.swift */,
 				9FE5E37526CA21A300170372 /* MineManagementViewController.swift */,
-				9FE5E38526CA302F00170372 /* MachineIntroViewController.swift */,
+				9FA4899E26D62C6F0012E7AE /* MineCollectionViewCell.swift */,
+				9FE5E38726CA304100170372 /* MachineIntroViewController.swift */,
+				9FE5E38526CA302F00170372 /* ShopIntroViewController.swift */,
 				9FE5E37726CA22AD00170372 /* MineShopMachineViewController.swift */,
 				9FE5E37926CA265200170372 /* NotificationHistoryViewController.swift */,
 				9FE5E37B26CA268D00170372 /* PaymentRecordViewController.swift */,
@@ -158,12 +193,18 @@
 				9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */,
 				9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */,
 				9FE5E38326CA2FBB00170372 /* ShopPlanViewController.swift */,
-				9FE5E38726CA304100170372 /* ShopIntroViewController.swift */,
 				9FE5E38926CA310800170372 /* NotificationReceiveViewController.swift */,
 				9FE5E38B26CA321C00170372 /* NewTrackViewController.swift */,
 				9FE5E38D26CA323800170372 /* NewMachineViewController.swift */,
+				9FA489A826DCB78E0012E7AE /* NewMachineFirstViewController.swift */,
+				9FA489AA26DCB7DC0012E7AE /* NewMachineSecondViewController.swift */,
 				9FE5E38F26CA324700170372 /* NewShopViewController.swift */,
+				9FA489AC26DCC52E0012E7AE /* NewCollectionViewCell.swift */,
 				9FE5E39126CA326000170372 /* MineTrackViewController.swift */,
+				9FA4899626D602E70012E7AE /* MineTrackFirstViewController.swift */,
+				9FA4899826D603000012E7AE /* MineTrackSecondViewController.swift */,
+				9FA4899A26D614600012E7AE /* VideoViewController.swift */,
+				9FA489A026D773390012E7AE /* UnfinishViewController.swift */,
 				9FE5E35926CA159C00170372 /* Main.storyboard */,
 				9FE5E35C26CA159F00170372 /* Assets.xcassets */,
 				9FE5E35E26CA159F00170372 /* LaunchScreen.storyboard */,
@@ -287,10 +328,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FE5E37626CA21A300170372 /* MineManagementViewController.swift in Sources */,
+				9FA489AB26DCB7DC0012E7AE /* NewMachineSecondViewController.swift in Sources */,
 				9FE5E38C26CA321C00170372 /* NewTrackViewController.swift in Sources */,
 				9FA4898F26CF80330012E7AE /* MyCollectionViewCell.swift in Sources */,
+				9FA489B226DF391A0012E7AE /* NewShopModel.swift in Sources */,
 				9FA4899126D33FF90012E7AE /* MySecondCollectionViewCell.swift in Sources */,
-				9FE5E38626CA302F00170372 /* MachineIntroViewController.swift in Sources */,
+				9FE5E38626CA302F00170372 /* ShopIntroViewController.swift in Sources */,
 				9FA4899326D361760012E7AE /* LoginViewController.swift in Sources */,
 				9FE5E35826CA159C00170372 /* HomePageViewController.swift in Sources */,
 				9FE5E35426CA159C00170372 /* AppDelegate.swift in Sources */,
@@ -298,21 +341,30 @@
 				9FE5E36826CA1C1A00170372 /* SearchViewController.swift in Sources */,
 				9FE5E37426CA205000170372 /* ChangePasswordViewController.swift in Sources */,
 				9FA4896526CCB9120012E7AE /* RootViewController.swift in Sources */,
+				9FA489A126D7733B0012E7AE /* UnfinishViewController.swift in Sources */,
 				9FE5E38426CA2FBB00170372 /* ShopPlanViewController.swift in Sources */,
 				9FE5E36C26CA1E6100170372 /* RegisterViewController.swift in Sources */,
+				9FA489A526D77D2C0012E7AE /* JsonStruct.swift in Sources */,
 				9FA4899526D4C5910012E7AE /* SearchCollectionViewCell.swift in Sources */,
+				9FA4899F26D62C6F0012E7AE /* MineCollectionViewCell.swift in Sources */,
+				9FA4899926D603000012E7AE /* MineTrackSecondViewController.swift in Sources */,
 				9FE5E37026CA1F4600170372 /* VerificationCodeViewController.swift in Sources */,
-				9FE5E38826CA304100170372 /* ShopIntroViewController.swift in Sources */,
+				9FA4899B26D614600012E7AE /* VideoViewController.swift in Sources */,
+				9FA489A326D77C630012E7AE /* NewMachineModel.swift in Sources */,
+				9FA489AD26DCC52F0012E7AE /* NewCollectionViewCell.swift in Sources */,
+				9FE5E38826CA304100170372 /* MachineIntroViewController.swift in Sources */,
 				9FE5E36A26CA1C9800170372 /* MapViewController.swift in Sources */,
 				9FE5E37A26CA265200170372 /* NotificationHistoryViewController.swift in Sources */,
 				9FE5E38226CA2FA200170372 /* MachinePlanViewController.swift in Sources */,
 				9FE5E38E26CA323800170372 /* NewMachineViewController.swift in Sources */,
 				9FE5E37E26CA2EF100170372 /* ChoosePlanViewController.swift in Sources */,
 				9FE5E39026CA324700170372 /* NewShopViewController.swift in Sources */,
+				9FA489A926DCB7930012E7AE /* NewMachineFirstViewController.swift in Sources */,
 				9FE5E35626CA159C00170372 /* SceneDelegate.swift in Sources */,
 				9FE5E37C26CA268D00170372 /* PaymentRecordViewController.swift in Sources */,
 				9FE5E37826CA22AD00170372 /* MineShopMachineViewController.swift in Sources */,
 				9FE5E36E26CA1ED900170372 /* PersonalViewController.swift in Sources */,
+				9FA4899726D602E80012E7AE /* MineTrackFirstViewController.swift in Sources */,
 				9FE5E38026CA2F4F00170372 /* TermsViewController.swift in Sources */,
 				9FE5E37226CA1FD800170372 /* EditPersonalViewController.swift in Sources */,
 				9FE5E39226CA326000170372 /* MineTrackViewController.swift in Sources */,

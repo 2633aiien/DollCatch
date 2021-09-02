@@ -1,21 +1,25 @@
 //
-//  SearchViewController.swift
+//  NewMachineFirstViewController.swift
 //  DollCatch
 //
-//  Created by allen on 2021/8/16.
+//  Created by allen on 2021/8/30.
 //
 
 import UIKit
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class NewMachineFirstViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    @IBOutlet weak var myCollectionView: UICollectionView!
+    
+    var width = Int(UIScreen.main.bounds.width)-40
+    var height = 120
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! SearchCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewMachineCollectionViewCell", for: indexPath) as! NewCollectionViewCell
         cell.myImageView.image = UIImage(systemName: "cart")
-        cell.myTitleLabel.text = "阿翔的恐龍台~灰熊好夾"
+        cell.myTitleLabel.text = "shop"
         cell.myLocationLabel.text = "新北市板橋市"
         cell.myNameLabel.text = "小魚"
         cell.myTimeLabel.text = "08/01 18:49"
@@ -31,7 +35,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         return cell
     }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         if let controller = storyboard?.instantiateViewController(withIdentifier: "shopIntro") {
@@ -42,27 +45,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
-
-    @IBOutlet weak var myCollectionView: UICollectionView!
-    @IBOutlet weak var topView: UIView!
-    
-    var width = Int(UIScreen.main.bounds.width)-60
-    var height = 120
-    
-    var bottomLayer = CALayer()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.navigationBar.isHidden = true
-        self.tabBarController?.tabBar.isHidden = true
-        
-        
-        bottomLayer.backgroundColor = UIColor.lightGray.cgColor
-        bottomLayer.frame = CGRect(x: 0, y: topView.bounds.maxY, width: UIScreen.main.bounds.width, height: 1)
-        
-        topView.layer.addSublayer(bottomLayer)
-        
-        //CollectionViewLayout
+
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         layout.minimumInteritemSpacing = 8
@@ -72,17 +57,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         myCollectionView.collectionViewLayout = layout
         
         myCollectionView.register(
-            SearchCollectionViewCell.self,
-            forCellWithReuseIdentifier: "CollectionViewCell")
+            NewCollectionViewCell.self,
+            forCellWithReuseIdentifier: "NewMachineCollectionViewCell")
         
         myCollectionView.delegate = self
         myCollectionView.dataSource = self
-        
-        
     }
-    @IBAction func backBtn(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
+    
     @objc func share() {
         let activityVC = UIActivityViewController(activityItems: ["Let me recommend you this application https://www.surveyx.tw/"], applicationActivities: nil)
             // 顯示出我們的 activityVC。

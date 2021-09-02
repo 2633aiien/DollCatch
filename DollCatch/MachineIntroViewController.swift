@@ -1,5 +1,5 @@
 //
-//  MachineIntroViewController.swift
+//  ShopIntroViewController.swift
 //  DollCatch
 //
 //  Created by allen on 2021/8/16.
@@ -11,8 +11,12 @@ class MachineIntroViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         // Do any additional setup after loading the view.
+    }
+    @IBAction func backIba(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
 
