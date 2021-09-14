@@ -7,6 +7,8 @@
 
 import UIKit
 import SideMenu
+import CoreData
+
 
 class HomePageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NewMachineModelDelegate, NewShopModelDelegate {
     
@@ -17,8 +19,10 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     var newMachines = [newMachine]()
     var newShopModel = NewShopModel()
     var newShops = [newShop]()
+    var userData : [UserInformationClass] = []
     
     var nameOfTableView = ""
+    
     func itemsDownloaded(machines: [newMachine]) {
         self.newMachines = machines
         DispatchQueue.main.async {
@@ -83,8 +87,8 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 as! MyCollectionViewCell
             
             // 設置 cell 內容 (即自定義元件裡 增加的圖片與文字元件)
-            cell.myImageView.image =
-                UIImage(systemName: "cart")
+            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(newMachines[indexPath.row].userId)/machine_photo_\(newMachines[indexPath.row].id)_6")! , imageView: cell.myImageView)
+
             cell.myTitleLabel.text = newMachines[indexPath.row].title
             let str = newMachines[indexPath.row].address_machine
             if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
@@ -107,8 +111,7 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         else if collectionView == self.newestShopCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NewShopCell", for: indexPath) as! MySecondCollectionViewCell
             
-            cell.myImageView.image =
-                UIImage(systemName: "cart")
+            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(newShops[indexPath.row].userId)/store_photo_\(newShops[indexPath.row].id)_6")! , imageView: cell.myImageView)
             cell.myTitleLabel.text = newShops[indexPath.row].title
             let str = newShops[indexPath.row].address_shop
             if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
@@ -134,8 +137,18 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         if collectionView == self.hottestCollectionView {
             
         } else if collectionView == self.newestCollectionView {
-            if let controller = storyboard?.instantiateViewController(withIdentifier: "machineIntro") {
-                //self.navigationController?.pushViewController(controller, animated: true)
+            var newM = newMachines[indexPath.row]
+
+            if let controller = storyboard?.instantiateViewController(withIdentifier: "machineIntro") as? MachineIntroViewController{
+                controller.tempTitle = newM.title
+                controller.tempId = newM.id
+                controller.tempUserId = newM.userId
+                controller.tempAddress = newM.address_machine
+                controller.tempDescription = newM.description
+                controller.tempStoreName = newM.store_name
+                controller.tempManager = newM.manager
+                controller.tempLine = newM.line_id
+                controller.tempPhone = newM.phone_no
                 let navigationController = UINavigationController(rootViewController: controller)
                 navigationController.modalPresentationStyle = .fullScreen
                 present(navigationController, animated: true, completion: nil)
@@ -259,6 +272,39 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         newestShopCollectionView.dataSource = self
         
     }
+    
+    
+    func queryFromCoreData() {
+        let moc = CoreDataHelper.shared.managedObjectContext()
+        
+        let fetchRequest = NSFetchRequest<UserInformationClass>(entityName: "UserInformationClass")
+        
+        moc.performAndWait {
+            do{
+                self.userData = try moc.fetch(fetchRequest)//查詢，回傳為[Note]
+            }catch{
+                print("error \(error)")
+                self.userData = []//如果有錯，回傳空陣列
+            }
+        }
+    }
+    func downloadImage(from url: URL, imageView: UIImageView) {
+        print("Download Started")
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            // always update the UI from the main thread
+            DispatchQueue.main.async() { [weak self] in
+                imageView.image = UIImage(data: data)
+            }
+        }
+    }
+    
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
     @IBAction func moreNewShop(_ sender: Any) {
         bool = true
 //        if let controller = storyboard?.instantiateViewController(withIdentifier: "newMachine") {

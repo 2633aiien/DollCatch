@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class RootViewController: UIViewController {
     let fullScreenSize = UIScreen.main.bounds.size
@@ -15,28 +16,13 @@ class RootViewController: UIViewController {
     var privacyBtn = UIButton(type: .system)
     var contactBtn = UIButton(type: .system)
     var photoImageView : UIImageView!
+    var userData : [UserInformationClass] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        queryFromCoreData()
         
         view.backgroundColor = UIColor(red: 255/255, green: 170/255, blue: 0/255, alpha: 1.0)
-        
-        photoImageView = UIImageView(frame: CGRect(x: 80, y: 230, width: 90, height: 90))
-        photoImageView.clipsToBounds = true
-        photoImageView.layer.cornerRadius = 45
-        photoImageView.image = UIImage(named: "image")
-        photoImageView.contentMode = .scaleAspectFill
-        photoImageView.backgroundColor = .white
-        self.view.addSubview(photoImageView)
-        
-        loginBtn = UIButton(frame: CGRect(x: 170, y: 230, width: 140, height: 90))
-        loginBtn.setTitle("   登入        >", for: .normal)
-        loginBtn.setTitleColor(.label, for: .normal)
-        loginBtn.contentHorizontalAlignment = .left
-        loginBtn.addTarget(self, action: #selector(loginBtnPressed), for: .touchUpInside)
-        //loginBtn.backgroundColor = .green
-        //loginBtn.setImage(UIImage(named: "user-1"), for: .normal)
-        self.view.addSubview(loginBtn)
         
         announcementBtn = UIButton(frame: CGRect(x: 80, y: 350, width: 230, height: 60))
         announcementBtn.setTitle("   公告", for: .normal)
@@ -67,6 +53,29 @@ class RootViewController: UIViewController {
         self.view.addSubview(contactBtn)
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        photoImageView = UIImageView(frame: CGRect(x: 80, y: 230, width: 90, height: 90))
+        photoImageView.clipsToBounds = true
+        photoImageView.layer.cornerRadius = 45
+        photoImageView.contentMode = .scaleAspectFill
+        photoImageView.backgroundColor = .white
+        photoImageView.image = UIImage(named: "image")
+        loginBtn = UIButton(frame: CGRect(x: 170, y: 230, width: 140, height: 90))
+        loginBtn.setTitleColor(.label, for: .normal)
+        loginBtn.contentHorizontalAlignment = .left
+        if userData.isEmpty {
+            photoImageView.image = UIImage(named: "image")
+        loginBtn.setTitle("   登入        >", for: .normal)
+        loginBtn.addTarget(self, action: #selector(loginBtnPressed), for: .touchUpInside)
+        } else {
+            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(userData[0].userId)/person_photo")! )
+            loginBtn.setTitle("   \(userData[0].nickname)        >", for: .normal)
+            loginBtn.addTarget(self, action: #selector(personalInformation), for: .touchUpInside)
+        }
+        self.view.addSubview(photoImageView)
+        self.view.addSubview(loginBtn)
+        
+    }
     @objc func loginBtnPressed() {
         print("login")
         let controller = storyboard?.instantiateViewController(withIdentifier: "login")
@@ -74,6 +83,12 @@ class RootViewController: UIViewController {
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: false, completion: nil)
             
+    }
+    @objc func personalInformation() {
+        let controller = storyboard?.instantiateViewController(withIdentifier: "personalInformation")
+        let navigationController = UINavigationController(rootViewController: controller!)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: false, completion: nil)
     }
     @objc func AnnouncementBtnPressed() {
         announcementBtn.backgroundColor = .tertiaryLabel
@@ -103,6 +118,37 @@ class RootViewController: UIViewController {
         privacyBtn.backgroundColor = .clear
         contactBtn.backgroundColor = .tertiaryLabel
         print("聯絡我們")
+    }
+    
+    func queryFromCoreData() {
+        let moc = CoreDataHelper.shared.managedObjectContext()
+        
+        let fetchRequest = NSFetchRequest<UserInformationClass>(entityName: "UserInformationClass")
+        
+        moc.performAndWait {
+            do{
+                self.userData = try moc.fetch(fetchRequest)//查詢，回傳為[Note]
+            }catch{
+                print("error \(error)")
+                self.userData = []//如果有錯，回傳空陣列
+            }
+        }
+    }
+    func downloadImage(from url: URL) {
+        print("Download Started")
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            // always update the UI from the main thread
+            DispatchQueue.main.async() { [weak self] in
+                self?.photoImageView.image = UIImage(data: data)
+            }
+        }
+    }
+    
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
    

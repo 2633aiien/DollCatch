@@ -57,9 +57,9 @@ class NewMachineModel: NSObject {
                 let title : String = jsonDict["title"] as? String ?? "null"
                 let description : String = jsonDict["description"] as? String ?? "null"
                 let address_machine : String = jsonDict["address_machine"] as? String ?? "null"
-                let machine_name : String = jsonDict["store_name"] as? String ?? "null"
+                let store_name : String = jsonDict["store_name"] as? String ?? "null"
                 let manager : String = jsonDict["manager"] as? String ?? "null"
-                let phone_no : String = jsonDict["photo_no"] as? String ?? "null"
+                let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
                 let line_id : String = jsonDict["line_id"] as? String ?? "null"
                 let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
                 let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
@@ -71,7 +71,7 @@ class NewMachineModel: NSObject {
                 let updateDate : String = jsonDict["updateDate"] as! String
                 
                 // Create new Machine and set its properties
-                let machine = newMachine(isStore: isStore, id: id, userId: userId, title: title, description: description, address_machine: address_machine, machine_name: machine_name, manager: manager, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let machine = newMachine(isStore: isStore, id: id, userId: userId, title: title, description: description, address_machine: address_machine, store_name: store_name, manager: manager, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
                 machineArray.append(machine)
             }

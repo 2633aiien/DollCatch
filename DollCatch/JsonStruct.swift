@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import CoreData
+import UIKit
 
 struct MachineInformation {
     var id = ""
@@ -46,7 +48,7 @@ struct newMachine {
     var title = ""
     var description = ""
     var address_machine = ""
-    var machine_name = ""
+    var store_name = ""
     var manager = ""
     var phone_no = ""
     var line_id = ""
@@ -82,5 +84,22 @@ struct newShop {
     var longitude = 0.1
     var createDate = ""
     var updateDate = ""
-    
+}
+struct UserInformationStruct {
+    var result: Bool
+    var userId: String
+    var name: String
+    var nickname: String
+    var email: String
+    var level: String
+    var photo_position: Bool
+}
+class UserInformationClass : NSManagedObject{
+    @NSManaged var result: Bool
+    @NSManaged var userId: String
+    @NSManaged var name: String
+    @NSManaged var nickname: String
+    @NSManaged var email: String
+    @NSManaged var level: String
+    @NSManaged var photo_position: Bool
 }
