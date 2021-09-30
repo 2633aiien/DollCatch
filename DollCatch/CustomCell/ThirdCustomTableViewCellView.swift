@@ -67,7 +67,8 @@ final class ThirdCustomTableDetailView: UIView {
     private let arrowLabel = UILabel()
 
     func setUI(description: String) {
-        descriptionTextView.textAlignment = .center
+        descriptionTextView.textAlignment = .left
+//        descriptionTextView.font = descriptionTextView.font?.withSize(20)
         descriptionTextView.text = description
         
         arrowLabel.text = "▴"
@@ -79,6 +80,8 @@ final class ThirdCustomTableDetailView: UIView {
         addSubview(descriptionTextView)
         addSubview(arrowLabel)
         descriptionTextView.isScrollEnabled = false
+        descriptionTextView.isSelectable = false
+        
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
         arrowLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
@@ -86,7 +89,7 @@ final class ThirdCustomTableDetailView: UIView {
         descriptionTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
         descriptionTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10).isActive = true
         
-        arrowLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
+        arrowLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
         arrowLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
         arrowLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10).isActive = true
     }

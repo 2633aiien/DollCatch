@@ -15,17 +15,21 @@ class NewShopModel: NSObject {
     
     var delegate: NewShopModelDelegate?
 
-    func getNewShopItems() {
-        // web service Url
-        let serviceUrl = "https://www.surveyx.tw/funchip/new_store.php"
-        // json data
-        let url = URL(string: serviceUrl)
+    func getNewShopItems(userId: String) {
         
-        if let url = url {
-            // create a Url session
-            let session = URLSession(configuration: .default)
+        // json data
+        let url = URL(string: "https://www.surveyx.tw/funchip/new_store.php")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let json: [String: Any] = [
+            "userId": "\(userId)",
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        request.httpBody = jsonData
             
-            let task = session.dataTask(with: url) { data, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if error == nil {
                     // succceeded
                     
@@ -38,7 +42,6 @@ class NewShopModel: NSObject {
             }
             // start the task
             task.resume()
-        }
     }
     func parseNewShopJson(data: Data) {
         
@@ -57,13 +60,13 @@ class NewShopModel: NSObject {
                 let title : String = jsonDict["title"] as? String ?? "null"
                 let description : String = jsonDict["description"] as? String ?? "null"
                 let address_shop : String = jsonDict["address_store"] as? String ?? "null"
-                let big_machine_no : Int = jsonDict["big_machine_no"] as? Int ?? 0
-                let machine_no : Int = jsonDict["machine_no"] as? Int ?? 0
+                let big_machine_no : String = jsonDict["big_machine_no"] as? String ?? "null"
+                let machine_no : String = jsonDict["machine_no"] as? String ?? "null"
                 let manager : String = jsonDict["manager"] as? String ?? "null"
                 let air_condition : Bool = jsonDict["air_condition"] as? Bool ?? false
                 let fan : Bool = jsonDict["fan"] as? Bool ?? false
                 let wifi : Bool = jsonDict["wifi"] as? Bool ?? false
-                let phone_no : String = jsonDict["photo_no"] as? String ?? "null"
+                let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
                 let line_id : String = jsonDict["line_id"] as? String ?? "null"
                 let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
                 let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
@@ -73,9 +76,10 @@ class NewShopModel: NSObject {
                 let longitude : Double = jsonDict["longitude"] as? Double ?? 0
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
+                let isFollow : Bool = jsonDict["isFollow"] as! Bool
                 
                 // Create new Machine and set its properties
-                let shop = newShop(isStore: isStore, id: id, userId: userId, title: title, description: description, address_shop: address_shop, big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id,activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let shop = newShop(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_shop: address_shop, big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id,activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
                 shopArray.append(shop)
             }

@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
-        continueBtn.layer.cornerRadius = 20
+        continueBtn.layer.cornerRadius = 15
         backView.layer.cornerRadius = 15
         //        self.navigationController?.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 255/255, green: 145/255, blue: 0/255, alpha: 1.0)
@@ -102,7 +102,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 
             }
-            
             task.resume()
         }else {
             print("煤田")

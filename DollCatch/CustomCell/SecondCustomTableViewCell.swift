@@ -19,7 +19,16 @@ class SecondCustomTableViewCell: UITableViewCell {
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var classfyImageView: UIImageView!
     @IBOutlet weak var classfyTextView: UITextView!
-
+    @IBOutlet weak var machine_no: UIImageView!
+    @IBOutlet weak var machine_noLabel: UILabel!
+    @IBOutlet weak var classLabel: UILabel!
+    @IBOutlet weak var ACLabel: UILabel!
+    @IBOutlet weak var isACImage: UIImageView!
+    @IBOutlet weak var FanLabel: UILabel!
+    @IBOutlet weak var isFanImage: UIImageView!
+    @IBOutlet weak var wifiLabel: UILabel!
+    @IBOutlet weak var isWifiImage: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -23,8 +23,8 @@ class SecondImageCollectionViewCell: UICollectionViewCell {
         self.backgroundColor = .white
        
         myImageView = UIImageView(frame: CGRect(
-                                    x: 10, y: 0,
-                                    width: 180, height: 160))
+                                    x: 20, y: 0,
+                                    width: 160, height: 140))
         self.addSubview(myImageView)
     }
 

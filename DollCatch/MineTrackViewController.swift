@@ -7,17 +7,23 @@
 
 import UIKit
 import SideMenu
+import CoreData
 
 class MineTrackViewController: UIViewController {
     @IBOutlet var containerViews: [UIView]!
     
-    
-    
     let menu = SideMenuNavigationController(rootViewController: RootViewController())
+    var userData : [UserInformationClass] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        queryFromCoreData()
+        if userData .isEmpty {
+            let controller = storyboard?.instantiateViewController(withIdentifier: "login")
+            let navigationController = UINavigationController(rootViewController: controller!)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: false, completion: nil)
+        }
         // sidebar
         menu.presentationStyle = .menuSlideIn
         menu.menuWidth = 330
@@ -41,6 +47,21 @@ class MineTrackViewController: UIViewController {
             }
             containerViews[sender.selectedSegmentIndex].isHidden = false
         }
+    
+    func queryFromCoreData() {
+        let moc = CoreDataHelper.shared.managedObjectContext()
+        
+        let fetchRequest = NSFetchRequest<UserInformationClass>(entityName: "UserInformationClass")
+        
+        moc.performAndWait {
+            do{
+                self.userData = try moc.fetch(fetchRequest)//查詢，回傳為[Note]
+            }catch{
+                print("error \(error)")
+                self.userData = []//如果有錯，回傳空陣列
+            }
+        }
+    }
     
     
     

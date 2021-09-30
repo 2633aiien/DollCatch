@@ -57,29 +57,29 @@ class SearchCollectionViewCell: UICollectionViewCell {
         let h: Double = 120
         // 建立一個 UIImageView
         myImageView = UIImageView(frame: CGRect(
-                                    x: 0, y: 0,
-                                    width: w/3, height: h))
+                                    x: 10, y: 10,
+                                    width: w/2-20, height: h-20))
         self.addSubview(myImageView)
         
         // 建立一個 UILabel
         myTitleLabel = UILabel(frame:CGRect(
-                                x: w/2, y: 10, width: w/3-20, height: (h-20)/4))
+                                x: w/2, y: 10, width: w/3, height: (h-20)/4))
         
         self.addSubview(myTitleLabel)
         
-        myLocationLabel = UILabel(frame: CGRect(x: w/2, y: 10+(h-20)/4, width: w/3-20, height: (h-10)/4))
+        myLocationLabel = UILabel(frame: CGRect(x: w/2, y: 10+(h-20)/4, width: w/3, height: (h-10)/4))
         myLocationLabel.textColor = .gray
         self.addSubview(myLocationLabel)
-        myNameLabel = UILabel(frame: CGRect(x: w/2, y: 10+(h-20)/4*2, width: w/3-20, height: (h-10)/4))
+        myNameLabel = UILabel(frame: CGRect(x: w/2, y: 10+(h-20)/4*2, width: w/3, height: (h-10)/4))
         myNameLabel.textColor = .gray
         self.addSubview(myNameLabel)
-        myTimeLabel = UILabel(frame: CGRect(x: w/2, y: 10+(h-20)/4*3, width: w/3-20, height: (h-10)/4))
+        myTimeLabel = UILabel(frame: CGRect(x: w/2, y: 10+(h-20)/4*3, width: w/3, height: (h-10)/4))
         myTimeLabel.textColor = .gray
         self.addSubview(myTimeLabel)
-        shareBtn = UIButton(frame: CGRect(x: w-60, y: 20, width: 40, height: 40))
+        shareBtn = UIButton(frame: CGRect(x: w-40, y: 20, width: 40, height: 40))
         shareBtn.tintColor = .black
         self.addSubview(shareBtn)
-        heartBtn = UIButton(frame: CGRect(x: w-60, y: h/2+15, width: 40, height: 30))
+        heartBtn = UIButton(frame: CGRect(x: w-40, y: h/2+15, width: 40, height: 40))
         heartBtn.tintColor = .black
         self.addSubview(heartBtn)
         

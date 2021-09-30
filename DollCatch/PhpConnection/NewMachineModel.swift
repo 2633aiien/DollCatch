@@ -15,17 +15,21 @@ class NewMachineModel: NSObject {
     
     var delegate: NewMachineModelDelegate?
 
-    func getNewMachineItems() {
-        // web service Url
-        let serviceUrl = "https://www.surveyx.tw/funchip/new_machine.php"
-        // json data
-        let url = URL(string: serviceUrl)
+    func getNewMachineItems(userId: String) {
         
-        if let url = url {
-            // create a Url session
-            let session = URLSession(configuration: .default)
+        // json data
+        let url = URL(string: "https://www.surveyx.tw/funchip/new_machine.php")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let json: [String: Any] = [
+            "userId": "\(userId)",
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        request.httpBody = jsonData
             
-            let task = session.dataTask(with: url) { data, response, error in
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 if error == nil {
                     // succceeded
                     
@@ -38,7 +42,6 @@ class NewMachineModel: NSObject {
             }
             // start the task
             task.resume()
-        }
     }
     func parseNewMachineJson(data: Data) {
         
@@ -69,9 +72,10 @@ class NewMachineModel: NSObject {
                 let longitude : Double = jsonDict["longitude"] as? Double ?? 0
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
+                let isFollow : Bool = jsonDict["isFollow"] as! Bool
                 
                 // Create new Machine and set its properties
-                let machine = newMachine(isStore: isStore, id: id, userId: userId, title: title, description: description, address_machine: address_machine, store_name: store_name, manager: manager, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let machine = newMachine(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_machine: address_machine, store_name: store_name, manager: manager, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
                 machineArray.append(machine)
             }

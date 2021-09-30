@@ -7,6 +7,7 @@
 
 import UIKit
 import SideMenu
+import CoreData
 
 class mineCell {
     var image : UIImage!
@@ -16,10 +17,17 @@ class mineCell {
 class MineManagementViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var mineCollectionView: UICollectionView!
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var photoBtn: UIButton!
+    @IBOutlet weak var photoBackView: UIView!
     var mineCellArr : [mineCell] = []
     let menu = SideMenuNavigationController(rootViewController: RootViewController())
     let w = UIScreen.main.bounds.width
     let h = UIScreen.main.bounds.height
+    
+    var userData : [UserInformationClass] = []
+    
+    @IBOutlet weak var photoImageView: UIImageView!
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
@@ -120,14 +128,68 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
         self.mineCellArr.append(mine6)
         mine6.image = UIImage(named: "14")
         mine6.name = "聯絡客服"
+        photoBtn.layer.cornerRadius = 75/2
+        photoBackView.layer.cornerRadius = 75/2
+        photoImageView.layer.cornerRadius = 75/2
         
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        queryFromCoreData()
+        if userData .isEmpty {
+            photoImageView.image = UIImage(named: "image")
+            loginBtn.setTitle("登入", for: .normal)
+            loginBtn.tintColor = .black
+            loginBtn.isEnabled = true
+            photoBtn.isEnabled = false
+        } else {
+            
+            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(userData[0].userId)/person_photo")!, imageView: photoImageView)
+            photoImageView.contentMode = .scaleAspectFill
+            loginBtn.setTitle("\(userData[0].nickname)", for: .normal)
+            loginBtn.tintColor = .black
+            loginBtn.isEnabled = false
+            photoBtn.isEnabled = true
+        }
+    }
+    
+    func queryFromCoreData() {
+        let moc = CoreDataHelper.shared.managedObjectContext()
+        
+        let fetchRequest = NSFetchRequest<UserInformationClass>(entityName: "UserInformationClass")
+        
+        moc.performAndWait {
+            do{
+                self.userData = try moc.fetch(fetchRequest)//查詢，回傳為[Note]
+            }catch{
+                print("error \(error)")
+                self.userData = []//如果有錯，回傳空陣列
+            }
+        }
+    }
+    @IBAction func loginBtnPressed(_ sender: Any) {
+        if userData.isEmpty {
+            let controller = storyboard?.instantiateViewController(withIdentifier: "login")
+            let navigationController = UINavigationController(rootViewController: controller!)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: false, completion: nil)
+        }
+    }
+    @IBAction func addBtnPressed(_ sender: Any) {
     }
     @IBAction func hamburgerBtn(_ sender: Any) {
         menu.leftSide = true
         menu.settings.presentationStyle = .menuSlideIn
         menu.menuWidth = 330
         present(menu, animated: true, completion: nil)
+    }
+    @IBAction func photoBtnPressed(_ sender: Any) {
+        if !userData.isEmpty {
+            let controller = storyboard?.instantiateViewController(withIdentifier: "personalInformation")
+            let navigationController = UINavigationController(rootViewController: controller!)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: false, completion: nil)
+        }
     }
     override func viewWillLayoutSubviews() {
             super.viewWillLayoutSubviews()
@@ -136,6 +198,22 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
 //            backgroundView.roundCorners(corners: [.topLeft, .topRight], radius: 50)
 
         }
+    func downloadImage(from url: URL, imageView: UIImageView) {
+        print("Download Started")
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            // always update the UI from the main thread
+            DispatchQueue.main.async() {
+                imageView.image = UIImage(data: data)
+            }
+        }
+    }
+    
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
 
     
 

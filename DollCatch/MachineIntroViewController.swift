@@ -1,35 +1,60 @@
 //
-//  ShopIntroViewController.swift
+//  MachineIntroViewController.swift
 //  DollCatch
 //
 //  Created by allen on 2021/8/16.
 //
 
 import UIKit
+import CoreData
 
 
 class MachineIntroViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var firstCollectionView: UICollectionView!
     
-    
+    @IBOutlet weak var followBtn: UIBarButtonItem!
+    // both
+    var tempIsFollow = false
+    var tempIsStore = false
     var tempTitle = "aa"
     var tempId = ""
     var tempUserId = ""
     var tempAddress = "aa"
     var tempDescription = ""
-    var tempStoreName = ""
     var tempManager = ""
     var tempLine = ""
     var tempPhone = ""
     var tempClass = ""
     var tempActivity = ""
+    // machine
+    var tempStoreName = ""
+    // store
+    var tempBig_machine_no = ""
+    var tempMachine_no = ""
+    var tempAir_condition = true
+    var tempFan = true
+    var tempWifi = true
+    
+    
     var classArr = [Bool]()
     
     var imageArr : [UIImageView] = []
     var imageView = UIImageView()
+    
+    var imageNameArr : [String] = []
+    var imageDescribeArr : [String] = []
+    
+    var userData : [UserInformationClass] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        if tempIsFollow == true {
+            followBtn.image = UIImage(named: "followed")
+            followBtn.tintColor = .systemPink
+        } else {
+            followBtn.image = UIImage(named: "unfollow")
+            followBtn.tintColor = .black
+        }
+        queryFromCoreData()
         getClassItems()
         getActivity()
         
@@ -37,36 +62,13 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         
-        let FirstLayout = UICollectionViewFlowLayout()
-        // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
-        FirstLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        
-        FirstLayout.minimumInteritemSpacing = 8
-        FirstLayout.scrollDirection = .horizontal
-        
-        // 設置每個 cell 的尺寸
-        FirstLayout.itemSize = CGSize(width: 250, height: 180)
-        
-        
-        firstCollectionView.collectionViewLayout = FirstLayout
-        
-        firstCollectionView.register(
-            FirstImageCollectionViewCell.self,
-            forCellWithReuseIdentifier: "FirstImageCell")
-        
-        firstCollectionView.delegate = self
-        firstCollectionView.dataSource = self
-        firstCollectionView.alwaysBounceHorizontal = true
-        
-//        
-//        
-//        secondCollectionView.register(
-//            SecondImageCollectionViewCell.self,
-//            forCellWithReuseIdentifier: "SecondImageCell")
-//        secondCollectionView.delegate = self
-//        secondCollectionView.dataSource = self
-//        secondCollectionView.alwaysBounceHorizontal = true
-        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        if tempIsStore == true {
+            self.title = "店家介紹"
+        } else {
+            self.title = "機台介紹"
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -74,51 +76,113 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.firstCollectionView {
+        if collectionView.tag == 1 {
             let cell =
-                collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "FirstImageCell", for: indexPath)
-                as! FirstImageCollectionViewCell
-            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(tempUserId)/machine_photo_\(tempId)_\(indexPath.row+6)")! , imageView: cell.myImageView)
+            collectionView.dequeueReusableCell(
+                withReuseIdentifier: "FirstImageCell", for: indexPath)
+            as! FirstImageCollectionViewCell
+            if tempIsStore == true {
+                downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(tempUserId)/store_photo_\(tempId)_\(indexPath.row+6)")! , imageView: cell.myImageView)
+            } else {
+                downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(tempUserId)/machine_photo_\(tempId)_\(indexPath.row+6)")! , imageView: cell.myImageView)
+            }
             
             return cell
         } else {
             let cell =
-                collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "SecondImageCell", for: indexPath)
-                as! SecondImageCollectionViewCell
-            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(tempUserId)/machine_photo_\(tempId)_\(indexPath.row+1)")! , imageView: cell.myImageView)
+            collectionView.dequeueReusableCell(
+                withReuseIdentifier: "SecondImageCell", for: indexPath)
+            as! SecondImageCollectionViewCell
+            if tempIsStore == true {
+                downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(tempUserId)/store_photo_\(tempId)_\(indexPath.row+1)")! , imageView: cell.myImageView)
+            } else {
+                downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(tempUserId)/machine_photo_\(tempId)_\(indexPath.row+1)")! , imageView: cell.myImageView)
+            }
             
             return cell
         }
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView.tag == 2 {
+            if let controller = storyboard?.instantiateViewController(withIdentifier: "imageIntro") as? ImageIntroViewController {
+                controller.index = indexPath.row
+                controller.tempIsStore = tempIsStore
+                controller.tempUserId = tempUserId
+                controller.tempId = tempId
+                let navigationController = UINavigationController(rootViewController: controller)
+                navigationController.modalPresentationStyle = .fullScreen
+                present(navigationController, animated: true, completion: nil)
+            }
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "firstImage") as! FirstImageTableViewCell
+            return cell
+        }
+        else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "firstCustomCell") as! FirstCustomTableViewCell
             cell.setUI(title: tempTitle, address: tempAddress, description: tempDescription)
             return cell
         }
-        else if indexPath.row == 1 {
+        else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "secondCustomCell") as! SecondCustomTableViewCell
-            cell.shopNameLabel.text = "店家名稱：\(tempStoreName)"
-            cell.managerLabel.text = "管理者：\(tempManager)"
-            cell.lineLabel.text = "LINE：\(tempLine)"
-            cell.phoneLabel.text = "電話：\(tempPhone)"
-            
-            cell.classfyTextView.text = "\(tempClass)"
-            
+            if tempIsStore == true {
+                cell.titleLabel.text = "店內資訊"
+                cell.shopNameImageView.image = UIImage(named: "joystick-1")
+                cell.shopNameLabel.text = "巨無霸台數：\(tempBig_machine_no)"
+                cell.machine_no.isHidden = false
+                cell.machine_noLabel.isHidden = false
+                cell.isACImage.isHidden = false
+                cell.ACLabel.isHidden = false
+                cell.isFanImage.isHidden = false
+                cell.FanLabel.isHidden = false
+                cell.isWifiImage.isHidden = false
+                cell.wifiLabel.isHidden = false
+                cell.classfyImageView.isHidden = true
+                cell.classLabel.isHidden = true
+                cell.classfyTextView.isHidden = true
+                if tempAir_condition == true {
+                    cell.isACImage.image = UIImage(named: "画板 – 5")
+                } else {
+                    cell.isACImage.image = UIImage(named: "画板 – 4-1")
+                }
+                if tempFan == true {
+                    cell.isFanImage.image = UIImage(named: "画板 – 5")
+                } else {
+                    cell.isFanImage.image = UIImage(named: "画板 – 4-1")
+                }
+                if tempWifi == true {
+                    cell.isWifiImage.image = UIImage(named: "画板 – 5")
+                } else {
+                    cell.isWifiImage.image = UIImage(named: "画板 – 4-1")
+                }
+                
+                cell.machine_noLabel.text = "標準台數：\(tempMachine_no)"
+                
+                cell.managerLabel.text = "管理者：\(tempManager)"
+                cell.lineLabel.text = "LINE：\(tempLine)"
+                cell.phoneLabel.text = "電話：\(tempPhone)"
+            } else {
+                cell.titleLabel.text = "機台資訊"
+                cell.shopNameLabel.text = "店家名稱：\(tempStoreName)"
+                cell.managerLabel.text = "管理者：\(tempManager)"
+                cell.lineLabel.text = "LINE：\(tempLine)"
+                cell.phoneLabel.text = "電話：\(tempPhone)"
+                cell.classfyTextView.text = "\(tempClass)"
+            }
             
             return cell
         }
-        else if indexPath.row == 2 {
+        else if indexPath.row == 3 {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "thirdCustomCell") as! ThirdCustomTableViewCell
             cell.setUI(description: tempActivity)
@@ -127,10 +191,15 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
         else {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "imageCustomCell") as! ImageTableViewCell
+            if tempIsStore == true {
+                cell.titleLabel.text = "店內機台"
+            } else {
+                cell.titleLabel.text = "商品介紹"
+            }
             return cell
         }
         
-            }
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.performBatchUpdates(nil)
         
@@ -147,8 +216,12 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
             print(response?.suggestedFilename ?? url.lastPathComponent)
             print("Download Finished")
             // always update the UI from the main thread
-            DispatchQueue.main.async() { [weak self] in
-                imageView.image = UIImage(data: data)
+            DispatchQueue.main.async() {
+                if UIImage(data: data) != nil {
+                    imageView.image = UIImage(data: data)
+                } else {
+                    imageView.image = UIImage(named: "withoutImage")
+                }
             }
         }
     }
@@ -176,15 +249,15 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
             
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
-                    
-                    let ccc = responseJSON["ccc"]! as! Bool
-                    let groceries = responseJSON["groceries"]! as! Bool
-                    let toy = responseJSON["toy"]! as! Bool
-                    let figure = responseJSON["figure"]! as! Bool
-                    let doll = responseJSON["doll"]! as! Bool
-                    let bulk_goods = responseJSON["bulk_goods"]! as! Bool
-                    let other = responseJSON["other"]! as! Bool
-                    
+                
+                let ccc = responseJSON["ccc"]! as! Bool
+                let groceries = responseJSON["groceries"]! as! Bool
+                let toy = responseJSON["toy"]! as! Bool
+                let figure = responseJSON["figure"]! as! Bool
+                let doll = responseJSON["doll"]! as! Bool
+                let bulk_goods = responseJSON["bulk_goods"]! as! Bool
+                let other = responseJSON["other"]! as! Bool
+                
                 if ccc == true {
                     self.tempClass.append("3c ")
                 }
@@ -228,9 +301,16 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
         let url = URL(string: "https://www.surveyx.tw/funchip/get_activity.php")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let json: [String: Any] = [
-            "machineId":"\(tempId)"
-        ]
+        var json: [String: Any] = [:]
+        if tempIsStore == true {
+            json = [
+                "storeId":"\(tempId)"
+            ]
+        } else {
+            json = [
+                "machineId":"\(tempId)"
+            ]
+        }
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         request.httpBody = jsonData
@@ -244,12 +324,106 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
                 
-                self.tempActivity = responseJSON["content"]! as! String
+                self.tempActivity = responseJSON["content"]! as? String ?? ""
+                
             }
         }
         task.resume()
     }
     
+    // MARK: COREDATA
+    
+    func queryFromCoreData() {
+        let moc = CoreDataHelper.shared.managedObjectContext()
+        
+        let fetchRequest = NSFetchRequest<UserInformationClass>(entityName: "UserInformationClass")
+        
+        moc.performAndWait {
+            do{
+                self.userData = try moc.fetch(fetchRequest)//查詢，回傳為[Note]
+            }catch{
+                print("error \(error)")
+                self.userData = []//如果有錯，回傳空陣列
+            }
+        }
+    }
+    
+    
+    @IBAction func followBtnPressed(_ sender: Any) {
+        postFollow()
+        if tempIsFollow == true {
+            tempIsFollow = false
+            followBtn.image = UIImage(named: "unfollow")
+            followBtn.tintColor = .black
+        } else {
+            tempIsFollow = true
+            followBtn.image = UIImage(named: "followed")
+            followBtn.tintColor = .systemPink
+        }
+        
+    }
+    @IBAction func shareBtnPressed(_ sender: Any) {
+    }
+    
+    func postFollow() {
+        if tempIsStore == true {
+            let url = URL(string: "https://www.surveyx.tw/funchip/click_follow_store.php")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            var json: [String: Any] = [:]
+            if tempIsFollow == true {
+                json = [
+                    "userId": "\(userData[0].userId)",
+                    "objectId": "\(tempId)"
+                ]
+            } else {
+                json = [
+                    "isFollow": "\(tempIsFollow)",
+                    "userId": "\(userData[0].userId)",
+                    "objectId": "\(tempId)"
+                ]
+            }
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            
+            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    return
+                }
+            }
+            task.resume()
+        } else {
+        let url = URL(string: "https://www.surveyx.tw/funchip/click_follow_machine.php")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        var json: [String: Any] = [:]
+        if tempIsFollow == true {
+            json = [
+                "userId": "\(userData[0].userId)",
+                "objectId": "\(tempId)"
+            ]
+        } else {
+            json = [
+                "isFollow": "\(tempIsFollow)",
+                "userId": "\(userData[0].userId)",
+                "objectId": "\(tempId)"
+            ]
+        }
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+        }
+        task.resume()
+        }
+    }
     
     
     @IBAction func backIba(_ sender: Any) {
