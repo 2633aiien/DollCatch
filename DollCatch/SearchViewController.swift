@@ -10,7 +10,7 @@ import CoreData
 import MapKit
 import CoreLocation
 
-class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UITextFieldDelegate {
+class SearchViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UITextFieldDelegate, MKMapViewDelegate {
     @IBOutlet weak var firstBtn: UIButton!
     @IBOutlet weak var secondBtn: UIButton!
     @IBOutlet weak var thirdBtn: UIButton!
@@ -19,6 +19,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     @IBOutlet weak var dropDownTableView: UITableView!
     @IBOutlet weak var myCollectionView: UICollectionView!
+    @IBOutlet weak var mapCollectionView: UICollectionView!
     @IBOutlet weak var topView: UIView!
     
     var width = Int(UIScreen.main.bounds.width)-40
@@ -38,7 +39,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     var firstDict : [Bool] = [true, true]
     var secondSelectedArray : [String] = []
     var secondAllBool = false
-    var secondSelectedIndex = 0
+    var countrySelectedIndex = -1
+    var areaSelectedIndex = 0
     var tempCountry = ""
     var countryIndexArr : [Int] = []
     var areaIndexArr : [Int] = []
@@ -54,6 +56,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var areaTableView: UITableView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var changeMapBtn: UIButton!
     
     var json: [String: Any] = [:]
     
@@ -61,7 +64,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     var searchArr : [FollowShopMachine] = []
     
     var myLocationManager :CLLocationManager!
-    var myMapView :MKMapView!
+    @IBOutlet weak var myMapView: MKMapView!
+    @IBOutlet weak var topRightBtn: UIButton!
+    
     var my_latitude : Double!
     var my_longitude : Double!
     
@@ -112,11 +117,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 cell.textLabel?.text = ""
             } else {
                 cell.textLabel?.text = countryArr[indexPath.row]
-                for i in countryIndexArr {
-                    if indexPath.row == i {
+                    if indexPath.row == countrySelectedIndex {
                         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
                         cell.textLabel?.textColor = .black
-                    }
                 }
             }
             return cell
@@ -135,12 +138,17 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                         cell.textLabel?.textColor = .black
                     }
                     }
+                } else {
+                    if indexPath.row == 0 {
+                        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+                        cell.textLabel?.textColor = .black
+                    }
                 }
             }
             if secondAllBool == true && indexPath.row == 0{
                 cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
                 cell.textLabel?.textColor = .black
-            } else if indexPath.row == secondSelectedIndex && indexPath.row != 0 {
+            } else if indexPath.row == areaSelectedIndex && indexPath.row != 0 {
                 cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
                 cell.textLabel?.textColor = .black
             }
@@ -207,28 +215,25 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             dropDownTableView.reloadData()
         }
         if tableView == countryTableView {
-            secondSelectedIndex = 0
-            secondAllBool = false
+            
+            areaSelectedIndex = 0
+            secondAllBool = true
             areaIndexArr.removeAll()
             let cell = tableView.cellForRow(at: indexPath)
             areaTableView.isHidden = false
+            countrySelectedIndex = indexPath.row
             if cell?.textLabel?.textColor == .systemGray {
-                cell?.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-                cell?.textLabel?.textColor = .black
+                secondSelectedArray.removeAll()
                 secondSelectedArray.append(countryArr[indexPath.row])
-                countryIndexArr.append(indexPath.row)
                 tempCountry = cell?.textLabel?.text ?? ""
             } else {
+                countrySelectedIndex = -1
+                secondSelectedArray.removeAll()
                 cell?.textLabel?.font = UIFont.systemFont(ofSize: 17)
                 cell?.textLabel?.textColor = .systemGray
-                for str in secondSelectedArray {
-                    if str.contains("\(tempCountry)") {
-                        secondSelectedArray = secondSelectedArray.filter { $0 != str }
-                    }
-                }
-                countryIndexArr = countryIndexArr.filter { $0 != indexPath.row }
                 tempCountry = ""
             }
+            countryTableView.reloadData()
             areaArr = areaArray[indexPath.row]
             areaTableView.reloadData()
         }
@@ -241,15 +246,28 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 secondSelectedArray.append("\(tempCountry)\(areaArr[indexPath.row])")
                 }
                 areaIndexArr.append(indexPath.row)
+                if indexPath.row != 0 && secondAllBool == true {
+                    secondAllBool = false
+//                    areaSelectedIndex = indexPath.row
+                    secondSelectedArray.removeAll()
+                    secondSelectedArray.append("\(tempCountry)\(areaArr[indexPath.row])")
+                    print("s3")
+                    areaTableView.reloadData()
+                }
             } else {
                 cell?.textLabel?.font = UIFont.systemFont(ofSize: 17)
                 cell?.textLabel?.textColor = .systemGray
-                secondSelectedArray = secondSelectedArray.filter { $0 != cell?.textLabel?.text }
+                secondSelectedArray = secondSelectedArray.filter { $0 != "\(tempCountry)\(areaArr[indexPath.row])" }
                 areaIndexArr = areaIndexArr.filter { $0 != indexPath.row }
+                if areaIndexArr .isEmpty {
+                    secondAllBool = true
+                    secondSelectedArray.append(tempCountry)
+                    areaTableView.reloadData()
+                }
             }
             if indexPath.row == 0 && secondAllBool == false {
                 secondAllBool = true
-                secondSelectedIndex = 0
+                areaSelectedIndex = 0
                 areaIndexArr = []
                 for str in secondSelectedArray {
                     if str.contains("\(tempCountry)") {
@@ -263,12 +281,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 secondAllBool = false
                 print("s2")
                 areaTableView.reloadData()
-            } else if indexPath.row != 0 && secondAllBool == true{
-                secondAllBool = false
-                secondSelectedIndex = indexPath.row
-                print("s3")
-                areaTableView.reloadData()
             }
+//            else if indexPath.row != 0 && secondAllBool == true{
+//                secondAllBool = false
+//                areaSelectedIndex = indexPath.row
+//                print("s3")
+//                areaTableView.reloadData()
+//            }
             print("bool: \(secondAllBool)")
         }
     }
@@ -284,7 +303,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+        if collectionView == myCollectionView {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! SearchCollectionViewCell
         downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(searchArr[indexPath.row].userId)/store_photo_\(searchArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
         cell.myTitleLabel.text = searchArr[indexPath.row].title
@@ -318,6 +337,41 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         cell.myTimeLabel.font = cell.myTimeLabel.font.withSize(14)
         
         return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mapCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
+            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(searchArr[indexPath.row].userId)/store_photo_\(searchArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
+            cell.myTitleLabel.text = searchArr[indexPath.row].title
+            let str = searchArr[indexPath.row].address
+            if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
+                let index = str.firstIndex(of: "區")
+                let str3 = str[...index!]
+                cell.myLocationLabel.text = String(str3)
+            } else {
+                cell.myLocationLabel.text = searchArr[indexPath.row].address
+            }
+            cell.myNameLabel.text = searchArr[indexPath.row].manager
+            let time = timeStringToDate(searchArr[indexPath.row].updateDate)
+            cell.myTimeLabel.text = time
+            cell.shareBtn.setImage(UIImage(named: "12"), for: .normal)
+            
+            cell.shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
+            
+                cell.heartBtn.tag = indexPath.row
+            
+                cell.heartBtn.addTarget(self, action: #selector(follow(_ :)), for: .touchUpInside)
+            
+                if searchArr[indexPath.row].isFollow == true {
+                        cell.heartBtn.setImage(UIImage(named: "followed"), for: .normal)
+                } else {
+                    cell.heartBtn.setImage(UIImage(named: "unfollow"), for: .normal)
+                }
+            
+            cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(14)
+            cell.myNameLabel.font = cell.myNameLabel.font.withSize(14)
+            cell.myTimeLabel.font = cell.myTimeLabel.font.withSize(14)
+            
+            return cell
+        }
     
     }
     
@@ -376,6 +430,15 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         myCollectionView.delegate = self
         myCollectionView.dataSource = self
         
+        mapCollectionView.collectionViewLayout = layout
+        
+        mapCollectionView.register(
+            SearchCollectionViewCell.self,
+            forCellWithReuseIdentifier: "mapCollectionViewCell")
+        
+        mapCollectionView.delegate = self
+        mapCollectionView.dataSource = self
+        
         dropDownTableView.delegate = self
         dropDownTableView.dataSource = self
         countryTableView.delegate = self
@@ -396,6 +459,35 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         myLocationManager.desiredAccuracy =
           kCLLocationAccuracyBest
         
+        // myMapView
+        // 設置委任對象
+        myMapView.delegate = self
+
+        // 地圖樣式
+        myMapView.mapType = .standard
+
+        // 顯示自身定位位置
+        myMapView.showsUserLocation = true
+
+        // 允許縮放地圖
+        myMapView.isZoomEnabled = true
+        // 地圖預設顯示的範圍大小 (數字越小越精確)
+        let latDelta = 0.05
+        let longDelta = 0.05
+        let currentLocationSpan:MKCoordinateSpan =
+        MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
+
+        // 設置地圖顯示的範圍與中心點座標
+//        let center:CLLocation = CLLocation(
+//          latitude: 25.05, longitude: 121.515)
+//        let currentRegion:MKCoordinateRegion =
+//          MKCoordinateRegion(
+//            center: center.coordinate,
+//            span: currentLocationSpan)
+//        myMapView.setRegion(currentRegion, animated: true)
+        
+        myMapView.userTrackingMode = .follow
+
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -457,7 +549,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let json: [String: Any] = [
-            "userId" : "\((userData.first?.userId)!)",
+            "userId" : "\((userData.first?.userId ?? ""))",
                 "my_latitude": my_latitude!,
                 "my_longitude": my_longitude!,
                 "only_machine" : firstDict[0],
@@ -515,8 +607,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
                 let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
                 let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
-                let latitude : Double = jsonDict["latitude"] as? Double ?? 0
-                let longitude : Double = jsonDict["longitude"] as? Double ?? 0
+                let latitude : String = jsonDict["latitude"] as? String ?? ""
+                let longitude : String = jsonDict["longitude"] as? String ?? ""
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
                 let isFollow : Bool = jsonDict["isFollow"] as! Bool
@@ -628,7 +720,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 return
             }
             
-            
         }
         task.resume()
     }
@@ -646,15 +737,50 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     @objc func sure() {
         dropDownTableView.isHidden = true
         getSearchItems()
+        switch dropDownTableView.tag {
+        case 1:
+            firstBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        case 3:
+            thirdBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        case 4:
+            fourthBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        default:
+            break
+        }
         print("結果：\(firstDict),\(secondSelectedArray),\(thirdSelectedArray),\(searchArr.count)")
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
         dropDownTableView.isHidden = true
         areaView.isHidden = true
         }
+    
+    // mapView
+    
+    func addAnnotation() {
+        if !searchArr.isEmpty {
+    for i in 0...searchArr.count-1 {
+        var objectAnnotation = MKPointAnnotation()
+        objectAnnotation.coordinate = CLLocation(
+            latitude: Double(searchArr[i].latitude) ?? 0,
+          longitude: Double(searchArr[i].longitude) ?? 0).coordinate
+        objectAnnotation.title = searchArr[i].title
+//            objectAnnotation.subtitle =
+//              "艋舺公園位於龍山寺旁邊，原名為「萬華十二號公園」。"
+        myMapView.addAnnotation(objectAnnotation)
+    }
+        }
+    }
+    func mapView(_ mapView: MKMapView,
+      annotationView view: MKAnnotationView,
+      calloutAccessoryControlTapped control: UIControl) {
+        print("點擊大頭針的說明")
+    }
+
+    
     @IBAction func areaSureBtnPressed(_ sender: Any) {
         areaView.isHidden = true
         getSearchItems()
+        secondBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         print("結果：\(firstDict),\(secondSelectedArray),\(thirdSelectedArray),\(searchArr.count)")
     }
     
@@ -753,6 +879,19 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBAction func searchBtnPressed(_ sender: Any) {
         getSearchItems()
         self.view.endEditing(true)
+    }
+    @IBAction func changeMapBtnPressed(_ sender: Any) {
+        if myMapView.isHidden {
+            topRightBtn.setImage(UIImage(named: "listTabber"), for: .normal)
+        myMapView.removeAnnotations(self.myMapView.annotations)
+        myCollectionView.isHidden = true
+        myMapView.isHidden = false
+            addAnnotation()
+        } else {
+            topRightBtn.setImage(UIImage(named: "18"), for: .normal)
+            myCollectionView.isHidden = false
+            myMapView.isHidden = true
+        }
     }
     
     

@@ -76,13 +76,14 @@ struct FollowShopMachine {
     var remaining_push = 0
     var announceDate = ""
     var clickTime = 0
-    var latitude = 0.1
-    var longitude = 0.1
+    var latitude = "0.1"
+    var longitude = "0.1"
     var createDate = ""
     var updateDate = ""
 }
 
 struct UserInformationStruct {
+    var phone: String
     var result: Bool
     var userId: String
     var name: String
@@ -107,6 +108,7 @@ class AreaList: Decodable {
 }
 
 class UserInformationClass : NSManagedObject{
+    @NSManaged var phone: String
     @NSManaged var result: Bool
     @NSManaged var userId: String
     @NSManaged var name: String

@@ -20,6 +20,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     
     var frameView: UIView!
     
+    var isRegistered = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let yourBackImage = UIImage(named: "back tabbar")
@@ -148,6 +150,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     @IBAction func userTermsBtnPressed(_ sender: Any) {
     }
     @IBAction func nextBtnPressed(_ sender: Any) {
+        checkPhone()
         
         if nameTextField.text?.isEmpty == true {
            let controller = UIAlertController(title: "姓名欄位不可為空白", message: "請填入姓名", preferredStyle: .alert)
@@ -164,7 +167,23 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
      let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
      controller.addAction(okAction)
      present(controller, animated: true, completion: nil)
-} else if passwordTextField.text?.isEmpty == true {
+ } else if isRegistered == true {
+     let controller = UIAlertController(title: "此電話號碼已註冊過", message: "", preferredStyle: .alert)
+     let backToHomeAction = UIAlertAction(title: "回首頁", style: .default) { _ in
+         if let controller = self.storyboard?.instantiateViewController(withIdentifier: "beginTabbar") as? UITabBarController {
+//             let navigationController = UINavigationController(rootViewController: controller)
+//             navigationController.modalPresentationStyle = .fullScreen
+//             self.present(navigationController, animated: true, completion: nil)
+             controller.modalPresentationStyle = .fullScreen
+             self.present(controller, animated: false, completion: nil)
+         }
+     }
+     let reInputAction = UIAlertAction(title: "重新輸入", style: .default, handler: nil)
+     controller.addAction(backToHomeAction)
+     controller.addAction(reInputAction)
+     present(controller, animated: true, completion: nil)
+     
+ } else if passwordTextField.text?.isEmpty == true {
     let controller = UIAlertController(title: "密碼欄位不可為空白", message: "請填入密碼", preferredStyle: .alert)
     let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
     controller.addAction(okAction)
@@ -197,6 +216,35 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
     present(navigationController, animated: true, completion: nil)
     }
 }
+    }
+    
+    func checkPhone() {
+        let url = URL(string: "https://www.surveyx.tw/funchip/check_phone_no.php")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        var json: [String: Any] = [:]
+        
+            json = [
+                "phone_no":"\(phoneTextField.text ?? "")"
+            ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                
+                self.isRegistered = responseJSON["result"]! as? Bool ?? true
+                
+            }
+        }
+        task.resume()
     }
     
     

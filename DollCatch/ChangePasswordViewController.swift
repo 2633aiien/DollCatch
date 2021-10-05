@@ -15,6 +15,9 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var againNewPasswordField: UITextField!
     var userdata : [UserInformationClass] = []
     
+    var result = false
+    var message = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         oldPasswordField.delegate = self
@@ -25,8 +28,66 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate {
         downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(userdata[0].userId)/person_photo")! )
     }
     @IBAction func returnBtnPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     @IBAction func saveBtnPressed(_ sender: Any) {
+        if self.newPasswordField.text != self.againNewPasswordField.text || self.newPasswordField.text == ""{
+                let controller = UIAlertController(title: "請確認新密碼是否輸入相同", message: "", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                controller.addAction(okAction)
+            DispatchQueue.main.async {
+                self.present(controller, animated: true, completion: nil)
+            }
+            return
+        }
+        let url = URL(string: "https://www.surveyx.tw/funchip/update_user_password.php")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        var json: [String: Any] = [:]
+            json = [
+                "old_password": "\(oldPasswordField.text!)",
+                "new_password": "\(newPasswordField.text!)",
+                "userId": "\(userdata[0].userId)"
+            ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON["result"]!)
+                if responseJSON["result"]! as! Bool == false && responseJSON["message"]! as! String == "密碼錯誤"{
+                    let controller = UIAlertController(title: "密碼錯誤", message: "", preferredStyle: .alert)
+                    let backToHomeAction = UIAlertAction(title: "上一步", style: .default) { _ in
+                        self.dismiss(animated: true, completion: nil)
+                        }
+                    let reInputAction = UIAlertAction(title: "重新輸入", style: .default, handler: nil)
+                    controller.addAction(backToHomeAction)
+                    controller.addAction(reInputAction)
+                    DispatchQueue.main.async {
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                }  else if responseJSON["result"]! as! Bool == true {
+                    
+                    let controller = UIAlertController(title: "密碼更改成功", message: "", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "確認", style: .default) { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    controller.addAction(okAction)
+                    DispatchQueue.main.async {
+                    self.present(controller, animated: true, completion: nil)
+                    }
+                }
+                    
+            }
+            
+        }
+        task.resume()
     }
     @IBAction func backBtn(_ sender: Any) {
         self.dismiss(animated: false, completion: nil)

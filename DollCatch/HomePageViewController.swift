@@ -302,9 +302,9 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     override func viewDidLoad() {
         super .viewDidLoad()
     
-        let backItem = UIBarButtonItem()
-            backItem.title = ""
-            navigationItem.backBarButtonItem = backItem
+//        let backItem = UIBarButtonItem()
+//            backItem.title = ""
+//            navigationItem.backBarButtonItem = backItem
         
         let viewController = storyboard?.instantiateViewController(withIdentifier: "rootView")
         let menu = SideMenuNavigationController(rootViewController: viewController!)
@@ -492,8 +492,8 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
                 let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
                 let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
-                let latitude : Double = jsonDict["latitude"] as? Double ?? 0
-                let longitude : Double = jsonDict["longitude"] as? Double ?? 0
+                let latitude : String = jsonDict["latitude"] as? String ?? "0"
+                let longitude : String = jsonDict["longitude"] as? String ?? "0"
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
                 
@@ -561,8 +561,8 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
                 let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
                 let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
-                let latitude : Double = jsonDict["latitude"] as? Double ?? 0
-                let longitude : Double = jsonDict["longitude"] as? Double ?? 0
+                let latitude : String = jsonDict["latitude"] as? String ?? "0"
+                let longitude : String = jsonDict["longitude"] as? String ?? "0"
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
                 

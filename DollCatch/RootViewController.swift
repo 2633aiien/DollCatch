@@ -68,6 +68,7 @@ class RootViewController: UIViewController {
         loginBtn.setTitle("   登入        >", for: .normal)
         loginBtn.addTarget(self, action: #selector(loginBtnPressed), for: .touchUpInside)
         } else {
+            
             downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(userData[0].userId)/person_photo")! )
             loginBtn.setTitle("   \(userData[0].nickname)        >", for: .normal)
             loginBtn.addTarget(self, action: #selector(personalInformation), for: .touchUpInside)
@@ -78,17 +79,19 @@ class RootViewController: UIViewController {
     }
     @objc func loginBtnPressed() {
         print("login")
-        let controller = storyboard?.instantiateViewController(withIdentifier: "login")
-        let navigationController = UINavigationController(rootViewController: controller!)
+        if let controller = storyboard?.instantiateViewController(withIdentifier: "login") {
+        let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: false, completion: nil)
+        }
             
     }
     @objc func personalInformation() {
-        let controller = storyboard?.instantiateViewController(withIdentifier: "personalInformation")
-        let navigationController = UINavigationController(rootViewController: controller!)
+        if let controller = storyboard?.instantiateViewController(withIdentifier: "personalInformation") {
+        let navigationController = UINavigationController(rootViewController: controller)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: false, completion: nil)
+        }
     }
     @objc func AnnouncementBtnPressed() {
         announcementBtn.backgroundColor = .tertiaryLabel
@@ -135,6 +138,7 @@ class RootViewController: UIViewController {
         }
     }
     func downloadImage(from url: URL) {
+        
         print("Download Started")
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
@@ -142,6 +146,7 @@ class RootViewController: UIViewController {
             print("Download Finished")
             // always update the UI from the main thread
             DispatchQueue.main.async() { [weak self] in
+                print("data: \(data),\(response?.url)")
                 self?.photoImageView.image = UIImage(data: data)
             }
         }
@@ -164,3 +169,4 @@ class RootViewController: UIViewController {
     */
 
 }
+

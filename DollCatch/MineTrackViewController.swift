@@ -18,12 +18,7 @@ class MineTrackViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         queryFromCoreData()
-        if userData .isEmpty {
-            let controller = storyboard?.instantiateViewController(withIdentifier: "login")
-            let navigationController = UINavigationController(rootViewController: controller!)
-            navigationController.modalPresentationStyle = .fullScreen
-            present(navigationController, animated: false, completion: nil)
-        }
+        
         // sidebar
         menu.presentationStyle = .menuSlideIn
         menu.menuWidth = 330
@@ -33,6 +28,14 @@ class MineTrackViewController: UIViewController {
         SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
 
         // Do any additional setup after loading the view.
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if userData .isEmpty {
+            let controller = storyboard?.instantiateViewController(withIdentifier: "login")
+            let navigationController = UINavigationController(rootViewController: controller!)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+        }
     }
     @IBAction func hamburgerBtn(_ sender: Any) {
         menu.leftSide = true

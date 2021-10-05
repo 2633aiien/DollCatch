@@ -16,7 +16,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var errorImage: UIImageView!
     @IBOutlet weak var errorLabel: UILabel!
     
-    var user = UserInformationStruct(result: false, userId: "", name: "", nickname: "", email: "", level: "", photo_position: true)
+    var user = UserInformationStruct(phone: "",result: false, userId: "", name: "", nickname: "", email: "", level: "", photo_position: true)
     
     var userData : [UserInformationClass] = []
     
@@ -37,7 +37,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
     }
     @IBAction func backBtn(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        if let controller = self.storyboard?.instantiateViewController(withIdentifier: "beginTabbar") as? UITabBarController {
+//            let navigationController = UINavigationController(rootViewController: controller)
+//            navigationController.modalPresentationStyle = .fullScreen
+            controller.modalPresentationStyle = .fullScreen
+            self.present(controller, animated: false, completion: nil)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -78,6 +83,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             self.errorLabel.isHidden = true
                             self.errorImage.isHidden = true
                         }
+                        DispatchQueue.main.async {
+                            self.user.phone = self.accountTextField.text!
+                        }
+                        
                         self.user.result = responseJSON["result"]! as! Bool
                         self.user.userId = responseJSON["userId"]! as! String
                         self.user.name = responseJSON["name"]! as! String
@@ -147,6 +156,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func addCoreData() {
         let context = CoreDataHelper.shared.managedObjectContext()
         let userC = NSEntityDescription.insertNewObject(forEntityName: "UserInformationClass", into: context) as! UserInformationClass
+        userC.phone = user.phone
         userC.result = user.result
         userC.userId = user.userId
         userC.name = user.name

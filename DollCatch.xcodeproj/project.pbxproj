@@ -82,6 +82,7 @@
 		832DDB8F17BFBC6F4FBF92BA /* Pods-DollCatch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DollCatch.release.xcconfig"; path = "Target Support Files/Pods-DollCatch/Pods-DollCatch.release.xcconfig"; sourceTree = "<group>"; };
 		9F67A6A126FC305600EF54BF /* ImageIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageIntroViewController.swift; sourceTree = "<group>"; };
 		9F6E2DEC27054C1F00A4DF2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9F6E2DEE270559B300A4DF2A /* DollCatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DollCatch.entitlements; sourceTree = "<group>"; };
 		9FA169EBB26F5426526CB9F3 /* Pods_DollCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DollCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FA4896426CCB9120012E7AE /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -227,6 +228,7 @@
 		9FE5E35226CA159C00170372 /* DollCatch */ = {
 			isa = PBXGroup;
 			children = (
+				9F6E2DEE270559B300A4DF2A /* DollCatch.entitlements */,
 				9F6E2DEC27054C1F00A4DF2A /* GoogleService-Info.plist */,
 				9FE5E35326CA159C00170372 /* AppDelegate.swift */,
 				9FE5E35526CA159C00170372 /* SceneDelegate.swift */,
@@ -615,6 +617,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DollCatch/DollCatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9L6T99V452;
 				INFOPLIST_FILE = DollCatch/Info.plist;
@@ -635,6 +638,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DollCatch/DollCatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9L6T99V452;
 				INFOPLIST_FILE = DollCatch/Info.plist;

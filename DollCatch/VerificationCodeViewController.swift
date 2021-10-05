@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class VerificationCodeViewController: UIViewController,UITextFieldDelegate, MyTextFieldDelegate {
     func textFieldDidDelete() {
@@ -63,7 +64,8 @@ class VerificationCodeViewController: UIViewController,UITextFieldDelegate, MyTe
     
     var activeTextField = UITextField()
     
-    var inputCode = ""
+    var userId = ""
+    var phoneNumber = ""
     
     
     override func viewDidLoad() {
@@ -83,7 +85,15 @@ class VerificationCodeViewController: UIViewController,UITextFieldDelegate, MyTe
         fifth.myDelegate = self
         sixth.myDelegate = self
         
-        
+        PhoneAuthProvider.provider().verifyPhoneNumber("+886\(phoneNumber)" , uiDelegate: nil) { verificationID, error in
+              if let error = error {
+                  print("error: \(error)")
+                  return
+                  }
+                UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+            print("phone: \(self.phoneNumber)")
+              print("get code success")
+            }
     
 
         // Do any additional setup after loading the view.
@@ -109,8 +119,6 @@ class VerificationCodeViewController: UIViewController,UITextFieldDelegate, MyTe
             default:
                 break
             }
-        }else{
-
         }
     }
     
@@ -201,7 +209,7 @@ class VerificationCodeViewController: UIViewController,UITextFieldDelegate, MyTe
                     }
 
                     textField.text = ""
-                    inputCode = "\(first.text)\(second.text)\(third.text)\(fourth.text)\(fifth.text)\(sixth.text)"
+                    
                     return false
 
                 } // 12. after pressing the backButton and moving forward again you will have to do what's in step 10 all over again
@@ -247,11 +255,84 @@ class VerificationCodeViewController: UIViewController,UITextFieldDelegate, MyTe
             }
     
     @IBAction func continueBtn(_ sender: Any) {
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "changeForgetPw") {
-            let navigationController = UINavigationController(rootViewController: controller)
-            navigationController.modalPresentationStyle = .fullScreen
-            present(navigationController, animated: false, completion: nil)
+        let verificationID = UserDefaults.standard.string(forKey: "authVerificationID") ?? ""
+        let verificationCode = "\(first.text ?? "0")\(second.text ?? "0")\(third.text ?? "0")\(fourth.text ?? "0")\(fifth.text ?? "0")\(sixth.text ?? "0")"
+        let credential = PhoneAuthProvider.provider().credential(
+          withVerificationID: verificationID,
+          verificationCode: verificationCode
+        )
+        Auth.auth().signIn(with: credential) { authResult, error in
+            if let error = error {
+              let authError = error as NSError
+              if authError.code == AuthErrorCode.secondFactorRequired.rawValue {
+                // The user is a multi-factor user. Second factor challenge is required.
+                let resolver = authError
+                  .userInfo[AuthErrorUserInfoMultiFactorResolverKey] as! MultiFactorResolver
+                var displayNameString = ""
+                for tmpFactorInfo in resolver.hints {
+                  displayNameString += tmpFactorInfo.displayName ?? ""
+                  displayNameString += " "
+                }
+//                self.showTextInputPrompt(
+//                  withMessage: "Select factor to sign in\n\(displayNameString)",
+//                  completionBlock: { userPressedOK, displayName in
+//                    var selectedHint: PhoneMultiFactorInfo?
+//                    for tmpFactorInfo in resolver.hints {
+//                      if displayName == tmpFactorInfo.displayName {
+//                        selectedHint = tmpFactorInfo as? PhoneMultiFactorInfo
+//                      }
+//                    }
+//                    PhoneAuthProvider.provider()
+//                      .verifyPhoneNumber(with: selectedHint!, uiDelegate: nil,
+//                                         multiFactorSession: resolver
+//                                           .session) { verificationID, error in
+//                        if error != nil {
+//                          print(
+//                            "Multi factor start sign in failed. Error: \(error.debugDescription)"
+//                          )
+//                        } else {
+//                          self.showTextInputPrompt(
+//                            withMessage: "Verification code for \(selectedHint?.displayName ?? "")",
+//                            completionBlock: { userPressedOK, verificationCode in
+//                              let credential: PhoneAuthCredential? = PhoneAuthProvider.provider()
+//                                .credential(withVerificationID: verificationID!,
+//                                            verificationCode: verificationCode!)
+//                              let assertion: MultiFactorAssertion? = PhoneMultiFactorGenerator
+//                                .assertion(with: credential!)
+//                              resolver.resolveSignIn(with: assertion!) { authResult, error in
+//                                if error != nil {
+//                                  print(
+//                                    "Multi factor finanlize sign in failed. Error: \(error.debugDescription)"
+//                                  )
+//                                } else {
+//                                  self.navigationController?.popViewController(animated: true)
+//                                }
+//                              }
+//                            }
+//                          )
+//                        }
+//                      }
+//                  }
+//                )
+              } else {
+                print(error.localizedDescription)
+                return
+              }
+              // ...
+              return
+            }
+            // User is signed in
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "changeForgetPw") as? ChangeForgetPwViewController {
+                controller.userId = self.userId
+                controller.phone = self.phoneNumber
+                let navigationController = UINavigationController(rootViewController: controller)
+                navigationController.modalPresentationStyle = .fullScreen
+                self.present(navigationController, animated: false, completion: nil)
+            }
+            print("maybe post success")
+            
         }
+        
     }
     
 
