@@ -10,6 +10,28 @@
 		080279EF8AC0EB4073B5DFA6 /* Pods_DollCatch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA169EBB26F5426526CB9F3 /* Pods_DollCatch.framework */; };
 		9F67A6A226FC305700EF54BF /* ImageIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F67A6A126FC305600EF54BF /* ImageIntroViewController.swift */; };
 		9F6E2DED27054C2000A4DF2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F6E2DEC27054C1F00A4DF2A /* GoogleService-Info.plist */; };
+		9F6E2DF2270BE8D200A4DF2A /* myScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E2DF1270BE8D000A4DF2A /* myScrollView.swift */; };
+		9F6E2DF4270C00AD00A4DF2A /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E2DF3270C00AB00A4DF2A /* SearchResultCollectionViewCell.swift */; };
+		9F6E2DF6270C18F300A4DF2A /* MyAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E2DF5270C18F100A4DF2A /* MyAnnotationView.swift */; };
+		9F8DCCD5270D577700250E24 /* ExtenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DCCD4270D577600250E24 /* ExtenseView.swift */; };
+		9F8DCCD7270D716400250E24 /* PlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DCCD6270D716400250E24 /* PlanCollectionViewCell.swift */; };
+		9F916211270ECBAD00E2295A /* FirstCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F916210270ECBAD00E2295A /* FirstCollectionViewCell.swift */; };
+		9F916213270ECBC200E2295A /* SecondCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F916212270ECBC200E2295A /* SecondCollectionViewCell.swift */; };
+		9F916216270FFF5600E2295A /* FirstMineItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F916215270FFF5500E2295A /* FirstMineItemTableViewCell.swift */; };
+		9F916218270FFF6600E2295A /* SecondMineItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F916217270FFF6600E2295A /* SecondMineItemTableViewCell.swift */; };
+		9F91621A270FFF7400E2295A /* ThirdMineItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F916219270FFF7400E2295A /* ThirdMineItemTableViewCell.swift */; };
+		9F91621C270FFF8800E2295A /* FourthMineItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F91621B270FFF8800E2295A /* FourthMineItemTableViewCell.swift */; };
+		9F91621E270FFF9A00E2295A /* FifthMineItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F91621D270FFF9A00E2295A /* FifthMineItemTableViewCell.swift */; };
+		9F916220270FFFA700E2295A /* SixthMineItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F91621F270FFFA700E2295A /* SixthMineItemTableViewCell.swift */; };
+		9F916222270FFFD200E2295A /* FirstMineItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F916221270FFFD200E2295A /* FirstMineItemCollectionViewCell.swift */; };
+		9F916224270FFFE200E2295A /* SecondMineItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F916223270FFFE200E2295A /* SecondMineItemCollectionViewCell.swift */; };
+		9F94173B271D53B7007322FE /* NotiHistoryFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F94173A271D53B7007322FE /* NotiHistoryFirstViewController.swift */; };
+		9F94173D271D53D1007322FE /* NotiHistorySecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F94173C271D53D1007322FE /* NotiHistorySecondViewController.swift */; };
+		9F94173F271D5541007322FE /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F94173E271D5541007322FE /* DetailTableViewCell.swift */; };
+		9F941741271D559D007322FE /* TableViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F941740271D559D007322FE /* TableViewCellView.swift */; };
+		9F960C13272664A100690CFA /* NewFollowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F960C12272664A100690CFA /* NewFollowModel.swift */; };
+		9F960C152726828D00690CFA /* notifyBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F960C142726828D00690CFA /* notifyBtn.swift */; };
+		9F9C8B27271FD39100F7BED3 /* AdCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9C8B26271FD39100F7BED3 /* AdCollectionViewCell.swift */; };
 		9FA4896526CCB9120012E7AE /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4896426CCB9120012E7AE /* RootViewController.swift */; };
 		9FA4898F26CF80330012E7AE /* MyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */; };
 		9FA4899126D33FF90012E7AE /* MySecondCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */; };
@@ -48,6 +70,16 @@
 		9FACF74426FAE5E30020F23F /* SureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACF74326FAE5E20020F23F /* SureTableViewCell.swift */; };
 		9FACF74626FB125B0020F23F /* city_county_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 9FACF74526FB125B0020F23F /* city_county_data.json */; };
 		9FACF74826FB18380020F23F /* LocalJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FACF74726FB18380020F23F /* LocalJson.swift */; };
+		9FD20755271E9B6E003F7A77 /* PayRecordFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD20754271E9B6E003F7A77 /* PayRecordFirstViewController.swift */; };
+		9FD20757271E9B84003F7A77 /* PayRecordSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD20756271E9B84003F7A77 /* PayRecordSecondViewController.swift */; };
+		9FD20759271E9F29003F7A77 /* PayRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD20758271E9F29003F7A77 /* PayRecordViewController.swift */; };
+		9FD2075B271EA19B003F7A77 /* PayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2075A271EA19B003F7A77 /* PayTableViewCell.swift */; };
+		9FD2075D271EA1C1003F7A77 /* PayTableViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2075C271EA1C1003F7A77 /* PayTableViewCellView.swift */; };
+		9FD20760271EB2FA003F7A77 /* NotificationFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD2075F271EB2FA003F7A77 /* NotificationFirstViewController.swift */; };
+		9FD20762271EB30E003F7A77 /* NotificationSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD20761271EB30E003F7A77 /* NotificationSecondViewController.swift */; };
+		9FD20764271EB38A003F7A77 /* NotificationReceiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD20763271EB38A003F7A77 /* NotificationReceiveViewController.swift */; };
+		9FD20766271EB560003F7A77 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD20765271EB560003F7A77 /* NotificationTableViewCell.swift */; };
+		9FD20768271EB58F003F7A77 /* NotiTableViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD20767271EB58F003F7A77 /* NotiTableViewCellView.swift */; };
 		9FE5E35426CA159C00170372 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35326CA159C00170372 /* AppDelegate.swift */; };
 		9FE5E35626CA159C00170372 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35526CA159C00170372 /* SceneDelegate.swift */; };
 		9FE5E35826CA159C00170372 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E35726CA159C00170372 /* HomePageViewController.swift */; };
@@ -55,25 +87,20 @@
 		9FE5E35D26CA159F00170372 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FE5E35C26CA159F00170372 /* Assets.xcassets */; };
 		9FE5E36026CA159F00170372 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FE5E35E26CA159F00170372 /* LaunchScreen.storyboard */; };
 		9FE5E36826CA1C1A00170372 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E36726CA1C1A00170372 /* SearchViewController.swift */; };
-		9FE5E36A26CA1C9800170372 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E36926CA1C9800170372 /* MapViewController.swift */; };
 		9FE5E36C26CA1E6100170372 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E36B26CA1E6100170372 /* RegisterViewController.swift */; };
 		9FE5E36E26CA1ED900170372 /* PersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E36D26CA1ED900170372 /* PersonalViewController.swift */; };
 		9FE5E37026CA1F4600170372 /* VerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E36F26CA1F4600170372 /* VerificationCodeViewController.swift */; };
-		9FE5E37226CA1FD800170372 /* EditPersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37126CA1FD800170372 /* EditPersonalViewController.swift */; };
 		9FE5E37426CA205000170372 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37326CA205000170372 /* ChangePasswordViewController.swift */; };
 		9FE5E37626CA21A300170372 /* MineManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37526CA21A300170372 /* MineManagementViewController.swift */; };
 		9FE5E37826CA22AD00170372 /* MineShopMachineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37726CA22AD00170372 /* MineShopMachineViewController.swift */; };
 		9FE5E37A26CA265200170372 /* NotificationHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37926CA265200170372 /* NotificationHistoryViewController.swift */; };
-		9FE5E37C26CA268D00170372 /* PaymentRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37B26CA268D00170372 /* PaymentRecordViewController.swift */; };
 		9FE5E37E26CA2EF100170372 /* ChoosePlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37D26CA2EF100170372 /* ChoosePlanViewController.swift */; };
 		9FE5E38026CA2F4F00170372 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */; };
 		9FE5E38226CA2FA200170372 /* MachinePlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */; };
-		9FE5E38426CA2FBB00170372 /* ShopPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38326CA2FBB00170372 /* ShopPlanViewController.swift */; };
+		9FE5E38426CA2FBB00170372 /* EditMineShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38326CA2FBB00170372 /* EditMineShopViewController.swift */; };
 		9FE5E38826CA304100170372 /* MachineIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38726CA304100170372 /* MachineIntroViewController.swift */; };
-		9FE5E38A26CA310800170372 /* NotificationReceiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38926CA310800170372 /* NotificationReceiveViewController.swift */; };
-		9FE5E38C26CA321C00170372 /* NewTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38B26CA321C00170372 /* NewTrackViewController.swift */; };
 		9FE5E38E26CA323800170372 /* NewMachineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38D26CA323800170372 /* NewMachineViewController.swift */; };
-		9FE5E39026CA324700170372 /* NewShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38F26CA324700170372 /* NewShopViewController.swift */; };
+		9FE5E39026CA324700170372 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E38F26CA324700170372 /* WebViewController.swift */; };
 		9FE5E39226CA326000170372 /* MineTrackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE5E39126CA326000170372 /* MineTrackViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +110,28 @@
 		9F67A6A126FC305600EF54BF /* ImageIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageIntroViewController.swift; sourceTree = "<group>"; };
 		9F6E2DEC27054C1F00A4DF2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F6E2DEE270559B300A4DF2A /* DollCatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DollCatch.entitlements; sourceTree = "<group>"; };
+		9F6E2DF1270BE8D000A4DF2A /* myScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myScrollView.swift; sourceTree = "<group>"; };
+		9F6E2DF3270C00AB00A4DF2A /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
+		9F6E2DF5270C18F100A4DF2A /* MyAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAnnotationView.swift; sourceTree = "<group>"; };
+		9F8DCCD4270D577600250E24 /* ExtenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtenseView.swift; sourceTree = "<group>"; };
+		9F8DCCD6270D716400250E24 /* PlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCollectionViewCell.swift; sourceTree = "<group>"; };
+		9F916210270ECBAD00E2295A /* FirstCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCollectionViewCell.swift; sourceTree = "<group>"; };
+		9F916212270ECBC200E2295A /* SecondCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCollectionViewCell.swift; sourceTree = "<group>"; };
+		9F916215270FFF5500E2295A /* FirstMineItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMineItemTableViewCell.swift; sourceTree = "<group>"; };
+		9F916217270FFF6600E2295A /* SecondMineItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondMineItemTableViewCell.swift; sourceTree = "<group>"; };
+		9F916219270FFF7400E2295A /* ThirdMineItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdMineItemTableViewCell.swift; sourceTree = "<group>"; };
+		9F91621B270FFF8800E2295A /* FourthMineItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthMineItemTableViewCell.swift; sourceTree = "<group>"; };
+		9F91621D270FFF9A00E2295A /* FifthMineItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FifthMineItemTableViewCell.swift; sourceTree = "<group>"; };
+		9F91621F270FFFA700E2295A /* SixthMineItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixthMineItemTableViewCell.swift; sourceTree = "<group>"; };
+		9F916221270FFFD200E2295A /* FirstMineItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstMineItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		9F916223270FFFE200E2295A /* SecondMineItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondMineItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		9F94173A271D53B7007322FE /* NotiHistoryFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiHistoryFirstViewController.swift; sourceTree = "<group>"; };
+		9F94173C271D53D1007322FE /* NotiHistorySecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiHistorySecondViewController.swift; sourceTree = "<group>"; };
+		9F94173E271D5541007322FE /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
+		9F941740271D559D007322FE /* TableViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellView.swift; sourceTree = "<group>"; };
+		9F960C12272664A100690CFA /* NewFollowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFollowModel.swift; sourceTree = "<group>"; };
+		9F960C142726828D00690CFA /* notifyBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = notifyBtn.swift; sourceTree = "<group>"; };
+		9F9C8B26271FD39100F7BED3 /* AdCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FA169EBB26F5426526CB9F3 /* Pods_DollCatch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DollCatch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FA4896426CCB9120012E7AE /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -122,6 +171,16 @@
 		9FACF74326FAE5E20020F23F /* SureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SureTableViewCell.swift; sourceTree = "<group>"; };
 		9FACF74526FB125B0020F23F /* city_county_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city_county_data.json; sourceTree = "<group>"; };
 		9FACF74726FB18380020F23F /* LocalJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalJson.swift; sourceTree = "<group>"; };
+		9FD20754271E9B6E003F7A77 /* PayRecordFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayRecordFirstViewController.swift; sourceTree = "<group>"; };
+		9FD20756271E9B84003F7A77 /* PayRecordSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayRecordSecondViewController.swift; sourceTree = "<group>"; };
+		9FD20758271E9F29003F7A77 /* PayRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayRecordViewController.swift; sourceTree = "<group>"; };
+		9FD2075A271EA19B003F7A77 /* PayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayTableViewCell.swift; sourceTree = "<group>"; };
+		9FD2075C271EA1C1003F7A77 /* PayTableViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayTableViewCellView.swift; sourceTree = "<group>"; };
+		9FD2075F271EB2FA003F7A77 /* NotificationFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationFirstViewController.swift; sourceTree = "<group>"; };
+		9FD20761271EB30E003F7A77 /* NotificationSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSecondViewController.swift; sourceTree = "<group>"; };
+		9FD20763271EB38A003F7A77 /* NotificationReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReceiveViewController.swift; sourceTree = "<group>"; };
+		9FD20765271EB560003F7A77 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		9FD20767271EB58F003F7A77 /* NotiTableViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotiTableViewCellView.swift; sourceTree = "<group>"; };
 		9FE5E35026CA159C00170372 /* DollCatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DollCatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FE5E35326CA159C00170372 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FE5E35526CA159C00170372 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,25 +190,20 @@
 		9FE5E35F26CA159F00170372 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9FE5E36126CA159F00170372 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9FE5E36726CA1C1A00170372 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		9FE5E36926CA1C9800170372 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9FE5E36B26CA1E6100170372 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		9FE5E36D26CA1ED900170372 /* PersonalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalViewController.swift; sourceTree = "<group>"; };
 		9FE5E36F26CA1F4600170372 /* VerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewController.swift; sourceTree = "<group>"; };
-		9FE5E37126CA1FD800170372 /* EditPersonalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalViewController.swift; sourceTree = "<group>"; };
 		9FE5E37326CA205000170372 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		9FE5E37526CA21A300170372 /* MineManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineManagementViewController.swift; sourceTree = "<group>"; };
 		9FE5E37726CA22AD00170372 /* MineShopMachineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineShopMachineViewController.swift; sourceTree = "<group>"; };
 		9FE5E37926CA265200170372 /* NotificationHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHistoryViewController.swift; sourceTree = "<group>"; };
-		9FE5E37B26CA268D00170372 /* PaymentRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRecordViewController.swift; sourceTree = "<group>"; };
 		9FE5E37D26CA2EF100170372 /* ChoosePlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePlanViewController.swift; sourceTree = "<group>"; };
 		9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
 		9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachinePlanViewController.swift; sourceTree = "<group>"; };
-		9FE5E38326CA2FBB00170372 /* ShopPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopPlanViewController.swift; sourceTree = "<group>"; };
+		9FE5E38326CA2FBB00170372 /* EditMineShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMineShopViewController.swift; sourceTree = "<group>"; };
 		9FE5E38726CA304100170372 /* MachineIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineIntroViewController.swift; sourceTree = "<group>"; };
-		9FE5E38926CA310800170372 /* NotificationReceiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReceiveViewController.swift; sourceTree = "<group>"; };
-		9FE5E38B26CA321C00170372 /* NewTrackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrackViewController.swift; sourceTree = "<group>"; };
 		9FE5E38D26CA323800170372 /* NewMachineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMachineViewController.swift; sourceTree = "<group>"; };
-		9FE5E38F26CA324700170372 /* NewShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShopViewController.swift; sourceTree = "<group>"; };
+		9FE5E38F26CA324700170372 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		9FE5E39126CA326000170372 /* MineTrackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineTrackViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,11 +236,50 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		9F91620F270ECB3C00E2295A /* 我的店家、機台 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E37726CA22AD00170372 /* MineShopMachineViewController.swift */,
+				9F916210270ECBAD00E2295A /* FirstCollectionViewCell.swift */,
+				9F916212270ECBC200E2295A /* SecondCollectionViewCell.swift */,
+			);
+			path = "我的店家、機台";
+			sourceTree = "<group>";
+		};
+		9F916214270FFEDB00E2295A /* EditMineMachine */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E38326CA2FBB00170372 /* EditMineShopViewController.swift */,
+				9F916215270FFF5500E2295A /* FirstMineItemTableViewCell.swift */,
+				9F916217270FFF6600E2295A /* SecondMineItemTableViewCell.swift */,
+				9F916219270FFF7400E2295A /* ThirdMineItemTableViewCell.swift */,
+				9F91621B270FFF8800E2295A /* FourthMineItemTableViewCell.swift */,
+				9F91621D270FFF9A00E2295A /* FifthMineItemTableViewCell.swift */,
+				9F91621F270FFFA700E2295A /* SixthMineItemTableViewCell.swift */,
+				9F916221270FFFD200E2295A /* FirstMineItemCollectionViewCell.swift */,
+				9F916223270FFFE200E2295A /* SecondMineItemCollectionViewCell.swift */,
+			);
+			path = EditMineMachine;
+			sourceTree = "<group>";
+		};
+		9F941739271D5374007322FE /* 推播歷史 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E37926CA265200170372 /* NotificationHistoryViewController.swift */,
+				9F94173A271D53B7007322FE /* NotiHistoryFirstViewController.swift */,
+				9F94173C271D53D1007322FE /* NotiHistorySecondViewController.swift */,
+				9F94173E271D5541007322FE /* DetailTableViewCell.swift */,
+				9F941740271D559D007322FE /* TableViewCellView.swift */,
+			);
+			path = "推播歷史";
+			sourceTree = "<group>";
+		};
 		9FA489B026DF388C0012E7AE /* PhpConnection */ = {
 			isa = PBXGroup;
 			children = (
 				9FA489A226D77C620012E7AE /* NewMachineModel.swift */,
 				9FA489B126DF391A0012E7AE /* NewShopModel.swift */,
+				9F960C12272664A100690CFA /* NewFollowModel.swift */,
 			);
 			path = PhpConnection;
 			sourceTree = "<group>";
@@ -205,6 +298,30 @@
 				9FACF73926F05D600020F23F /* FirstImageTableViewCell.swift */,
 			);
 			path = CustomCell;
+			sourceTree = "<group>";
+		};
+		9FD20753271E9B39003F7A77 /* 付費紀錄 */ = {
+			isa = PBXGroup;
+			children = (
+				9FD20758271E9F29003F7A77 /* PayRecordViewController.swift */,
+				9FD20754271E9B6E003F7A77 /* PayRecordFirstViewController.swift */,
+				9FD20756271E9B84003F7A77 /* PayRecordSecondViewController.swift */,
+				9FD2075A271EA19B003F7A77 /* PayTableViewCell.swift */,
+				9FD2075C271EA1C1003F7A77 /* PayTableViewCellView.swift */,
+			);
+			path = "付費紀錄";
+			sourceTree = "<group>";
+		};
+		9FD2075E271EB2C6003F7A77 /* 通知 */ = {
+			isa = PBXGroup;
+			children = (
+				9FD20763271EB38A003F7A77 /* NotificationReceiveViewController.swift */,
+				9FD2075F271EB2FA003F7A77 /* NotificationFirstViewController.swift */,
+				9FD20761271EB30E003F7A77 /* NotificationSecondViewController.swift */,
+				9FD20765271EB560003F7A77 /* NotificationTableViewCell.swift */,
+				9FD20767271EB58F003F7A77 /* NotiTableViewCellView.swift */,
+			);
+			path = "通知";
 			sourceTree = "<group>";
 		};
 		9FE5E34726CA159C00170372 = {
@@ -240,20 +357,23 @@
 				9FA4ACEB26E1BBEC00CF06A0 /* UserModel.xcdatamodeld */,
 				9FA4ACEE26E1BD4A00CF06A0 /* CoreDataHelper.swift */,
 				9FE5E35726CA159C00170372 /* HomePageViewController.swift */,
+				9F960C142726828D00690CFA /* notifyBtn.swift */,
+				9F9C8B26271FD39100F7BED3 /* AdCollectionViewCell.swift */,
 				9FA4896426CCB9120012E7AE /* RootViewController.swift */,
 				9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */,
 				9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */,
 				9FA4899426D4C5900012E7AE /* SearchCollectionViewCell.swift */,
+				9F6E2DF3270C00AB00A4DF2A /* SearchResultCollectionViewCell.swift */,
 				9FA4899226D361760012E7AE /* LoginViewController.swift */,
 				9FE5E36726CA1C1A00170372 /* SearchViewController.swift */,
+				9F6E2DF5270C18F100A4DF2A /* MyAnnotationView.swift */,
+				9F6E2DF1270BE8D000A4DF2A /* myScrollView.swift */,
 				9FACF74326FAE5E20020F23F /* SureTableViewCell.swift */,
-				9FE5E36926CA1C9800170372 /* MapViewController.swift */,
 				9FE5E36B26CA1E6100170372 /* RegisterViewController.swift */,
 				9FA4ACE326E08BB800CF06A0 /* RegisterVerificationCodeViewController.swift */,
 				9FE5E36F26CA1F4600170372 /* VerificationCodeViewController.swift */,
 				9FA4ACE726E0B21900CF06A0 /* MyTextField.swift */,
 				9FE5E36D26CA1ED900170372 /* PersonalViewController.swift */,
-				9FE5E37126CA1FD800170372 /* EditPersonalViewController.swift */,
 				9FE5E37326CA205000170372 /* ChangePasswordViewController.swift */,
 				9FA4ACE126E0819700CF06A0 /* ForgetPasswordViewController.swift */,
 				9FA4ACE926E0B87600CF06A0 /* ChangeForgetPwViewController.swift */,
@@ -261,22 +381,22 @@
 				9FA4899E26D62C6F0012E7AE /* MineCollectionViewCell.swift */,
 				9FE5E38726CA304100170372 /* MachineIntroViewController.swift */,
 				9F67A6A126FC305600EF54BF /* ImageIntroViewController.swift */,
-				9FE5E37726CA22AD00170372 /* MineShopMachineViewController.swift */,
-				9FE5E37926CA265200170372 /* NotificationHistoryViewController.swift */,
-				9FE5E37B26CA268D00170372 /* PaymentRecordViewController.swift */,
+				9F91620F270ECB3C00E2295A /* 我的店家、機台 */,
+				9F941739271D5374007322FE /* 推播歷史 */,
+				9FD20753271E9B39003F7A77 /* 付費紀錄 */,
 				9FE5E37D26CA2EF100170372 /* ChoosePlanViewController.swift */,
 				9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */,
 				9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */,
-				9FE5E38326CA2FBB00170372 /* ShopPlanViewController.swift */,
-				9FE5E38926CA310800170372 /* NotificationReceiveViewController.swift */,
-				9FE5E38B26CA321C00170372 /* NewTrackViewController.swift */,
+				9F8DCCD6270D716400250E24 /* PlanCollectionViewCell.swift */,
+				9F916214270FFEDB00E2295A /* EditMineMachine */,
+				9FD2075E271EB2C6003F7A77 /* 通知 */,
 				9FE5E38D26CA323800170372 /* NewMachineViewController.swift */,
 				9FA489A826DCB78E0012E7AE /* NewMachineFirstViewController.swift */,
 				9FA489AA26DCB7DC0012E7AE /* NewMachineSecondViewController.swift */,
 				9FACF73D26F46B6A0020F23F /* MoreFollowViewController.swift */,
 				9FACF73F26F46C800020F23F /* MoreFirstViewController.swift */,
 				9FACF74126F46CAC0020F23F /* MoreSecondViewController.swift */,
-				9FE5E38F26CA324700170372 /* NewShopViewController.swift */,
+				9FE5E38F26CA324700170372 /* WebViewController.swift */,
 				9FA489AC26DCC52E0012E7AE /* NewCollectionViewCell.swift */,
 				9FACF73B26F43EB90020F23F /* MoreCollectionViewCell.swift */,
 				9FE5E39126CA326000170372 /* MineTrackViewController.swift */,
@@ -284,6 +404,7 @@
 				9FA4899826D603000012E7AE /* MineTrackSecondViewController.swift */,
 				9FA4899A26D614600012E7AE /* VideoViewController.swift */,
 				9FA489A026D773390012E7AE /* UnfinishViewController.swift */,
+				9F8DCCD4270D577600250E24 /* ExtenseView.swift */,
 				9FE5E35926CA159C00170372 /* Main.storyboard */,
 				9FE5E35C26CA159F00170372 /* Assets.xcassets */,
 				9FE5E35E26CA159F00170372 /* LaunchScreen.storyboard */,
@@ -410,65 +531,92 @@
 			files = (
 				9FE5E37626CA21A300170372 /* MineManagementViewController.swift in Sources */,
 				9FA489AB26DCB7DC0012E7AE /* NewMachineSecondViewController.swift in Sources */,
-				9FE5E38C26CA321C00170372 /* NewTrackViewController.swift in Sources */,
+				9F91621A270FFF7400E2295A /* ThirdMineItemTableViewCell.swift in Sources */,
+				9F94173B271D53B7007322FE /* NotiHistoryFirstViewController.swift in Sources */,
 				9FA4898F26CF80330012E7AE /* MyCollectionViewCell.swift in Sources */,
 				9FA4ACE226E0819700CF06A0 /* ForgetPasswordViewController.swift in Sources */,
 				9FA489B226DF391A0012E7AE /* NewShopModel.swift in Sources */,
+				9F94173D271D53D1007322FE /* NotiHistorySecondViewController.swift in Sources */,
+				9F916220270FFFA700E2295A /* SixthMineItemTableViewCell.swift in Sources */,
 				9FA4899126D33FF90012E7AE /* MySecondCollectionViewCell.swift in Sources */,
+				9F6E2DF6270C18F300A4DF2A /* MyAnnotationView.swift in Sources */,
+				9FD20762271EB30E003F7A77 /* NotificationSecondViewController.swift in Sources */,
 				9FA4ACED26E1BBEC00CF06A0 /* UserModel.xcdatamodeld in Sources */,
 				9FA4899326D361760012E7AE /* LoginViewController.swift in Sources */,
 				9FE5E35826CA159C00170372 /* HomePageViewController.swift in Sources */,
 				9FA4AD0226EEEC7000CF06A0 /* SecondImageCollectionViewCell.swift in Sources */,
+				9F916218270FFF6600E2295A /* SecondMineItemTableViewCell.swift in Sources */,
 				9FA4ACE426E08BB800CF06A0 /* RegisterVerificationCodeViewController.swift in Sources */,
+				9FD20768271EB58F003F7A77 /* NotiTableViewCellView.swift in Sources */,
 				9FE5E35426CA159C00170372 /* AppDelegate.swift in Sources */,
-				9FE5E38A26CA310800170372 /* NotificationReceiveViewController.swift in Sources */,
 				9FE5E36826CA1C1A00170372 /* SearchViewController.swift in Sources */,
 				9FE5E37426CA205000170372 /* ChangePasswordViewController.swift in Sources */,
 				9FACF73C26F43EBB0020F23F /* MoreCollectionViewCell.swift in Sources */,
 				9FA4ACE826E0B21900CF06A0 /* MyTextField.swift in Sources */,
 				9FA4ACEF26E1BD4A00CF06A0 /* CoreDataHelper.swift in Sources */,
+				9F960C152726828D00690CFA /* notifyBtn.swift in Sources */,
 				9FA4896526CCB9120012E7AE /* RootViewController.swift in Sources */,
+				9F8DCCD5270D577700250E24 /* ExtenseView.swift in Sources */,
+				9F916224270FFFE200E2295A /* SecondMineItemCollectionViewCell.swift in Sources */,
 				9FA489A126D7733B0012E7AE /* UnfinishViewController.swift in Sources */,
-				9FE5E38426CA2FBB00170372 /* ShopPlanViewController.swift in Sources */,
+				9FE5E38426CA2FBB00170372 /* EditMineShopViewController.swift in Sources */,
 				9FE5E36C26CA1E6100170372 /* RegisterViewController.swift in Sources */,
+				9F91621E270FFF9A00E2295A /* FifthMineItemTableViewCell.swift in Sources */,
 				9FA4ACF626E88A9A00CF06A0 /* ThirdCustomTableViewCell.swift in Sources */,
+				9FD20755271E9B6E003F7A77 /* PayRecordFirstViewController.swift in Sources */,
+				9F8DCCD7270D716400250E24 /* PlanCollectionViewCell.swift in Sources */,
 				9FA489A526D77D2C0012E7AE /* JsonStruct.swift in Sources */,
 				9FA4899526D4C5910012E7AE /* SearchCollectionViewCell.swift in Sources */,
 				9FA4ACF426E88A8900CF06A0 /* SecondCustomTableViewCell.swift in Sources */,
 				9FA4899F26D62C6F0012E7AE /* MineCollectionViewCell.swift in Sources */,
 				9FA4899926D603000012E7AE /* MineTrackSecondViewController.swift in Sources */,
+				9F6E2DF2270BE8D200A4DF2A /* myScrollView.swift in Sources */,
 				9FACF74426FAE5E30020F23F /* SureTableViewCell.swift in Sources */,
+				9FD20766271EB560003F7A77 /* NotificationTableViewCell.swift in Sources */,
+				9FD2075D271EA1C1003F7A77 /* PayTableViewCellView.swift in Sources */,
 				9FACF73E26F46B6B0020F23F /* MoreFollowViewController.swift in Sources */,
 				9FE5E37026CA1F4600170372 /* VerificationCodeViewController.swift in Sources */,
 				9F67A6A226FC305700EF54BF /* ImageIntroViewController.swift in Sources */,
 				9FA4899B26D614600012E7AE /* VideoViewController.swift in Sources */,
+				9FD20759271E9F29003F7A77 /* PayRecordViewController.swift in Sources */,
 				9FA489A326D77C630012E7AE /* NewMachineModel.swift in Sources */,
 				9FA489AD26DCC52F0012E7AE /* NewCollectionViewCell.swift in Sources */,
+				9F916222270FFFD200E2295A /* FirstMineItemCollectionViewCell.swift in Sources */,
 				9FE5E38826CA304100170372 /* MachineIntroViewController.swift in Sources */,
 				9FA4ACF226E88A5800CF06A0 /* FirstCustomTableViewCell.swift in Sources */,
-				9FE5E36A26CA1C9800170372 /* MapViewController.swift in Sources */,
+				9FD20757271E9B84003F7A77 /* PayRecordSecondViewController.swift in Sources */,
 				9FACF74826FB18380020F23F /* LocalJson.swift in Sources */,
 				9FE5E37A26CA265200170372 /* NotificationHistoryViewController.swift in Sources */,
 				9FE5E38226CA2FA200170372 /* MachinePlanViewController.swift in Sources */,
+				9F6E2DF4270C00AD00A4DF2A /* SearchResultCollectionViewCell.swift in Sources */,
 				9FE5E38E26CA323800170372 /* NewMachineViewController.swift in Sources */,
 				9FE5E37E26CA2EF100170372 /* ChoosePlanViewController.swift in Sources */,
 				9FA4ACEA26E0B87600CF06A0 /* ChangeForgetPwViewController.swift in Sources */,
+				9FD20760271EB2FA003F7A77 /* NotificationFirstViewController.swift in Sources */,
 				9FACF74026F46C810020F23F /* MoreFirstViewController.swift in Sources */,
-				9FE5E39026CA324700170372 /* NewShopViewController.swift in Sources */,
+				9FE5E39026CA324700170372 /* WebViewController.swift in Sources */,
+				9F916211270ECBAD00E2295A /* FirstCollectionViewCell.swift in Sources */,
 				9FA4ACFA26EA05E000CF06A0 /* ThirdCustomTableViewCellView.swift in Sources */,
+				9F916216270FFF5600E2295A /* FirstMineItemTableViewCell.swift in Sources */,
+				9F91621C270FFF8800E2295A /* FourthMineItemTableViewCell.swift in Sources */,
+				9F960C13272664A100690CFA /* NewFollowModel.swift in Sources */,
+				9FD20764271EB38A003F7A77 /* NotificationReceiveViewController.swift in Sources */,
+				9F941741271D559D007322FE /* TableViewCellView.swift in Sources */,
 				9FA489A926DCB7930012E7AE /* NewMachineFirstViewController.swift in Sources */,
 				9FA4AD0026EEEC5C00CF06A0 /* FirstImageCollectionViewCell.swift in Sources */,
 				9FE5E35626CA159C00170372 /* SceneDelegate.swift in Sources */,
+				9F94173F271D5541007322FE /* DetailTableViewCell.swift in Sources */,
 				9FACF73A26F05D600020F23F /* FirstImageTableViewCell.swift in Sources */,
-				9FE5E37C26CA268D00170372 /* PaymentRecordViewController.swift in Sources */,
+				9F916213270ECBC200E2295A /* SecondCollectionViewCell.swift in Sources */,
 				9FACF73826EF5FB40020F23F /* ImageTableViewCell.swift in Sources */,
 				9FE5E37826CA22AD00170372 /* MineShopMachineViewController.swift in Sources */,
 				9FE5E36E26CA1ED900170372 /* PersonalViewController.swift in Sources */,
 				9FA4899726D602E80012E7AE /* MineTrackFirstViewController.swift in Sources */,
+				9F9C8B27271FD39100F7BED3 /* AdCollectionViewCell.swift in Sources */,
 				9FACF74226F46CAC0020F23F /* MoreSecondViewController.swift in Sources */,
 				9FE5E38026CA2F4F00170372 /* TermsViewController.swift in Sources */,
 				9FA4ACF826E8A67F00CF06A0 /* FirstCustomTableCellView.swift in Sources */,
-				9FE5E37226CA1FD800170372 /* EditPersonalViewController.swift in Sources */,
+				9FD2075B271EA19B003F7A77 /* PayTableViewCell.swift in Sources */,
 				9FE5E39226CA326000170372 /* MineTrackViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -618,15 +766,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DollCatch/DollCatch.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9L6T99V452;
 				INFOPLIST_FILE = DollCatch/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.funclip.DollCatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -639,15 +791,19 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DollCatch/DollCatch.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9L6T99V452;
 				INFOPLIST_FILE = DollCatch/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.funclip.DollCatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

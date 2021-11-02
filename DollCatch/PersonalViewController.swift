@@ -27,7 +27,11 @@ class PersonalViewController: UIViewController, UITextFieldDelegate, UIImagePick
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        URLCache.shared.removeAllCachedResponses()
+        URLCache.shared.diskCapacity = 0
+        URLCache.shared.memoryCapacity = 0
+        queryFromCoreData()
+        downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(userdata[0].userId)/person_photo")! )
         nameField.setBottomBorder()
         nameField.delegate = self
         nickNameField.delegate = self
@@ -38,8 +42,8 @@ class PersonalViewController: UIViewController, UITextFieldDelegate, UIImagePick
         
     }
     override func viewWillAppear(_ animated: Bool) {
-        queryFromCoreData()
-        downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(userdata[0].userId)/person_photo")! )
+        
+       
         print("userId: \(userdata[0].userId)")
         nameField.text = userdata[0].name
         nickNameField.text = userdata[0].nickname
@@ -224,7 +228,7 @@ class PersonalViewController: UIViewController, UITextFieldDelegate, UIImagePick
             body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
             body.append("Content-Disposition:form-data; name=\"phone_no\"; filename=\"\(phoneLabel.text!)\"\r\n".data(using: String.Encoding.utf8)!)
             body.append("Content-Type: \(mimetype)\r\n\r\n".data(using: String.Encoding.utf8)!)
-            body.append(image_data!)
+//            body.append(image_data!)
             body.append("\r\n".data(using: String.Encoding.utf8)!)
             //
             
@@ -297,6 +301,11 @@ class PersonalViewController: UIViewController, UITextFieldDelegate, UIImagePick
         saveButton.isHidden = false
         aboutUsBtn.isHidden = true
         logoutBtn.isHidden = true
+    }
+    @IBAction func aboutUsBtnPressed(_ sender: Any) {
+        let urlString = "http://www.surveyx.tw/funchip/about_us.html"
+        let url = URL(string: urlString)
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
     
     @IBAction func changePwBtn(_ sender: Any) {

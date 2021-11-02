@@ -99,6 +99,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.queryFromCoreData()
                         print("這裏：\(self.userData[0].email)")
                         DispatchQueue.main.async {
+                            self.uploadDeviceId()
                             self.dismiss(animated: true, completion: nil)
                         }
                     } else {
@@ -117,18 +118,33 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         }
         
+    }
+    func uploadDeviceId() {
+        let url = URL(string: "https://www.surveyx.tw/funchip/upload_deviceid.php")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let json: [String: Any] = [
+            "device_id": "\(token)",
+            "userId": "\(userData[0].userId)"
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        request.httpBody = jsonData
         
-        
-        /*
-         // MARK: - Navigation
-         
-         // In a storyboard-based application, you will often want to do a little preparation before navigation
-         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-         // Get the new view controller using segue.destination.
-         // Pass the selected object to the new view controller.
-         }
-         */
-        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON["result"]!)
+                if responseJSON["result"]! as! Bool == true {
+                    print("device upload success.")
+                }
+    }
+        }
+        task.resume()
     }
     
     func queryFromCoreData() {

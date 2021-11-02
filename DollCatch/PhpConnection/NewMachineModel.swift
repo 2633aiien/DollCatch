@@ -59,23 +59,25 @@ class NewMachineModel: NSObject {
                 let userId : String = jsonDict["userId"] as! String
                 let title : String = jsonDict["title"] as? String ?? "null"
                 let description : String = jsonDict["description"] as? String ?? "null"
-                let address_machine : String = jsonDict["address_machine"] as? String ?? "null"
+                let address_city : String = jsonDict["address_city"] as? String ?? "null"
+                let address_area : String = jsonDict["address_area"] as? String ?? "null"
+                let address_name : String = jsonDict["address_name"] as? String ?? "null"
                 let store_name : String = jsonDict["store_name"] as? String ?? "null"
                 let manager : String = jsonDict["manager"] as? String ?? "null"
                 let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
                 let line_id : String = jsonDict["line_id"] as? String ?? "null"
                 let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
-                let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
+                let remaining_push : String = jsonDict["remaining_push"] as? String ?? "null"
                 let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
                 let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
-                let latitude : Double = jsonDict["latitude"] as? Double ?? 0
-                let longitude : Double = jsonDict["longitude"] as? Double ?? 0
+                let latitude : String = jsonDict["latitude"] as? String ?? "0"
+                let longitude : String = jsonDict["longitude"] as? String ?? "0"
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
                 let isFollow : Bool = jsonDict["isFollow"] as! Bool
                 
                 // Create new Machine and set its properties
-                let machine = newMachine(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_machine: address_machine, store_name: store_name, manager: manager, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let machine = newMachine(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, store_name: store_name, manager: manager, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
                 machineArray.append(machine)
             }

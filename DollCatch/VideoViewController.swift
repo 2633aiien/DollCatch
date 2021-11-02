@@ -37,6 +37,8 @@ class VideoViewController: UIViewController, WKNavigationDelegate, WKUIDelegate 
     
     
     @IBAction func hamburgerBtn(_ sender: Any) {
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "rootView")
+        let menu = SideMenuNavigationController(rootViewController: viewController!)
         menu.leftSide = true
         menu.settings.presentationStyle = .menuSlideIn
         menu.menuWidth = 330

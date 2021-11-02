@@ -51,14 +51,9 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineTrackFirstCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
         downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(followArr[indexPath.row].userId)/store_photo_\(followArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
         cell.myTitleLabel.text = followArr[indexPath.row].title
-        let str = followArr[indexPath.row].address
-        if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
-            let index = str.firstIndex(of: "區")
-            let str3 = str[...index!]
-            cell.myLocationLabel.text = String(str3)
-        } else {
-            cell.myLocationLabel.text = followArr[indexPath.row].address
-        }
+    
+        cell.myLocationLabel.text = "\(followArr[indexPath.row].address_city)\(followArr[indexPath.row].address_area)"
+            
         cell.myNameLabel.text = followArr[indexPath.row].manager
         let time = timeStringToDate(followArr[indexPath.row].updateDate)
         cell.myTimeLabel.text = time
@@ -90,7 +85,9 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
             controller.tempTitle = newF.title
             controller.tempId = newF.id
             controller.tempUserId = newF.userId
-            controller.tempAddress = newF.address
+            controller.tempAddress_city = newF.address_city
+            controller.tempAddress_area = newF.address_area
+            controller.tempAddress_name = newF.address_name
             controller.tempDescription = newF.description
             controller.tempManager = newF.manager
             controller.tempLine = newF.line_id
@@ -102,7 +99,8 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
             controller.tempWifi = newF.wifi
             controller.tempStoreName = newF.store_name
             controller.tempIsFollow = newF.isFollow
-            
+            controller.tempLatitude = Double(newF.latitude) ?? 0
+            controller.tempLongitude = Double(newF.longitude) ?? 0
             
             let navigationController = UINavigationController(rootViewController: controller)
             navigationController.modalPresentationStyle = .fullScreen
@@ -182,7 +180,9 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
                 let userId : String = jsonDict["userId"] as! String
                 let title : String = jsonDict["title"] as? String ?? "null"
                 let description : String = jsonDict["description"] as? String ?? "null"
-                let address : String = jsonDict["address_store"] as? String ?? "null"
+                let address_city : String = jsonDict["address_city"] as? String ?? "null"
+                let address_area : String = jsonDict["address_area"] as? String ?? "null"
+                let address_name : String = jsonDict["address_name"] as? String ?? "null"
                 let big_machine_no : String = jsonDict["big_machine_no"] as? String ?? "null"
                 let machine_no : String = jsonDict["machine_no"] as? String ?? "null"
                 let manager : String = jsonDict["manager"] as? String ?? "null"
@@ -192,7 +192,7 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
                 let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
                 let line_id : String = jsonDict["line_id"] as? String ?? "null"
                 let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
-                let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
+                let remaining_push : String = jsonDict["remaining_push"] as? String ?? "null"
                 let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
                 let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
                 let latitude : String = jsonDict["latitude"] as? String ?? "0"
@@ -201,7 +201,7 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
                 let updateDate : String = jsonDict["updateDate"] as! String
                 
                 // Create new Machine and set its properties
-                let shop = FollowShopMachine(isFollow: true, isStore: isStore, id: id, userId: userId, title: title, description: description, address: address, store_name: "", big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let shop = FollowShopMachine(isFollow: true, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, store_name: "", big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
                 followArr.append(shop)
                 DispatchQueue.main.async {

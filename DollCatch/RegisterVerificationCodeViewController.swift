@@ -169,7 +169,8 @@ class RegisterVerificationCodeViewController: UIViewController,UITextFieldDelega
                 "nickname": "\(tempNicknameLabel)",
                 "phoneNo": "\(tempPhoneLabel)",
                 "email":"\(tempEmailLabel)",
-                "password":"\(tempPasswordLabel)"
+                "password":"\(tempPasswordLabel)",
+                "device_id":"\(token)"
             ]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         

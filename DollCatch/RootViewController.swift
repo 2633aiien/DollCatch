@@ -94,6 +94,9 @@ class RootViewController: UIViewController {
         }
     }
     @objc func AnnouncementBtnPressed() {
+        let urlString = "http://www.surveyx.tw/funchip/announcement.html"
+        let url = URL(string: urlString)
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         announcementBtn.backgroundColor = .tertiaryLabel
         QABtn.backgroundColor = .clear
         privacyBtn.backgroundColor = .clear
@@ -102,6 +105,9 @@ class RootViewController: UIViewController {
         print("公告")
     }
     @objc func QABtnPressed() {
+        let urlString = "http://www.surveyx.tw/funchip/qa.html"
+        let url = URL(string: urlString)
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         announcementBtn.backgroundColor = .clear
         QABtn.backgroundColor = .tertiaryLabel
         privacyBtn.backgroundColor = .clear
@@ -109,6 +115,9 @@ class RootViewController: UIViewController {
         print("Q&A")
     }
     @objc func privacyBtnPressed() {
+        let urlString = "http://www.surveyx.tw/funchip/privacy.html"
+        let url = URL(string: urlString)
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         announcementBtn.backgroundColor = .clear
         QABtn.backgroundColor = .clear
         privacyBtn.backgroundColor = .tertiaryLabel
@@ -116,6 +125,9 @@ class RootViewController: UIViewController {
         print("隱私權協議")
     }
     @objc func contactBtnPressed() {
+        let urlString = "http://www.surveyx.tw/funchip/contact_us.html"
+        let url = URL(string: urlString)
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         announcementBtn.backgroundColor = .clear
         QABtn.backgroundColor = .clear
         privacyBtn.backgroundColor = .clear

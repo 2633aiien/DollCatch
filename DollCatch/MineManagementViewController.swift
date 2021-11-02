@@ -20,6 +20,11 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var photoBtn: UIButton!
     @IBOutlet weak var photoBackView: UIView!
+    @IBOutlet weak var adCollectionView: UICollectionView!
+    var adArr : [AdStruct] = []
+    var imageIndex = 0
+    var timer = Timer()
+    
     var mineCellArr : [mineCell] = []
     let menu = SideMenuNavigationController(rootViewController: RootViewController())
     let w = UIScreen.main.bounds.width
@@ -30,20 +35,47 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
     @IBOutlet weak var photoImageView: UIImageView!
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == adCollectionView {
+            if userData .isEmpty {
+                return 1
+            } else {
+            return adArr.count
+            }
+        } else {
         return 6
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == adCollectionView {
+            if userData .isEmpty {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AdCollectionViewCell
+                cell.myImageView.contentMode = .scaleToFill
+                downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/pay_ad/ad_00")!, imageView: cell.myImageView)
+                return cell
+            } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AdCollectionViewCell
+                cell.myImageView.contentMode = .scaleToFill
+            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/pay_ad/ad_0\(adArr[indexPath.row].position)")!, imageView: cell.myImageView)
+            return cell
+            }
+        } else {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineCollectionViewCell", for: indexPath) as! MineCollectionViewCell
         
         cell.myImageView.image = mineCellArr[indexPath.row].image
         cell.myTitleLabel.text = mineCellArr[indexPath.row].name
         
         return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var id = ""
+        if collectionView == adCollectionView {
+            let urlString = adArr[indexPath.row].adUrl
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else {
         switch indexPath.row {
         
         case 0:
@@ -63,14 +95,38 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
         default:
             break
         }
-
-        if let controller = storyboard?.instantiateViewController(withIdentifier: id) {
+        
+        
+        if indexPath.row == 0 {
+        if let controller = storyboard?.instantiateViewController(withIdentifier: "mineShopMachine") as? MineShopMachineViewController {
+                controller.isStore = true
+            let navigationController = UINavigationController(rootViewController: controller)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+            }
+        }else if indexPath.row == 1 {
+                if let controller = storyboard?.instantiateViewController(withIdentifier: "mineShopMachine") as? MineShopMachineViewController {
+                controller.isStore = false
+            let navigationController = UINavigationController(rootViewController: controller)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+                }
+        } else if indexPath.row == 3{
+            let urlString = "http://www.surveyx.tw/funchip/contact_us.html"
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else if indexPath.row == 5{
+            let urlString = "http://www.surveyx.tw/funchip/contact_us.html"
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        } else if let controller = storyboard?.instantiateViewController(withIdentifier: id) {
             let navigationController = UINavigationController(rootViewController: controller)
             navigationController.modalPresentationStyle = .fullScreen
             present(navigationController, animated: true, completion: nil)
         }
-        
+        }
     }
+        
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +135,7 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
 //        iconBtn.clipsToBounds = true
 //        backgroundView.roundCorners(corners: [.topLeft, .topRight], radius: 50)
         backgroundView.layer.cornerRadius = 50
+        backgroundView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
 
         // sidebar
@@ -97,6 +154,20 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
         layout.itemSize = CGSize(width: (w-45-16)/2, height: 120)
         
         mineCollectionView.collectionViewLayout = layout
+        
+        let layoutAd = UICollectionViewFlowLayout()
+        // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
+        layoutAd.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        layoutAd.minimumInteritemSpacing = 0
+        layoutAd.scrollDirection = .horizontal
+        layoutAd.itemSize = CGSize(width: w, height: 230)
+        
+        adCollectionView.collectionViewLayout = layoutAd
+        
+        adCollectionView.register(AdCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        adCollectionView.delegate = self
+        adCollectionView.dataSource = self
         
         mineCollectionView.register(
             MineCollectionViewCell.self,
@@ -151,6 +222,13 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
             loginBtn.isEnabled = false
             photoBtn.isEnabled = true
         }
+        if !userData .isEmpty {
+            adArr.removeAll()
+        getAd()
+        }
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        timer.invalidate()
     }
     
     func queryFromCoreData() {
@@ -176,8 +254,15 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
         }
     }
     @IBAction func addBtnPressed(_ sender: Any) {
+        if let controller = storyboard?.instantiateViewController(withIdentifier: "choosePlan") {
+            let navigationController = UINavigationController(rootViewController: controller)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+        }
     }
     @IBAction func hamburgerBtn(_ sender: Any) {
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "rootView")
+        let menu = SideMenuNavigationController(rootViewController: viewController!)
         menu.leftSide = true
         menu.settings.presentationStyle = .menuSlideIn
         menu.menuWidth = 330
@@ -213,6 +298,80 @@ class MineManagementViewController: UIViewController, UICollectionViewDelegate, 
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    func getAd() {
+        let serviceUrl = "https://www.surveyx.tw/funchip/get_pay_ad.php"
+        // json data
+        let url = URL(string: serviceUrl)!
+        
+        var request = URLRequest(url: url)
+        let json: [String: Any] = [
+            "userId": "\((userData.first?.userId)!)",
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        request.httpBody = jsonData
+        request.httpMethod = "POST"
+            // create a Url session
+            let session = URLSession(configuration: .default)
+            
+            let task = session.dataTask(with: request) { data, response, error in
+                if error == nil {
+                    // succceeded
+                    
+                    // Call the parse json function on the data
+                    self.parseAdJson(data: data!)
+                    
+                } else {
+                    //Error occurred
+                }
+            }
+            // start the task
+            task.resume()
+    }
+    func parseAdJson(data: Data) {
+        
+        // Parse the data into struct
+        do {
+            // Parse the data into a jsonObject
+        let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as! [Any]
+            for jsonResult in jsonArray {
+                // json result as a dictionary
+                let jsonDict = jsonResult as! [String:Any]
+                let position : String = jsonDict["position"] as! String
+                let adUrl : String = jsonDict["adUrl"] as! String
+                
+                
+                // Create new Machine and set its properties
+                let ad = AdStruct(position: position, adUrl: adUrl)
+                //Add it to the array
+                adArr.append(ad)
+            }
+            DispatchQueue.main.async {
+                print("urlArrayy: \(self.adArr)")
+                self.adCollectionView.reloadData()
+                if self.adArr.count > 1 {
+                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.autoScroll), userInfo: nil, repeats: true)
+                }
+            }
+        }
+        catch {
+            print("There was an error")
+        }
+    }
+    
+    @objc func autoScroll() {
+        var indexPath: IndexPath
+        imageIndex += 1
+        if imageIndex < adArr.count {
+            indexPath = IndexPath(item: imageIndex, section: 0)
+            adCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+        } else {
+            imageIndex = -1
+            indexPath = IndexPath(item: imageIndex, section: 0)
+            adCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+            autoScroll()
+        }
     }
 
     

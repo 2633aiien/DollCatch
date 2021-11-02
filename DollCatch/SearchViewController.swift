@@ -46,7 +46,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     var areaIndexArr : [Int] = []
     var thirdSelectedIndex = 0
     var thirdSelectedArray = [true,false,false,false,false,false,false,false]
-//    var thirdDict : [Bool] = []
+    //    var thirdDict : [Bool] = []
     var numOfCategory = 0
     var fourthSelectedIndex = 0
     var fourthDict : Int = 0
@@ -67,8 +67,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var myMapView: MKMapView!
     @IBOutlet weak var topRightBtn: UIButton!
     
-    var my_latitude : Double!
-    var my_longitude : Double!
+    var my_latitude : Double! = 0
+    var my_longitude : Double! = 0
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == dropDownTableView {
@@ -117,9 +118,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 cell.textLabel?.text = ""
             } else {
                 cell.textLabel?.text = countryArr[indexPath.row]
-                    if indexPath.row == countrySelectedIndex {
-                        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-                        cell.textLabel?.textColor = .black
+                if indexPath.row == countrySelectedIndex {
+                    cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+                    cell.textLabel?.textColor = .black
                 }
             }
             return cell
@@ -132,11 +133,11 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             }else {
                 cell.textLabel?.text = areaArr[indexPath.row]
                 if !areaIndexArr .isEmpty {
-                for i in areaIndexArr {
-                    if indexPath.row == i {
-                        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-                        cell.textLabel?.textColor = .black
-                    }
+                    for i in areaIndexArr {
+                        if indexPath.row == i {
+                            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+                            cell.textLabel?.textColor = .black
+                        }
                     }
                 } else {
                     if indexPath.row == 0 {
@@ -228,6 +229,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 tempCountry = cell?.textLabel?.text ?? ""
             } else {
                 countrySelectedIndex = -1
+                areaTableView.isHidden = true
                 secondSelectedArray.removeAll()
                 cell?.textLabel?.font = UIFont.systemFont(ofSize: 17)
                 cell?.textLabel?.textColor = .systemGray
@@ -243,12 +245,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 cell?.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
                 cell?.textLabel?.textColor = .black
                 if tempCountry != "" {
-                secondSelectedArray.append("\(tempCountry)\(areaArr[indexPath.row])")
+                    secondSelectedArray.append("\(areaArr[indexPath.row])")
                 }
                 areaIndexArr.append(indexPath.row)
                 if indexPath.row != 0 && secondAllBool == true {
                     secondAllBool = false
-//                    areaSelectedIndex = indexPath.row
+                    //                    areaSelectedIndex = indexPath.row
                     secondSelectedArray.removeAll()
                     secondSelectedArray.append("\(tempCountry)\(areaArr[indexPath.row])")
                     print("s3")
@@ -282,12 +284,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 print("s2")
                 areaTableView.reloadData()
             }
-//            else if indexPath.row != 0 && secondAllBool == true{
-//                secondAllBool = false
-//                areaSelectedIndex = indexPath.row
-//                print("s3")
-//                areaTableView.reloadData()
-//            }
+            //            else if indexPath.row != 0 && secondAllBool == true{
+            //                secondAllBool = false
+            //                areaSelectedIndex = indexPath.row
+            //                print("s3")
+            //                areaTableView.reloadData()
+            //            }
             print("bool: \(secondAllBool)")
         }
     }
@@ -304,51 +306,13 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == myCollectionView {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! SearchCollectionViewCell
-        downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(searchArr[indexPath.row].userId)/store_photo_\(searchArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
-        cell.myTitleLabel.text = searchArr[indexPath.row].title
-        let str = searchArr[indexPath.row].address
-        if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
-            let index = str.firstIndex(of: "區")
-            let str3 = str[...index!]
-            cell.myLocationLabel.text = String(str3)
-        } else {
-            cell.myLocationLabel.text = searchArr[indexPath.row].address
-        }
-        cell.myNameLabel.text = searchArr[indexPath.row].manager
-        let time = timeStringToDate(searchArr[indexPath.row].updateDate)
-        cell.myTimeLabel.text = time
-        cell.shareBtn.setImage(UIImage(named: "12"), for: .normal)
-        
-        cell.shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
-        
-            cell.heartBtn.tag = indexPath.row
-        
-            cell.heartBtn.addTarget(self, action: #selector(follow(_ :)), for: .touchUpInside)
-        
-            if searchArr[indexPath.row].isFollow == true {
-                    cell.heartBtn.setImage(UIImage(named: "followed"), for: .normal)
-            } else {
-                cell.heartBtn.setImage(UIImage(named: "unfollow"), for: .normal)
-            }
-        
-        cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(14)
-        cell.myNameLabel.font = cell.myNameLabel.font.withSize(14)
-        cell.myTimeLabel.font = cell.myTimeLabel.font.withSize(14)
-        
-        return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mapCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
+            print("cccccc")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! SearchCollectionViewCell
             downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(searchArr[indexPath.row].userId)/store_photo_\(searchArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
             cell.myTitleLabel.text = searchArr[indexPath.row].title
-            let str = searchArr[indexPath.row].address
-            if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
-                let index = str.firstIndex(of: "區")
-                let str3 = str[...index!]
-                cell.myLocationLabel.text = String(str3)
-            } else {
-                cell.myLocationLabel.text = searchArr[indexPath.row].address
-            }
+            
+                cell.myLocationLabel.text = "\(searchArr[indexPath.row].address_city)\(searchArr[indexPath.row].address_area)"
+            
             cell.myNameLabel.text = searchArr[indexPath.row].manager
             let time = timeStringToDate(searchArr[indexPath.row].updateDate)
             cell.myTimeLabel.text = time
@@ -356,15 +320,44 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             cell.shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
             
-                cell.heartBtn.tag = indexPath.row
+            cell.heartBtn.tag = indexPath.row
             
-                cell.heartBtn.addTarget(self, action: #selector(follow(_ :)), for: .touchUpInside)
+            cell.heartBtn.addTarget(self, action: #selector(follow(_ :)), for: .touchUpInside)
             
-                if searchArr[indexPath.row].isFollow == true {
-                        cell.heartBtn.setImage(UIImage(named: "followed"), for: .normal)
-                } else {
-                    cell.heartBtn.setImage(UIImage(named: "unfollow"), for: .normal)
-                }
+            if searchArr[indexPath.row].isFollow == true {
+                cell.heartBtn.setImage(UIImage(named: "followed"), for: .normal)
+            } else {
+                cell.heartBtn.setImage(UIImage(named: "unfollow"), for: .normal)
+            }
+            
+            cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(14)
+            cell.myNameLabel.font = cell.myNameLabel.font.withSize(14)
+            cell.myTimeLabel.font = cell.myTimeLabel.font.withSize(14)
+            
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mapCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
+            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(searchArr[indexPath.row].userId)/store_photo_\(searchArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
+            cell.myTitleLabel.text = searchArr[indexPath.row].title
+            
+                cell.myLocationLabel.text = "\(searchArr[indexPath.row].address_city)\(searchArr[indexPath.row].address_area)"
+            
+            cell.myNameLabel.text = searchArr[indexPath.row].manager
+            let time = timeStringToDate(searchArr[indexPath.row].updateDate)
+            cell.myTimeLabel.text = time
+            cell.shareBtn.setImage(UIImage(named: "12"), for: .normal)
+            
+            cell.shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
+            
+            cell.heartBtn.tag = indexPath.row
+            
+            cell.heartBtn.addTarget(self, action: #selector(follow(_ :)), for: .touchUpInside)
+            
+            if searchArr[indexPath.row].isFollow == true {
+                cell.heartBtn.setImage(UIImage(named: "followed"), for: .normal)
+            } else {
+                cell.heartBtn.setImage(UIImage(named: "unfollow"), for: .normal)
+            }
             
             cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(14)
             cell.myNameLabel.font = cell.myNameLabel.font.withSize(14)
@@ -372,7 +365,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             return cell
         }
-    
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -382,7 +375,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             controller.tempTitle = newF.title
             controller.tempId = newF.id
             controller.tempUserId = newF.userId
-            controller.tempAddress = newF.address
+            controller.tempAddress_city = newF.address_city
+            controller.tempAddress_area = newF.address_area
+            controller.tempAddress_name = newF.address_name
             controller.tempDescription = newF.description
             controller.tempManager = newF.manager
             controller.tempLine = newF.line_id
@@ -394,7 +389,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             controller.tempWifi = newF.wifi
             controller.tempStoreName = newF.store_name
             controller.tempIsFollow = newF.isFollow
-            
+            controller.tempLatitude = Double(newF.latitude) ?? 0
+            controller.tempLongitude = Double(newF.longitude) ?? 0
             
             let navigationController = UINavigationController(rootViewController: controller)
             navigationController.modalPresentationStyle = .fullScreen
@@ -405,6 +401,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         super.viewDidLoad()
         queryFromCoreData()
         
+        myMapView.isHidden = true
+        print("LLLLL: \(my_latitude),\(my_longitude)")
+        locationAddress()
         self.navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = true
         
@@ -421,6 +420,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: width, height: height)
         
+        let mapLayout = UICollectionViewFlowLayout()
+        mapLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        mapLayout.minimumInteritemSpacing = 8
+        mapLayout.scrollDirection = .vertical
+        mapLayout.itemSize = CGSize(width: width - 20, height: height)
+        
         myCollectionView.collectionViewLayout = layout
         
         myCollectionView.register(
@@ -430,7 +435,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         myCollectionView.delegate = self
         myCollectionView.dataSource = self
         
-        mapCollectionView.collectionViewLayout = layout
+        mapCollectionView.collectionViewLayout = mapLayout
         
         mapCollectionView.register(
             SearchCollectionViewCell.self,
@@ -453,22 +458,22 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         myLocationManager.delegate = self
         // 距離篩選器 用來設置移動多遠距離才觸發委任方法更新位置
         myLocationManager.distanceFilter =
-          kCLLocationAccuracyNearestTenMeters
-
+        kCLLocationAccuracyNearestTenMeters
+        
         // 取得自身定位位置的精確度
         myLocationManager.desiredAccuracy =
-          kCLLocationAccuracyBest
+        kCLLocationAccuracyBest
         
         // myMapView
         // 設置委任對象
         myMapView.delegate = self
-
+        
         // 地圖樣式
         myMapView.mapType = .standard
-
+        
         // 顯示自身定位位置
         myMapView.showsUserLocation = true
-
+        
         // 允許縮放地圖
         myMapView.isZoomEnabled = true
         // 地圖預設顯示的範圍大小 (數字越小越精確)
@@ -476,67 +481,28 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         let longDelta = 0.05
         let currentLocationSpan:MKCoordinateSpan =
         MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
-
+        
         // 設置地圖顯示的範圍與中心點座標
-//        let center:CLLocation = CLLocation(
-//          latitude: 25.05, longitude: 121.515)
-//        let currentRegion:MKCoordinateRegion =
-//          MKCoordinateRegion(
-//            center: center.coordinate,
-//            span: currentLocationSpan)
-//        myMapView.setRegion(currentRegion, animated: true)
+        //        let center:CLLocation = CLLocation(
+        //          latitude: 25.05, longitude: 121.515)
+        //        let currentRegion:MKCoordinateRegion =
+        //          MKCoordinateRegion(
+        //            center: center.coordinate,
+        //            span: currentLocationSpan)
+        //        myMapView.setRegion(currentRegion, animated: true)
         
         myMapView.userTrackingMode = .follow
-
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        // 首次使用 向使用者詢問定位自身位置權限
-        switch myLocationManager.authorizationStatus {
-        case .notDetermined :
-            // 取得定位服務授權
-        myLocationManager.requestWhenInUseAuthorization()
-
-            // 開始定位自身位置
-            myLocationManager.startUpdatingLocation()
-        case .denied :
-            // 提示可至[設定]中開啟權限
-            let alertController = UIAlertController(
-              title: "定位權限已關閉",
-              message:
-              "如要變更權限，請至 設定 > 隱私權 > 定位服務 開啟",
-              preferredStyle: .alert)
-            let okAction = UIAlertAction(
-                title: "確認", style: .default, handler:nil)
-            alertController.addAction(okAction)
-            self.present(
-              alertController,
-              animated: true, completion: nil)
-        case .authorizedWhenInUse :
-            myLocationManager.startUpdatingLocation()
-        default:
-            break
-        }
+        myMapView.register(MyAnnotationView.self, forAnnotationViewWithReuseIdentifier: "id")
+        
+        
         
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-
+        
         // 停止定位自身位置
         myLocationManager.stopUpdatingLocation()
-    }
-    func locationManager(_ manager: CLLocationManager,
-      didUpdateLocations locations: [CLLocation]) {
-        // 印出目前所在位置座標
-        let currentLocation :CLLocation =
-          locations[0] as CLLocation
-        
-        my_latitude = currentLocation.coordinate.latitude
-        my_longitude = currentLocation.coordinate.longitude
-        
-        print("LL:\(my_latitude!),\(my_longitude!)")
-
     }
     
     func getSearchItems() {
@@ -550,32 +516,33 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         request.httpMethod = "POST"
         let json: [String: Any] = [
             "userId" : "\((userData.first?.userId ?? ""))",
-                "my_latitude": my_latitude!,
-                "my_longitude": my_longitude!,
-                "only_machine" : firstDict[0],
-                "only_store" : firstDict[1],
+            "my_latitude": my_latitude!,
+            "my_longitude": my_longitude!,
+            "only_machine" : firstDict[0],
+            "only_store" : firstDict[1],
             "search_text":"\(searchTextField.text ?? "")",
-                "address_filter" : secondSelectedArray,
-                "category" : thirdSelectedArray,
-                "nearby_distance" : fourthDict
+            "address_city":"\(tempCountry)",
+            "address_filter" : secondSelectedArray,
+            "category" : thirdSelectedArray,
+            "nearby_distance" : fourthDict
         ]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         request.httpBody = jsonData
-            
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                if error == nil {
-                    // succceeded
-                    
-                    // Call the parse json function on the data
-                    self.parseFollowShopJson(data: data!)
-                    
-                } else {
-                    print("error: \(error)")
-                }
+            if error == nil {
+                // succceeded
+                
+                // Call the parse json function on the data
+                self.parseFollowShopJson(data: data!)
+                
+            } else {
+                print("error: \(error)")
             }
-            // start the task
-            task.resume()
+        }
+        // start the task
+        task.resume()
         
     }
     func parseFollowShopJson(data: Data) {
@@ -585,7 +552,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         // Parse the data into struct
         do {
             // Parse the data into a jsonObject
-        let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as! [Any]
+            let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as! [Any]
             for jsonResult in jsonArray {
                 // json result as a dictionary
                 let jsonDict = jsonResult as! [String:Any]
@@ -594,7 +561,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 let userId : String = jsonDict["userId"] as! String
                 let title : String = jsonDict["title"] as? String ?? "null"
                 let description : String = jsonDict["description"] as? String ?? "null"
-                let address : String = jsonDict["address_store"] as? String ?? "null"
+                let address_city : String = jsonDict["address_city"] as? String ?? "null"
+                let address_area : String = jsonDict["address_area"] as? String ?? "null"
+                let address_name : String = jsonDict["address_name"] as? String ?? "null"
                 let big_machine_no : String = jsonDict["big_machine_no"] as? String ?? "null"
                 let machine_no : String = jsonDict["machine_no"] as? String ?? "null"
                 let manager : String = jsonDict["manager"] as? String ?? "null"
@@ -604,7 +573,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
                 let line_id : String = jsonDict["line_id"] as? String ?? "null"
                 let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
-                let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
+                let remaining_push : String = jsonDict["remaining_push"] as? String ?? "null"
                 let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
                 let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
                 let latitude : String = jsonDict["latitude"] as? String ?? ""
@@ -614,13 +583,20 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 let isFollow : Bool = jsonDict["isFollow"] as! Bool
                 
                 // Create new Machine and set its properties
-                let shop = FollowShopMachine(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address: address, store_name: "", big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let shop = FollowShopMachine(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, store_name: "", big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
                 searchArr.append(shop)
                 
             }
             DispatchQueue.main.async {
+                if self.myMapView.isHidden {
                 self.myCollectionView.reloadData()
+                    print("myCollectionView")
+                } else {
+                    print("mapCollectionView")
+                    self.mapCollectionView.reloadData()
+                    self.addAnnotation()
+                }
             }
         }
         catch {
@@ -669,21 +645,21 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         dateFormatter.dateFormat = "MM/dd HH:mm"
         dateFormatter.locale = tempLocale // reset the locale
         guard let getdate = date else {
-              return ""
-            }
-
-            let dateString = dateFormatter.string(from: getdate)
-            return dateString
+            return ""
+        }
+        
+        let dateString = dateFormatter.string(from: getdate)
+        return dateString
     }
     // textfield return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            textField.resignFirstResponder()
-            return true
-      }
+        textField.resignFirstResponder()
+        return true
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            self.view.endEditing(true)
-        }
-
+        self.view.endEditing(true)
+    }
+    
     
     @IBAction func backBtn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -752,30 +728,235 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     func textFieldDidBeginEditing(_ textField: UITextField) {
         dropDownTableView.isHidden = true
         areaView.isHidden = true
-        }
+    }
     
-    // mapView
+    // MARK: mapView
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didUpdateLocations locations: [CLLocation]) {
+        // 印出目前所在位置座標
+//        let currentLocation :CLLocation =
+//        locations[0] as CLLocation
+//
+//        my_latitude = currentLocation.coordinate.latitude
+//        my_longitude = currentLocation.coordinate.longitude
+//
+//        print("LL:\(my_latitude!),\(my_longitude!)")
+//
+//        locationAddress()
+    }
     
     func addAnnotation() {
+        myMapView.removeAnnotations(self.myMapView.annotations)
         if !searchArr.isEmpty {
-    for i in 0...searchArr.count-1 {
-        var objectAnnotation = MKPointAnnotation()
-        objectAnnotation.coordinate = CLLocation(
-            latitude: Double(searchArr[i].latitude) ?? 0,
-          longitude: Double(searchArr[i].longitude) ?? 0).coordinate
-        objectAnnotation.title = searchArr[i].title
-//            objectAnnotation.subtitle =
-//              "艋舺公園位於龍山寺旁邊，原名為「萬華十二號公園」。"
-        myMapView.addAnnotation(objectAnnotation)
+            for i in 0...searchArr.count-1 {
+                var objectAnnotation = MKPointAnnotation()
+                objectAnnotation.coordinate = CLLocation(
+                    latitude: Double(searchArr[i].latitude) ?? 0,
+                    longitude: Double(searchArr[i].longitude) ?? 0).coordinate
+                objectAnnotation.title = searchArr[i].title
+                //            objectAnnotation.subtitle =
+                //              "艋舺公園位於龍山寺旁邊，原名為「萬華十二號公園」。"
+                myMapView.addAnnotation(objectAnnotation)
+            }
+        }
     }
+    func geocode(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark?, Error?) -> ())  {
+        //1
+        let locale = Locale(identifier: "zh_TW")
+        let loc: CLLocation = CLLocation(latitude: latitude, longitude: longitude)
+        if #available(iOS 11.0, *) {
+            CLGeocoder().reverseGeocodeLocation(loc, preferredLocale: locale) { placemarks, error in
+                guard let placemark = placemarks?.first, error == nil else {
+                    UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+                    completion(nil, error)
+                    return
+                }
+                completion(placemark, nil)
+            }
+        }
+    }
+    func locationAddress(){
+        
+        //CLGeocoder地理編碼 經緯度轉換地址位置
+        geocode(latitude: my_latitude, longitude: my_longitude) { placemark, error in
+            guard let placemark = placemark, error == nil else { return }
+            // you should always update your UI in the main thread
+            DispatchQueue.main.async {
+                //  update UI here
+                print("address1:", placemark.thoroughfare ?? "")
+                print("address2:", placemark.subThoroughfare ?? "")
+                print("city:",     placemark.locality ?? "")
+                print("state:",    placemark.subAdministrativeArea ?? "")
+                print("zip code:", placemark.postalCode ?? "")
+                print("country:",  placemark.country ?? "")
+                print("placemark",placemark)
+                
+            }
+            self.getStartSearchItems(latitude: self.my_latitude, longitude: self.my_longitude, admin_area: placemark.subAdministrativeArea ?? "", locality: placemark.locality ?? "")
         }
     }
     func mapView(_ mapView: MKMapView,
-      annotationView view: MKAnnotationView,
-      calloutAccessoryControlTapped control: UIControl) {
+                 annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl) {
         print("點擊大頭針的說明")
     }
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("點擊大頭針")
+       
+    }
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let identifier = "MyPin"
+        let w = Double(UIScreen.main.bounds.size.width)-60
+        let h: Double = 120
+        let selectedTitle = "\(annotation.title ?? "")"
+        var index = 0
+               if annotation.isKind(of: MKUserLocation.self) {
+               return nil
+               }
 
+               // Reuse the annotation if possible
+               var annotationView:MKPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
+
+               if annotationView == nil {
+                   annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                   annotationView?.canShowCallout = true
+               }
+        for i in 0...searchArr.count-1 {
+            if searchArr[i].title == selectedTitle {
+                index = i
+            }
+        }
+
+        var myImageView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFit
+            imageView.tintColor = .white
+            return imageView
+        }()
+        var myTextView: UITextView = {
+            let textView = UITextView()
+            textView.textAlignment = .left
+            return textView
+        }()
+        var heartImageView: UIImageView = {
+            let imageView = UIImageView()
+            return imageView
+        }()
+        myImageView = UIImageView(frame: CGRect.init(x: 10, y: 10,
+                                                     width: w/2-20, height: h-20))
+        myTextView = UITextView(frame:CGRect(
+                                x: w/2, y: 10, width: w/3, height: (h-20)/4))
+        heartImageView = UIImageView(frame: CGRect.init(x: w-40, y: h/2+15, width: 40, height: 40))
+        
+        downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(searchArr[index].userId)/store_photo_\(searchArr[index].id)_6")! , imageView: myImageView)
+        myTextView.text = "\(searchArr[index].address_city)\(searchArr[index].address_area)\(searchArr[index].address_name)\n\(searchArr[index].manager)\n\(searchArr[index].updateDate)"
+        myTextView.font = myTextView.font?.withSize(17
+        )
+        NSLayoutConstraint.activate([
+            myTextView.widthAnchor.constraint(equalToConstant: w/3),
+            myTextView.heightAnchor.constraint(equalToConstant: h)
+        ])
+        if searchArr[index].isFollow {
+            heartImageView.image = UIImage(named: "followed")
+        } else {
+            heartImageView.image = UIImage(named: "unfollow")
+        }
+        
+        annotationView?.leftCalloutAccessoryView = myImageView
+        annotationView?.detailCalloutAccessoryView = myTextView
+        annotationView?.rightCalloutAccessoryView = heartImageView
+
+               return annotationView
+        }
+    
+    func getStartSearchItems(latitude: Double, longitude: Double, admin_area: String, locality: String) {
+        // web service Url
+        if userData .isEmpty {
+            userData.first?.userId = ""
+        }
+        let url = URL(string: "https://www.surveyx.tw/funchip/search.php")!
+        // json data
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let json: [String: Any] = [
+            "userId" : "\((userData.first?.userId ?? ""))",
+            "my_latitude": my_latitude!,
+            "my_longitude": my_longitude!,
+            "my_admin_area" : admin_area,
+            "my_locality" : locality,
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        request.httpBody = jsonData
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if error == nil {
+                // succceeded
+                
+                // Call the parse json function on the data
+                self.parseStartSearchJson(data: data!)
+                
+            } else {
+                print("error: \(error)")
+            }
+        }
+        // start the task
+        task.resume()
+        
+    }
+    func parseStartSearchJson(data: Data) {
+        print("before: \(searchArr.count)")
+        searchArr.removeAll()
+        print("after: \(searchArr.count)")
+        // Parse the data into struct
+        do {
+            // Parse the data into a jsonObject
+            let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as! [Any]
+            for jsonResult in jsonArray {
+                // json result as a dictionary
+                let jsonDict = jsonResult as! [String:Any]
+                let isStore : Bool = jsonDict["isStore"] as! Bool
+                let id : String = jsonDict["id"] as! String
+                let userId : String = jsonDict["userId"] as! String
+                let title : String = jsonDict["title"] as? String ?? "null"
+                let description : String = jsonDict["description"] as? String ?? "null"
+                let address_city : String = jsonDict["address_city"] as? String ?? "null"
+                let address_area : String = jsonDict["address_area"] as? String ?? "null"
+                let address_name : String = jsonDict["address_name"] as? String ?? "null"
+                let big_machine_no : String = jsonDict["big_machine_no"] as? String ?? "null"
+                let machine_no : String = jsonDict["machine_no"] as? String ?? "null"
+                let manager : String = jsonDict["manager"] as? String ?? "null"
+                let air_condition : Bool = jsonDict["air_condition"] as? Bool ?? false
+                let fan : Bool = jsonDict["fan"] as? Bool ?? false
+                let wifi : Bool = jsonDict["wifi"] as? Bool ?? false
+                let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
+                let line_id : String = jsonDict["line_id"] as? String ?? "null"
+                let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
+                let remaining_push : String = jsonDict["remaining_push"] as? String ?? "null"
+                let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
+                let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
+                let latitude : String = jsonDict["latitude"] as? String ?? ""
+                let longitude : String = jsonDict["longitude"] as? String ?? ""
+                let createDate : String = jsonDict["createDate"] as! String
+                let updateDate : String = jsonDict["updateDate"] as! String
+                let isFollow : Bool = jsonDict["isFollow"] as! Bool
+                
+                // Create new Machine and set its properties
+                let shop = FollowShopMachine(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, store_name: "", big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                //Add it to the array
+                searchArr.append(shop)
+                
+            }
+            DispatchQueue.main.async {
+                self.myCollectionView.reloadData()
+            }
+        }
+        catch {
+            print("There was an error")
+        }
+    }
+    
     
     @IBAction func areaSureBtnPressed(_ sender: Any) {
         areaView.isHidden = true
@@ -788,10 +969,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         dropDownTableView.tag = 1
         self.view.endEditing(true)
         if firstBtn.titleLabel?.font == UIFont.systemFont(ofSize: 15){
-        numOfTableView = ["不限","機台","店家"]
-        dropDownTableView.reloadData()
-        areaView.isHidden = true
-        dropDownTableView.isHidden = false
+            numOfTableView = ["不限","機台","店家"]
+            dropDownTableView.reloadData()
+            areaView.isHidden = true
+            dropDownTableView.isHidden = false
             firstBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             secondBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             thirdBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -805,8 +986,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBAction func areaBtnPressed(_ sender: Any) {
         self.view.endEditing(true)
         if secondBtn.titleLabel?.font == UIFont.systemFont(ofSize: 15){
-        areaView.isHidden = false
-        dropDownTableView.isHidden = true
+            areaView.isHidden = false
+            dropDownTableView.isHidden = true
             firstBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             secondBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             thirdBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -845,10 +1026,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         dropDownTableView.tag = 3
         self.view.endEditing(true)
         if thirdBtn.titleLabel?.font == UIFont.systemFont(ofSize: 15){
-        numOfTableView = ["不限","3C","雜貨","玩具","模型","娃娃","大貨","其他"]
-        dropDownTableView.reloadData()
-        areaView.isHidden = true
-        dropDownTableView.isHidden = false
+            numOfTableView = ["不限","3C","雜貨","玩具","模型","娃娃","大貨","其他"]
+            dropDownTableView.reloadData()
+            areaView.isHidden = true
+            dropDownTableView.isHidden = false
             firstBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             secondBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             thirdBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
@@ -862,10 +1043,10 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         dropDownTableView.tag = 4
         self.view.endEditing(true)
         if fourthBtn.titleLabel?.font == UIFont.systemFont(ofSize: 15){
-        numOfTableView = ["不限","100公尺 以內","500公尺 以內","1000公尺 以內","2000公尺 以內","3000公尺 以內"]
-        dropDownTableView.reloadData()
-        areaView.isHidden = true
-        dropDownTableView.isHidden = false
+            numOfTableView = ["不限","100公尺 以內","500公尺 以內","1000公尺 以內","2000公尺 以內","3000公尺 以內"]
+            dropDownTableView.reloadData()
+            areaView.isHidden = true
+            dropDownTableView.isHidden = false
             firstBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             secondBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             thirdBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -883,14 +1064,15 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBAction func changeMapBtnPressed(_ sender: Any) {
         if myMapView.isHidden {
             topRightBtn.setImage(UIImage(named: "listTabber"), for: .normal)
-        myMapView.removeAnnotations(self.myMapView.annotations)
-        myCollectionView.isHidden = true
-        myMapView.isHidden = false
+            myCollectionView.isHidden = true
+            myMapView.isHidden = false
+            mapCollectionView.reloadData()
             addAnnotation()
         } else {
             topRightBtn.setImage(UIImage(named: "18"), for: .normal)
             myCollectionView.isHidden = false
             myMapView.isHidden = true
+            myCollectionView.reloadData()
         }
     }
     

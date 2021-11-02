@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import MapKit
 
 class FirstCustomTableCellView: UIView {
+    // jump to apple map
+    var latitude = 0.0
+    var longitude = 0.0
+    var titlee = ""
 
     override init(frame: CGRect) {
             super.init(frame: frame)
@@ -24,13 +29,17 @@ class FirstCustomTableCellView: UIView {
     private let mapButton = UIButton()
     var arrowLabel = UILabel()
         
-    func setUI(title: String, address: String) {
+    func setUI(title: String, address: String, lat: Double, lon: Double) {
+        latitude = lat
+        longitude = lon
+        titlee = title
             titleLabel.text = title
             titleLabel.font = titleLabel.font.withSize(15)
             pinImageView.image = UIImage(named: "画板 – 4")
             addressLabel.text = address
             addressLabel.font = addressLabel.font.withSize(15)
             mapButton.setImage(UIImage(named: "18"), for: .normal)
+        mapButton.addTarget(self, action: #selector(mapAppInPhoneAndJumpInto), for: .touchUpInside)
             arrowLabel.text = "▾"
             arrowLabel.textAlignment = .center
             arrowLabel.font = arrowLabel.font.withSize(20)
@@ -73,7 +82,20 @@ class FirstCustomTableCellView: UIView {
             
             
         }
-    }
+    @objc func mapAppInPhoneAndJumpInto() {
+        //目標經維度
+        let targetLocation=CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        //透過地targetLocation建立一個MKMapItem
+        let targetPlacemark=MKPlacemark(coordinate: targetLocation)
+        // 目標地圖項目
+        let targetItem=MKMapItem(placemark: targetPlacemark)
+        let userMapItem=MKMapItem.forCurrentLocation()
+        //建構路徑
+        let routes=[userMapItem,targetItem]
+        //呼叫openMaps方法開啟系統地圖 這邊設定開車
+        MKMapItem.openMaps(with: routes, launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDefault])
+        }
+}
 
     final class FirstCustomTableDetailView: UIView {
         override init(frame: CGRect) {

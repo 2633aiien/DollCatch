@@ -19,7 +19,9 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
     var tempTitle = "aa"
     var tempId = ""
     var tempUserId = ""
-    var tempAddress = "aa"
+    var tempAddress_city = "aa"
+    var tempAddress_area = ""
+    var tempAddress_name = ""
     var tempDescription = ""
     var tempManager = ""
     var tempLine = ""
@@ -34,6 +36,8 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
     var tempAir_condition = true
     var tempFan = true
     var tempWifi = true
+    var tempLatitude = 0.0
+    var tempLongitude = 0.0
     
     
     var classArr = [Bool]()
@@ -45,6 +49,8 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
     var imageDescribeArr : [String] = []
     
     var userData : [UserInformationClass] = []
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         if tempIsFollow == true {
@@ -129,7 +135,7 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
         else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "firstCustomCell") as! FirstCustomTableViewCell
-            cell.setUI(title: tempTitle, address: tempAddress, description: tempDescription)
+            cell.setUI(title: tempTitle, address: "\(tempAddress_city)\(tempAddress_area)\(tempAddress_name)", description: tempDescription, lat: tempLatitude, lon: tempLongitude)
             return cell
         }
         else if indexPath.row == 2 {
@@ -431,6 +437,8 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     
+    
+    
     /*
      // MARK: - Navigation
      
@@ -442,3 +450,4 @@ class MachineIntroViewController: UIViewController, UITableViewDelegate, UITable
      */
     
 }
+

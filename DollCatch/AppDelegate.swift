@@ -7,17 +7,42 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 
+var token = ""
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
             // Override point for customization after application launch.
         FirebaseApp.configure()
-        
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+                    
+                }
+        UIApplication.shared.registerForRemoteNotifications()
             return true
         }
     
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+       var tokenString = ""
+       for byte in deviceToken {
+          let hexString = String(format: "%02x", byte)
+          tokenString += hexString
+       }
+        
+        token = tokenString
+        print("token: \(token)")
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+            print(response.notification.request.content.userInfo)
+            completionHandler()
+        }
+
+        func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+            completionHandler([.list, .banner, .badge, .sound])
+        }
 
 
     // MARK: UISceneSession Lifecycle

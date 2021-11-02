@@ -148,6 +148,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate, UIImagePick
         }
     }
     @IBAction func userTermsBtnPressed(_ sender: Any) {
+        let urlString = "http://www.surveyx.tw/funchip/agreement.html"
+        let url = URL(string: urlString)
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
     @IBAction func nextBtnPressed(_ sender: Any) {
         checkPhone()

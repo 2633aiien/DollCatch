@@ -8,20 +8,24 @@
 import UIKit
 import SideMenu
 import CoreData
+import MapKit
 
 
-class HomePageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NewMachineModelDelegate, NewShopModelDelegate {
+class HomePageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, NewMachineModelDelegate, NewShopModelDelegate, CLLocationManagerDelegate, NewFollowModelDelegate {
     
-    @IBOutlet weak var adScrollView: UIScrollView!
-    @IBOutlet weak var firstImageVIew: UIImageView!
-    @IBOutlet weak var secondImageView: UIImageView!
-    @IBOutlet weak var thirdImageView: UIImageView!
-    @IBOutlet weak var fourthImageView: UIImageView!
+    
+    @IBOutlet weak var adCollectionView: UICollectionView!
+    
     @IBOutlet weak var hottestCollectionView: UICollectionView!
     
     @IBOutlet weak var newestCollectionView: UICollectionView!
     
     @IBOutlet weak var newestShopCollectionView: UICollectionView!
+    @IBOutlet weak var mineManageBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var myStackView: UIStackView!
+    
+    var notiNum = 0
     
     var cellWidth = 270
     var cellHeight = 120
@@ -33,7 +37,6 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     @IBOutlet weak var pageControl: UIPageControl!
     
     var currentIndex : NSInteger = 0
-    var imageArray : [UIImage] = []
     var timer = Timer()
     var screenW = UIScreen.main.bounds.width
     var index = 1
@@ -42,7 +45,9 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     var bool = true
     
+    var followModel = NewFollowModel()
     var followArr : [FollowShopMachine] = []
+    @IBOutlet weak var followMoreNum: UILabel!
     
     var newMachineModel = NewMachineModel()
     var newMachines = [newMachine]()
@@ -53,12 +58,27 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     var nameOfTableView = ""
     
     var adUrlArr : [String] = []
+    var imageIndex = 0
+//    var imageViewArray : [UIImageView] = []
+    var positionArr : [String] = []
+    
+    var myLocationManager :CLLocationManager!
+    var my_latitude : Double! = 0
+    var my_longitude : Double! = 0
+    func itemsDownloaded(shops: [FollowShopMachine]) {
+        self.followArr = shops
+        print("follow: \(followArr.count)")
+        DispatchQueue.main.async {
+            self.hottestCollectionView.reloadData()
+        }
+    }
     
     func itemsDownloaded(machines: [newMachine]) {
         self.newMachines = machines
         
         DispatchQueue.main.async {
             self.newestCollectionView.reloadData()
+            self.hottestCollectionView.reloadData()
         }
     }
     func itemsDownloaded(shops: [newShop]) {
@@ -71,7 +91,9 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count = 0
-        if collectionView == self.hottestCollectionView {
+        if collectionView == self.adCollectionView {
+            count = positionArr.count
+        }else if collectionView == self.hottestCollectionView {
             
             if followArr.count <= 10 {
                 count = followArr.count
@@ -98,13 +120,15 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var myCell = UICollectionViewCell()
-        
-        if collectionView == self.hottestCollectionView{
+        if collectionView == self.adCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! AdCollectionViewCell
+            downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/ad/ad_0\(indexPath.row+1)")!, imageView: cell.myImageView)
+            myCell = cell
+        }else if collectionView == self.hottestCollectionView{
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "HotCell", for: indexPath)
                 as! MyCollectionViewCell
-            
             // 設置 cell 內容 (即自定義元件裡 增加的圖片與文字元件)
             if followArr[indexPath.row].isStore == true {
                 downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(followArr[indexPath.row].userId)/store_photo_\(followArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
@@ -112,14 +136,7 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(followArr[indexPath.row].userId)/machine_photo_\(followArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
             }
                 cell.myTitleLabel.text = followArr[indexPath.row].title
-                let str = followArr[indexPath.row].address
-                if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
-                    let index = str.firstIndex(of: "區")
-                    let str3 = str[...index!]
-                    cell.myLocationLabel.text = String(str3)
-                } else {
-                    cell.myLocationLabel.text = followArr[indexPath.row].address
-                }
+                    cell.myLocationLabel.text = "\(followArr[indexPath.row].address_city)\(followArr[indexPath.row].address_area)"
                 cell.myNameLabel.text = followArr[indexPath.row].manager
                 let time = timeStringToDate(followArr[indexPath.row].updateDate)
                 cell.myTimeLabel.text = time
@@ -142,14 +159,7 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
             downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(newMachines[indexPath.row].userId)/machine_photo_\(newMachines[indexPath.row].id)_6")! , imageView: cell.myImageView)
 
             cell.myTitleLabel.text = newMachines[indexPath.row].title
-            let str = newMachines[indexPath.row].address_machine
-            if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
-                let index = str.firstIndex(of: "區")
-                let str3 = str[...index!]
-                cell.myLocationLabel.text = String(str3)
-            } else {
-                cell.myLocationLabel.text = newMachines[indexPath.row].address_machine
-            }
+            cell.myLocationLabel.text =  "\(newMachines[indexPath.row].address_city)\(newMachines[indexPath.row].address_area)"
             
             cell.myNameLabel.text = newMachines[indexPath.row].manager
             cell.myTimeLabel.text = newMachines[indexPath.row].updateDate
@@ -165,14 +175,9 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
             
             downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(newShops[indexPath.row].userId)/store_photo_\(newShops[indexPath.row].id)_6")! , imageView: cell.myImageView)
             cell.myTitleLabel.text = newShops[indexPath.row].title
-            let str = newShops[indexPath.row].address_shop
-            if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
-                let index = str.firstIndex(of: "區")
-                let str3 = str[...index!]
-                cell.myLocationLabel.text = String(str3)
-            } else {
-                cell.myLocationLabel.text = newShops[indexPath.row].address_shop
-            }
+
+            cell.myLocationLabel.text = "\(newShops[indexPath.row].address_city)\(newShops[indexPath.row].address_area)"
+            
             cell.myNameLabel.text = newShops[indexPath.row].manager
             cell.myTimeLabel.text = newShops[indexPath.row].updateDate
             cell.myTitleLabel.numberOfLines = 1
@@ -186,7 +191,11 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == self.hottestCollectionView {
+        if collectionView == self.adCollectionView {
+            let urlString = adUrlArr[indexPath.row]
+            let url = URL(string: urlString)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }else if collectionView == self.hottestCollectionView {
             let newF = followArr[indexPath.row]
             if let controller = storyboard?.instantiateViewController(withIdentifier: "machineIntro") as? MachineIntroViewController{
                 controller.tempIsFollow = newF.isFollow
@@ -194,7 +203,9 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 controller.tempTitle = newF.title
                 controller.tempId = newF.id
                 controller.tempUserId = newF.userId
-                controller.tempAddress = newF.address
+                controller.tempAddress_city = newF.address_city
+                controller.tempAddress_area = newF.address_area
+                controller.tempAddress_name = newF.address_name
                 controller.tempDescription = newF.description
                 controller.tempManager = newF.manager
                 controller.tempLine = newF.line_id
@@ -205,6 +216,8 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 controller.tempFan = newF.fan
                 controller.tempWifi = newF.wifi
                 controller.tempStoreName = newF.store_name
+                controller.tempLatitude = Double(newF.latitude) ?? 0
+                controller.tempLongitude = Double(newF.longitude) ?? 0
                 
                 
                 let navigationController = UINavigationController(rootViewController: controller)
@@ -220,12 +233,16 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 controller.tempTitle = newM.title
                 controller.tempId = newM.id
                 controller.tempUserId = newM.userId
-                controller.tempAddress = newM.address_machine
+                controller.tempAddress_city = newM.address_city
+                controller.tempAddress_area = newM.address_area
+                controller.tempAddress_name = newM.address_name
                 controller.tempDescription = newM.description
                 controller.tempStoreName = newM.store_name
                 controller.tempManager = newM.manager
                 controller.tempLine = newM.line_id
                 controller.tempPhone = newM.phone_no
+                controller.tempLatitude = Double(newM.latitude) ?? 0
+                controller.tempLongitude = Double(newM.longitude) ?? 0
                 let navigationController = UINavigationController(rootViewController: controller)
                 navigationController.modalPresentationStyle = .fullScreen
                 present(navigationController, animated: true, completion: nil)
@@ -240,7 +257,9 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 controller.tempTitle = newS.title
                 controller.tempId = newS.id
                 controller.tempUserId = newS.userId
-                controller.tempAddress = newS.address_shop
+                controller.tempAddress_city = newS.address_city
+                controller.tempAddress_area = newS.address_area
+                controller.tempAddress_name = newS.address_name
                 controller.tempDescription = newS.description
                 controller.tempManager = newS.manager
                 controller.tempLine = newS.line_id
@@ -250,6 +269,8 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 controller.tempAir_condition = newS.air_condition
                 controller.tempFan = newS.fan
                 controller.tempWifi = newS.wifi
+                controller.tempLatitude = Double(newS.latitude) ?? 0
+                controller.tempLongitude = Double(newS.longitude) ?? 0
                 
                 
                 let navigationController = UINavigationController(rootViewController: controller)
@@ -267,51 +288,80 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
         
-        for i in 1...8 {
-                self.downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/ad/ad_0\(i)")!,i: i)
+        let notifyButton =  UIButton(type: .custom)
+        notifyButton.setImage(UIImage(named: "26-1"), for: .normal)
+        notifyButton.addTarget(self, action: #selector(notifyAction), for: .touchUpInside)
+        notifyButton.frame = CGRect(x: 0, y: 0, width: 30, height: 37)
+//        notifyButton.imageEdgeInsets = UIEdgeInsets(top: -1, left: 32, bottom: 1, right: -32)//move image to the right
+                  let notifyLabel = UILabel(frame: CGRect(x: 20, y: 0, width: 15, height: 15))
+        notifyLabel.font = UIFont.systemFont(ofSize: 10)
+        notifyLabel.cornerRadius = 7.5
+        notifyLabel.text = "99"
+        notifyLabel.textAlignment = .center
+        notifyLabel.textColor = .white
+        notifyLabel.backgroundColor =  .red
+        notifyButton.addSubview(notifyLabel)
+        if userData.isEmpty {
+            notifyLabel.isHidden = true
+        } else {
+            notifyLabel.isHidden = false
         }
+        
+        let barButton2 = UIBarButtonItem(customView: notifyButton)
+        let shareButton =  UIButton(type: .custom)
+        shareButton.setImage(UIImage(named: "27-1"), for: .normal)
+        shareButton.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
+        shareButton.frame = CGRect(x: 0, y: 0, width: 30, height: 37)
+//        shareButton.imageEdgeInsets = UIEdgeInsets(top: -1, left: 32, bottom: 1, right: -32)//move
+        
+        let barButton1 = UIBarButtonItem(customView: shareButton)
+        
+        let fixedSpace: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
+        fixedSpace.width = 30.0
+        self.navigationItem.setRightBarButtonItems([barButton1,fixedSpace,barButton2], animated: true)
+        
+        
         followArr = []
         newMachines = []
         newShops = []
-        if !userData .isEmpty {
-        getFollowShopItems()
-        getFollowMachineItems()
-        }
-        
         var userId = ""
         if !userData .isEmpty {
+            getNotiNum(label: notifyLabel)
             userId = userData[0].userId
+            followModel.getNewFollowItems(userId: userId)
+            followModel.delegate = self
         }
+        positionArr.removeAll()
+        adUrlArr.removeAll()
+        getAd()
+        
         newMachineModel.getNewMachineItems(userId: userId)
         newMachineModel.delegate = self
         
         newShopModel.getNewShopItems(userId: userId)
         newShopModel.delegate = self
         
-        hottestCollectionView.reloadData()
+//        hottestCollectionView.reloadData()
         newestCollectionView.reloadData()
         newestShopCollectionView.reloadData()
         
-        self.view.layoutIfNeeded()
-        adScrollView.contentSize = CGSize(width: screenW * CGFloat(imageArray.count + 2), height: 230)
-        adScrollView.contentOffset = CGPoint(x: screenW * CGFloat(index), y: 0)
-        swipe.direction = .left
+//        self.view.layoutIfNeeded()
+        
     }
     
     
     override func viewDidLoad() {
         super .viewDidLoad()
-    
-//        let backItem = UIBarButtonItem()
-//            backItem.title = ""
-//            navigationItem.backBarButtonItem = backItem
+        myLocationManager = CLLocationManager()
+        myLocationManager.delegate = self
+        locateUser()
+        mineManageBtn.setTitle("", for: .normal)
+        myStackView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)
         
         let viewController = storyboard?.instantiateViewController(withIdentifier: "rootView")
         let menu = SideMenuNavigationController(rootViewController: viewController!)
         queryFromCoreData()
-        
-        getAd()
-        
+                
         // sidebar
         menu.presentationStyle = .menuSlideIn
         menu.menuWidth = 330
@@ -344,6 +394,16 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         // 設置每個 cell 的尺寸
         layoutVer.itemSize = CGSize(width: width, height: cellHeight)
         
+        let layoutAd = UICollectionViewFlowLayout()
+        // 設置 section 的間距 四個數值分別代表 上、左、下、右 的間距
+        layoutAd.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        layoutAd.minimumInteritemSpacing = 0
+        layoutAd.scrollDirection = .horizontal
+        
+        // 設置每個 cell 的尺寸
+        layoutAd.itemSize = CGSize(width: screenW, height: 230)
+        adCollectionView.collectionViewLayout = layoutAd
         
         hottestCollectionView.collectionViewLayout = layoutHor
         
@@ -351,7 +411,10 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         newestShopCollectionView.collectionViewLayout = layoutVer
         
+        
         // 註冊 cell 以供後續重複使用
+        adCollectionView.register(AdCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        
         hottestCollectionView.register(
             MyCollectionViewCell.self,
             forCellWithReuseIdentifier: "HotCell")
@@ -367,6 +430,9 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         
         // 設置委任對象
+        adCollectionView.delegate = self
+        adCollectionView.dataSource = self
+        
         hottestCollectionView.delegate = self
         hottestCollectionView.dataSource = self
         hottestCollectionView.alwaysBounceHorizontal = true
@@ -378,11 +444,58 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         newestShopCollectionView.delegate = self
         newestShopCollectionView.dataSource = self
         
-        adScrollView.delegate = self
-        startTimer()
+        
     }
+    func locateUser() {
+        
+        // 首次使用 向使用者詢問定位自身位置權限
+        switch myLocationManager.authorizationStatus {
+        case .notDetermined :
+            // 取得定位服務授權
+            myLocationManager.requestWhenInUseAuthorization()
+            print("取得")
+            // 開始定位自身位置
+            myLocationManager.startUpdatingLocation()
+        case .denied :
+            // 提示可至[設定]中開啟權限
+            let alertController = UIAlertController(
+                title: "定位權限已關閉",
+                message:
+                    "如要變更權限，請至 設定 > 隱私權 > 定位服務 開啟",
+                preferredStyle: .alert)
+            let okAction = UIAlertAction(
+                title: "確認", style: .default, handler:nil)
+            alertController.addAction(okAction)
+            self.present(
+                alertController,
+                animated: true, completion: nil)
+        case .authorizedWhenInUse :
+            print("WhenInUse")
+            myLocationManager.startUpdatingLocation()
+        default:
+            break
+        }
+        
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        // 停止定位自身位置
+        myLocationManager.stopUpdatingLocation()
+        timer.invalidate()
+    }
+    func locationManager(_ manager: CLLocationManager,
+                         didUpdateLocations locations: [CLLocation]) {
+        // 印出目前所在位置座標
+        let currentLocation :CLLocation =
+        locations[0] as CLLocation
+        
+        my_latitude = currentLocation.coordinate.latitude
+        my_longitude = currentLocation.coordinate.longitude
+        
+        print("LL:\(my_latitude!),\(my_longitude!)")
     
-    
+    }
     func queryFromCoreData() {
         let moc = CoreDataHelper.shared.managedObjectContext()
         
@@ -397,26 +510,26 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
             }
         }
     }
-    func downloadImage(from url: URL,i: Int) {
-        print("Download Started")
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
-            print("Download Finished")
-            // always update the UI from the main thread
-            DispatchQueue.main.async() {
-    var image = UIImage(data: data)!
-                print("imageArray/image: \(self.imageArray)")
-                var imageView = UIImageView(frame: CGRect(x: self.screenW * CGFloat(i), y: 0, width: self.screenW, height: 230))
-                imageView.image = image
-                imageView.contentMode = .scaleAspectFit
-                imageView.clipsToBounds = true
-                imageView.isUserInteractionEnabled = true
-                self.adScrollView.addSubview(imageView)
-                self.imageArray.append(image)
-            }
-    }
-    }
+//    func downloadImage(from url: URL,i: Int) {
+//        var image : UIImage!
+//        print("Download Started")
+//        getData(from: url) { data, response, error in
+//            guard let data = data, error == nil else { return }
+//            print(response?.suggestedFilename ?? url.lastPathComponent)
+//            print("Download Finished")
+//            // always update the UI from the main thread
+//            DispatchQueue.main.async() {
+//    image = UIImage(data: data)
+//                let imageView = UIImageView()
+//                imageView.image = image
+//                imageView.contentMode = .scaleAspectFit
+//                imageView.clipsToBounds = true
+//                imageView.isUserInteractionEnabled = true
+//                self.imageViewArray.append(imageView)
+//
+//            }
+//    }
+//    }
     
     func downloadImage(from url: URL, imageView: UIImageView) {
         print("Download Started")
@@ -434,162 +547,246 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
+    //MARK: test
+    func pushTest() {
+        var url = URL(string: "https://www.surveyx.tw/funchip/push_store.php")!
+        var request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if error == nil {
+                print("success")
+            } else {
+                print("error: \(error)")
+            }
+        }
+        // start the task
+        task.resume()
+    }
     
     //MARK: 追蹤
     
-    func getFollowShopItems() {
-        // web service Url
-        let url = URL(string: "https://www.surveyx.tw/funchip/follow_store.php")!
-        // json data
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let json: [String: Any] = [
-            "userId": "\((userData.first?.userId)!)",
-        ]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        request.httpBody = jsonData
+//    func getHomefollowShopItems() {
+//        // web service Url
+//        let url = URL(string: "https://www.surveyx.tw/funchip/home_follow.php")!
+//        // json data
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        let json: [String: Any] = [
+//            "userId": "\((userData.first?.userId)!)",
+//        ]
+//        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+//
+//        request.httpBody = jsonData
+//
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//                if error == nil {
+//                    // succceeded
+//
+//                    // Call the parse json function on the data
+//                    self.parseFollowShopJson(data: data!)
+//
+//                } else {
+//                    print("error: \(error)")
+//                }
+//            }
+//            // start the task
+//            task.resume()
+//
+//    }
+//
+//    func getFollowShopItems() {
+//        // web service Url
+//        let url = URL(string: "https://www.surveyx.tw/funchip/follow_store.php")!
+//        // json data
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        let json: [String: Any] = [
+//            "userId": "\((userData.first?.userId)!)",
+//        ]
+//        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+//
+//        request.httpBody = jsonData
+//
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//                if error == nil {
+//                    // succceeded
+//
+//                    // Call the parse json function on the data
+//                    self.parseFollowShopJson(data: data!)
+//
+//                } else {
+//                    print("error: \(error)")
+//                }
+//            }
+//            // start the task
+//            task.resume()
+//
+//    }
+//    func parseFollowShopJson(data: Data) {
+//
+//        // Parse the data into struct
+//        do {
+//            // Parse the data into a jsonObject
+//        let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as! [Any]
+//            for jsonResult in jsonArray {
+//                // json result as a dictionary
+//                let jsonDict = jsonResult as! [String:Any]
+//                let isStore : Bool = jsonDict["isStore"] as! Bool
+//                let id : String = jsonDict["id"] as! String
+//                let userId : String = jsonDict["userId"] as! String
+//                let title : String = jsonDict["title"] as? String ?? "null"
+//                let description : String = jsonDict["description"] as? String ?? "null"
+//                let address_city : String = jsonDict["address_city"] as? String ?? "null"
+//                let address_area : String = jsonDict["address_area"] as? String ?? "null"
+//                let address_name : String = jsonDict["address_name"] as? String ?? "null"
+//                let store_name : String = jsonDict["store_name"] as? String ?? "null"
+//                let big_machine_no : String = jsonDict["big_machine_no"] as? String ?? "null"
+//                let machine_no : String = jsonDict["machine_no"] as? String ?? "null"
+//                let manager : String = jsonDict["manager"] as? String ?? "null"
+//                let air_condition : Bool = jsonDict["air_condition"] as? Bool ?? false
+//                let fan : Bool = jsonDict["fan"] as? Bool ?? false
+//                let wifi : Bool = jsonDict["wifi"] as? Bool ?? false
+//                let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
+//                let line_id : String = jsonDict["line_id"] as? String ?? "null"
+//                let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
+//                let remaining_push : String = jsonDict["remaining_push"] as? String ?? "null"
+//                let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
+//                let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
+//                let latitude : String = jsonDict["latitude"] as? String ?? "0"
+//                let longitude : String = jsonDict["longitude"] as? String ?? "0"
+//                let createDate : String = jsonDict["createDate"] as! String
+//                let updateDate : String = jsonDict["updateDate"] as! String
+//
+//                // Create new Machine and set its properties
+//                let shop = FollowShopMachine(isFollow: true, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, store_name: store_name, big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+//                //Add it to the array
+//                followArr.append(shop)
+//            }
+//            DispatchQueue.main.async {
+//                print("count: \(self.followArr)")
+//                self.hottestCollectionView.reloadData()
+//            }
+//        }
+//        catch {
+//            print("There was an error")
+//        }
+//    }
+//
+//    func getFollowMachineItems() {
+//        // web service Url
+//        let url = URL(string: "https://www.surveyx.tw/funchip/follow_machine.php")!
+//        // json data
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        let json: [String: Any] = [
+//            "userId": "\((userData.first?.userId)!)",
+//        ]
+//        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+//
+//        request.httpBody = jsonData
+//
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//                if error == nil {
+//                    // succceeded
+//
+//                    // Call the parse json function on the data
+//                    self.parseFollowMachineJson(data: data!)
+//
+//                } else {
+//                    print("error: \(error)")
+//                }
+//            }
+//            // start the task
+//            task.resume()
+//    }
+//    func parseFollowMachineJson(data: Data) {
+//
+//        // Parse the data into struct
+//        do {
+//            // Parse the data into a jsonObject
+//        let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as! [Any]
+//            for jsonResult in jsonArray {
+//                // json result as a dictionary
+//                let jsonDict = jsonResult as! [String:Any]
+//                let isStore : Bool = jsonDict["isStore"] as! Bool
+//                let id : String = jsonDict["id"] as! String
+//                let userId : String = jsonDict["userId"] as! String
+//                let title : String = jsonDict["title"] as? String ?? "null"
+//                let description : String = jsonDict["description"] as? String ?? "null"
+//                let address_city : String = jsonDict["address_city"] as? String ?? "null"
+//                let address_area : String = jsonDict["address_area"] as? String ?? "null"
+//                let address_name : String = jsonDict["address_name"] as? String ?? "null"
+//                let store_name : String = jsonDict["store_name"] as? String ?? "null"
+//                let manager : String = jsonDict["manager"] as? String ?? "null"
+//                let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
+//                let line_id : String = jsonDict["line_id"] as? String ?? "null"
+//                let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
+//                let remaining_push : String = jsonDict["remaining_push"] as? String ?? "null"
+//                let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
+//                let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
+//                let latitude : String = jsonDict["latitude"] as? String ?? "0"
+//                let longitude : String = jsonDict["longitude"] as? String ?? "0"
+//                let createDate : String = jsonDict["createDate"] as! String
+//                let updateDate : String = jsonDict["updateDate"] as! String
+//
+//                // Create new Machine and set its properties
+//                let machine = FollowShopMachine(isFollow: true, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, store_name: store_name, big_machine_no: "", machine_no: "", manager: manager, air_condition: false, fan: false, wifi: false, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+//                //Add it to the array
+//                followArr.append(machine)
+//            }
+//            DispatchQueue.main.async {
+//                self.hottestCollectionView.reloadData()
+//            }
+//        }
+//        catch {
+//            print("There was an error")
+//        }
+//    }
+    func getNotiNum(label: UILabel) {
+            let url = URL(string: "https://www.surveyx.tw/funchip/get_notify.php")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            let json: [String: Any] = [
+                "userId": "\(userData[0].userId)"
+            ]
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
             
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                if error == nil {
-                    // succceeded
-                    
-                    // Call the parse json function on the data
-                    self.parseFollowShopJson(data: data!)
-                    
-                } else {
-                    print("error: \(error)")
+            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    return
                 }
-            }
-            // start the task
-            task.resume()
-        
-    }
-    func parseFollowShopJson(data: Data) {
-        
-        // Parse the data into struct
-        do {
-            // Parse the data into a jsonObject
-        let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as! [Any]
-            for jsonResult in jsonArray {
-                // json result as a dictionary
-                let jsonDict = jsonResult as! [String:Any]
-                let isStore : Bool = jsonDict["isStore"] as! Bool
-                let id : String = jsonDict["id"] as! String
-                let userId : String = jsonDict["userId"] as! String
-                let title : String = jsonDict["title"] as? String ?? "null"
-                let description : String = jsonDict["description"] as? String ?? "null"
-                let address : String = jsonDict["address_store"] as? String ?? "null"
-                let big_machine_no : String = jsonDict["big_machine_no"] as? String ?? "null"
-                let machine_no : String = jsonDict["machine_no"] as? String ?? "null"
-                let manager : String = jsonDict["manager"] as? String ?? "null"
-                let air_condition : Bool = jsonDict["air_condition"] as? Bool ?? false
-                let fan : Bool = jsonDict["fan"] as? Bool ?? false
-                let wifi : Bool = jsonDict["wifi"] as? Bool ?? false
-                let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
-                let line_id : String = jsonDict["line_id"] as? String ?? "null"
-                let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
-                let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
-                let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
-                let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
-                let latitude : String = jsonDict["latitude"] as? String ?? "0"
-                let longitude : String = jsonDict["longitude"] as? String ?? "0"
-                let createDate : String = jsonDict["createDate"] as! String
-                let updateDate : String = jsonDict["updateDate"] as! String
                 
-                // Create new Machine and set its properties
-                let shop = FollowShopMachine(isFollow: true, isStore: isStore, id: id, userId: userId, title: title, description: description, address: address, store_name: "", big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
-                //Add it to the array
-                followArr.append(shop)
+                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    let num = responseJSON["notifyNo"]! as! Int
+                    self.notiNum = num
+                }
+                print("num: \(self.notiNum)")
                 DispatchQueue.main.async {
-                    self.hottestCollectionView.reloadData()
+                    if self.notiNum == 0 {
+                        label.isHidden = true
+                    } else {
+                        label.text = "\(self.notiNum)"
+                    }
                 }
-            }
-        }
-        catch {
-            print("There was an error")
-        }
-    }
-    
-    func getFollowMachineItems() {
-        // web service Url
-        let url = URL(string: "https://www.surveyx.tw/funchip/follow_machine.php")!
-        // json data
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let json: [String: Any] = [
-            "userId": "\((userData.first?.userId)!)",
-        ]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-        
-        request.httpBody = jsonData
-            
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                if error == nil {
-                    // succceeded
-                    
-                    // Call the parse json function on the data
-                    self.parseFollowMachineJson(data: data!)
-                    
-                } else {
-                    print("error: \(error)")
-                }
-            }
-            // start the task
-            task.resume()
-    }
-    func parseFollowMachineJson(data: Data) {
-        
-        // Parse the data into struct
-        do {
-            // Parse the data into a jsonObject
-        let jsonArray = try JSONSerialization.jsonObject(with: data, options: []) as! [Any]
-            for jsonResult in jsonArray {
-                // json result as a dictionary
-                let jsonDict = jsonResult as! [String:Any]
-                let isStore : Bool = jsonDict["isStore"] as! Bool
-                let id : String = jsonDict["id"] as! String
-                let userId : String = jsonDict["userId"] as! String
-                let title : String = jsonDict["title"] as? String ?? "null"
-                let description : String = jsonDict["description"] as? String ?? "null"
-                let address : String = jsonDict["address_machine"] as? String ?? "null"
-                let store_name : String = jsonDict["store_name"] as? String ?? "null"
-                let manager : String = jsonDict["manager"] as? String ?? "null"
-                let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
-                let line_id : String = jsonDict["line_id"] as? String ?? "null"
-                let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
-                let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
-                let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
-                let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
-                let latitude : String = jsonDict["latitude"] as? String ?? "0"
-                let longitude : String = jsonDict["longitude"] as? String ?? "0"
-                let createDate : String = jsonDict["createDate"] as! String
-                let updateDate : String = jsonDict["updateDate"] as! String
                 
-                // Create new Machine and set its properties
-                let machine = FollowShopMachine(isFollow: true, isStore: isStore, id: id, userId: userId, title: title, description: description, address: address, store_name: store_name, big_machine_no: "", machine_no: "", manager: manager, air_condition: false, fan: false, wifi: false, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
-                //Add it to the array
-                followArr.append(machine)
             }
-            DispatchQueue.main.async {
-                self.hottestCollectionView.reloadData()
-            }
-        }
-        catch {
-            print("There was an error")
-        }
+            task.resume()
     }
     
     func getAd() {
         let serviceUrl = "https://www.surveyx.tw/funchip/get_ad.php"
         // json data
-        let url = URL(string: serviceUrl)
+        let url = URL(string: serviceUrl)!
         
-        if let url = url {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
             // create a Url session
             let session = URLSession(configuration: .default)
             
-            let task = session.dataTask(with: url) { data, response, error in
+            let task = session.dataTask(with: request) { data, response, error in
                 if error == nil {
                     // succceeded
                     
@@ -602,7 +799,6 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
             }
             // start the task
             task.resume()
-        }
     }
     func parseAdJson(data: Data) {
         
@@ -621,6 +817,12 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
                 let ad = AdStruct(position: position, adUrl: adUrl)
                 //Add it to the array
                 adUrlArr.append(ad.adUrl)
+                positionArr.append(position)
+            }
+            DispatchQueue.main.async {
+                print("urlArray: \(self.adUrlArr)")
+                self.adCollectionView.reloadData()
+                self.timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.autoScroll), userInfo: nil, repeats: true)
             }
         }
         catch {
@@ -667,25 +869,28 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
         //        dismiss(animated: true, completion: nil)
     }
     @IBAction func searchBtn(_ sender: Any) {
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "searchView") {
+        if let controller = storyboard?.instantiateViewController(withIdentifier: "searchView") as? SearchViewController{
+            controller.my_latitude = my_latitude
+            controller.my_longitude = my_longitude
             let navigationController = UINavigationController(rootViewController: controller)
             navigationController.modalPresentationStyle = .fullScreen
             present(navigationController, animated: true, completion: nil)
         }
     }
     
-    @IBAction func shareBtn(_ sender: Any) {
-        let activityVC = UIActivityViewController(activityItems: ["Let me recommend you this application https://www.surveyx.tw/"], applicationActivities: nil)
-            // 顯示出我們的 activityVC。
-            self.present(activityVC, animated: true, completion: nil)
-    }
-    @IBAction func notifyBtn(_ sender: Any) {
+    @objc func notifyAction() {
         if let controller = storyboard?.instantiateViewController(withIdentifier: "notify") {
             let navigationController = UINavigationController(rootViewController: controller)
             navigationController.modalPresentationStyle = .fullScreen
             present(navigationController, animated: true, completion: nil)
         }
-
+    }
+    @objc func shareAction() {
+        let activityVC = UIActivityViewController(activityItems: ["Let me recommend you this application https://www.surveyx.tw/"], applicationActivities: nil)
+        //            // 顯示出我們的 activityVC。
+                    self.present(activityVC, animated: true, completion: nil)
+    }
+    @IBAction func mineManageBtnPressed(_ sender: Any) {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let controller = segue.destination as? NewMachineViewController
@@ -712,86 +917,76 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate, UIColl
 }
 
 //page...
-extension HomePageViewController: UIScrollViewDelegate{
+extension HomePageViewController {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == adScrollView {
-            let offsetX = adScrollView.contentOffset.x
-            
-            if offsetX == 0 {
-                let contentOffsetMinX = screenW * CGFloat(imageArray.count)
-                  adScrollView.contentOffset = CGPoint(x: contentOffsetMinX, y: 0)
-                   //此時需記錄更改後的最後位置，待會使用
-                   lastTimeOffsetX = contentOffsetMinX
-            }
-            if offsetX == screenW * CGFloat(imageArray.count + 1) {
-               adScrollView.contentOffset = CGPoint(x: screenW, y: 0)
-               //此時需記錄更改後的最後位置，待會使用
-               lastTimeOffsetX = screenW
-            }
-            
-            let page = round(scrollView.contentOffset.x / screenW) - 1
-            pageControl.currentPage = Int(page)
-        }
-    }
-    
-    // Timer
-    func startTimer() {
-        if timer != nil {
-            timer.invalidate()
-        }
-        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView == adScrollView {
+//            let offsetX = adScrollView.contentOffset.x
+//
+//            if offsetX == 0 {
+//                let contentOffsetMinX = screenW * CGFloat(imageArray.count)
+//                  adScrollView.contentOffset = CGPoint(x: contentOffsetMinX, y: 0)
+//                   //此時需記錄更改後的最後位置，待會使用
+//                   lastTimeOffsetX = contentOffsetMinX
+//            }
+//            if offsetX == screenW * CGFloat(imageArray.count + 1) {
+//               adScrollView.contentOffset = CGPoint(x: screenW, y: 0)
+//               //此時需記錄更改後的最後位置，待會使用
+//               lastTimeOffsetX = screenW
+//            }
+//
+//            let page = round(scrollView.contentOffset.x / screenW) - 1
+//            pageControl.currentPage = Int(page)
+//        }
+//    }
+//
+//    // Timer
+//    func startTimer() {
+//        if timer != nil {
+//            timer.invalidate()
+//        }
+//    }
     @objc func autoScroll() {
-        switch swipe.direction {
-        case .left:
-        if index == imageArray.count + 1 {
-        index = 2
+        var indexPath: IndexPath
+        imageIndex += 1
+        if imageIndex < positionArr.count {
+            indexPath = IndexPath(item: imageIndex, section: 0)
+            adCollectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
         } else {
-        index += 1
+            imageIndex = -1
+            indexPath = IndexPath(item: imageIndex, section: 0)
+            adCollectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+            autoScroll()
         }
-        case .right:
-          //當跑到位置0時，也就是要從間距２開始跑
-          if index == 0 {
-          index = imageArray.count - 1
-          } else {
-            index -= 1
-          }
-        default:
-            break
-        
-        }
-        adScrollView.setContentOffset(CGPoint(x: screenW * CGFloat(index), y: 0), animated: true)
-        lastTimeOffsetX = screenW * CGFloat(index)
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-      //print(“\(scrollView.contentOffset.x)”)
-        timer.invalidate()
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-      //print(“\(scrollView.contentOffset.x)”)
-      guard let lastTimeOffsetX = lastTimeOffsetX else { return }
-      let currentOffsetX = scrollView.contentOffset.x
-      //若有改變方向，變動方向註記
-//      if currentOffsetX < lastTimeOffsetX {
-//        swipe.direction = .left //往左跑
-//      } else {
-//        swipe.direction = .right //往右跑
-//      }
-        swipe.direction = .left
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-      //print(“\(scrollView.contentOffset.x)”)
-      let contentOffsetMinX = scrollView.contentOffset.x
-      index = Int(contentOffsetMinX / screenW)
-      //重新計算頁數
-      lastTimeOffsetX = scrollView.contentOffset.x
-      //若最後真的有換頁，再重新assign進去
-       startTimer()
-    }
+//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//      //print(“\(scrollView.contentOffset.x)”)
+//        timer.invalidate()
+//    }
+//
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//      //print(“\(scrollView.contentOffset.x)”)
+//      guard let lastTimeOffsetX = lastTimeOffsetX else { return }
+//      let currentOffsetX = scrollView.contentOffset.x
+//      //若有改變方向，變動方向註記
+////      if currentOffsetX < lastTimeOffsetX {
+////        swipe.direction = .left //往左跑
+////      } else {
+////        swipe.direction = .right //往右跑
+////      }
+//        swipe.direction = .left
+//    }
+//
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//      //print(“\(scrollView.contentOffset.x)”)
+//      let contentOffsetMinX = scrollView.contentOffset.x
+//      index = Int(contentOffsetMinX / screenW)
+//      //重新計算頁數
+//      lastTimeOffsetX = scrollView.contentOffset.x
+//      //若最後真的有換頁，再重新assign進去
+//       startTimer()
+//    }
         
 }
 

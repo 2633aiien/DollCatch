@@ -22,14 +22,9 @@ class MineTrackFirstViewController: UIViewController, UICollectionViewDelegate, 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineTrackFirstCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
         downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(shopArr[indexPath.row].userId)/store_photo_\(shopArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
         cell.myTitleLabel.text = shopArr[indexPath.row].title
-        let str = shopArr[indexPath.row].address_shop
-        if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
-            let index = str.firstIndex(of: "區")
-            let str3 = str[...index!]
-            cell.myLocationLabel.text = String(str3)
-        } else {
-            cell.myLocationLabel.text = shopArr[indexPath.row].address_shop
-        }
+        
+        cell.myLocationLabel.text = "\(shopArr[indexPath.row].address_city)\(shopArr[indexPath.row].address_area)\(shopArr[indexPath.row].address_name)"
+       
         cell.myNameLabel.text = shopArr[indexPath.row].manager
         let time = timeStringToDate(shopArr[indexPath.row].updateDate)
         cell.myTimeLabel.text = time
@@ -50,11 +45,14 @@ class MineTrackFirstViewController: UIViewController, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let followS = shopArr[indexPath.row]
         if let controller = storyboard?.instantiateViewController(withIdentifier: "machineIntro") as? MachineIntroViewController {
+            controller.tempIsFollow = followS.isFollow
             controller.tempIsStore = followS.isStore
             controller.tempTitle = followS.title
             controller.tempId = followS.id
             controller.tempUserId = followS.userId
-            controller.tempAddress = followS.address_shop
+            controller.tempAddress_city = followS.address_city
+            controller.tempAddress_area = followS.address_area
+            controller.tempAddress_name = followS.address_name
             controller.tempDescription = followS.description
             controller.tempManager = followS.manager
             controller.tempLine = followS.line_id
@@ -64,6 +62,8 @@ class MineTrackFirstViewController: UIViewController, UICollectionViewDelegate, 
             controller.tempAir_condition = followS.air_condition
             controller.tempFan = followS.fan
             controller.tempWifi = followS.wifi
+            controller.tempLatitude = Double(followS.latitude) ?? 0
+            controller.tempLongitude = Double(followS.longitude) ?? 0
             let navigationController = UINavigationController(rootViewController: controller)
             navigationController.modalPresentationStyle = .fullScreen
             present(navigationController, animated: true, completion: nil)
@@ -157,7 +157,9 @@ class MineTrackFirstViewController: UIViewController, UICollectionViewDelegate, 
                 let userId : String = jsonDict["userId"] as! String
                 let title : String = jsonDict["title"] as? String ?? "null"
                 let description : String = jsonDict["description"] as? String ?? "null"
-                let address_shop : String = jsonDict["address_store"] as? String ?? "null"
+                let address_city : String = jsonDict["address_city"] as? String ?? "null"
+                let address_area : String = jsonDict["address_area"] as? String ?? "null"
+                let address_name : String = jsonDict["address_name"] as? String ?? "null"
                 let big_machine_no : String = jsonDict["big_machine_no"] as? String ?? "null"
                 let machine_no : String = jsonDict["machine_no"] as? String ?? "null"
                 let manager : String = jsonDict["manager"] as? String ?? "null"
@@ -167,17 +169,17 @@ class MineTrackFirstViewController: UIViewController, UICollectionViewDelegate, 
                 let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
                 let line_id : String = jsonDict["line_id"] as? String ?? "null"
                 let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
-                let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
+                let remaining_push : String = jsonDict["remaining_push"] as? String ?? "null"
                 let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
                 let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
-                let latitude : Double = jsonDict["latitude"] as? Double ?? 0
-                let longitude : Double = jsonDict["longitude"] as? Double ?? 0
+                let latitude : String = jsonDict["latitude"] as? String ?? "0"
+                let longitude : String = jsonDict["longitude"] as? String ?? "0"
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
                 let isFollow : Bool = jsonDict["isFollow"] as! Bool
                 
                 // Create new Machine and set its properties
-                let shop = newShop(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_shop: address_shop, big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id,activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let shop = newShop(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id,activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
                 shopArr.append(shop)
                 DispatchQueue.main.async {

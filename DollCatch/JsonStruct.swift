@@ -16,17 +16,19 @@ struct newMachine {
     var userId = ""
     var title = ""
     var description = ""
-    var address_machine = ""
+    var address_city = ""
+    var address_area = ""
+    var address_name = ""
     var store_name = ""
     var manager = ""
     var phone_no = ""
     var line_id = ""
     var activity_id = 0
-    var remaining_push = 0
+    var remaining_push = ""
     var announceDate = ""
     var clickTime = 0
-    var latitude = 0.1
-    var longitude = 0.1
+    var latitude = "0.1"
+    var longitude = "0.1"
     var createDate = ""
     var updateDate = ""
 }
@@ -37,7 +39,9 @@ struct newShop {
     var userId = ""
     var title = ""
     var description = ""
-    var address_shop = ""
+    var address_city = ""
+    var address_area = ""
+    var address_name = ""
     var big_machine_no = ""
     var machine_no = ""
     var manager = ""
@@ -47,11 +51,11 @@ struct newShop {
     var phone_no = ""
     var line_id = ""
     var activity_id = 0
-    var remaining_push = 0
+    var remaining_push = ""
     var announceDate = ""
     var clickTime = 0
-    var latitude = 0.1
-    var longitude = 0.1
+    var latitude = "0.1"
+    var longitude = "0.1"
     var createDate = ""
     var updateDate = ""
 }
@@ -62,7 +66,9 @@ struct FollowShopMachine {
     var userId = ""
     var title = ""
     var description = ""
-    var address = ""
+    var address_city = ""
+    var address_area = ""
+    var address_name = ""
     var store_name = ""
     var big_machine_no = ""
     var machine_no = ""
@@ -73,7 +79,7 @@ struct FollowShopMachine {
     var phone_no = ""
     var line_id = ""
     var activity_id = 0
-    var remaining_push = 0
+    var remaining_push = ""
     var announceDate = ""
     var clickTime = 0
     var latitude = "0.1"
@@ -92,6 +98,22 @@ struct UserInformationStruct {
     var level: String
     var photo_position: Bool
 }
+struct NotifyHistory {
+    var title = ""
+    var history = ""
+}
+struct PaymentHistory {
+    var title = ""
+    var money = ""
+    var date = ""
+}
+struct Project {
+    var level = ""
+    var editNo = ""
+    var pushTime = ""
+    var moneyPerMonth = ""
+}
+
 struct AdStruct {
     var position: String
     var adUrl: String

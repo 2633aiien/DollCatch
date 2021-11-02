@@ -46,14 +46,8 @@ class NewMachineSecondViewController: UIViewController, UICollectionViewDelegate
         downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(newMachines[indexPath.row].userId)/machine_photo_\(newMachines[indexPath.row].id)_6")! , imageView: cell.myImageView)
 
         cell.myTitleLabel.text = newMachines[indexPath.row].title
-        let str = newMachines[indexPath.row].address_machine
-        if (str.rangeOfCharacter(from: CharacterSet(charactersIn: "區")) != nil) {
-            let index = str.firstIndex(of: "區")
-            let str3 = str[...index!]
-            cell.myLocationLabel.text = String(str3)
-        } else {
-            cell.myLocationLabel.text = newMachines[indexPath.row].address_machine
-        }
+        
+        cell.myLocationLabel.text = "\(newMachines[indexPath.row].address_city)\(newMachines[indexPath.row].address_area)"
         
         cell.myNameLabel.text = newMachines[indexPath.row].manager
         cell.myTimeLabel.text = newMachines[indexPath.row].updateDate
@@ -88,12 +82,16 @@ class NewMachineSecondViewController: UIViewController, UICollectionViewDelegate
         controller.tempTitle = newM.title
         controller.tempId = newM.id
         controller.tempUserId = newM.userId
-        controller.tempAddress = newM.address_machine
+        controller.tempAddress_city = newM.address_city
+            controller.tempAddress_area = newM.address_area
+            controller.tempAddress_name = newM.address_name
         controller.tempDescription = newM.description
         controller.tempStoreName = newM.store_name
         controller.tempManager = newM.manager
         controller.tempLine = newM.line_id
         controller.tempPhone = newM.phone_no
+            controller.tempLatitude = Double(newM.latitude) ?? 0
+            controller.tempLongitude = Double(newM.longitude) ?? 0
             let navigationController = UINavigationController(rootViewController: controller)
             navigationController.modalPresentationStyle = .fullScreen
             present(navigationController, animated: true, completion: nil)
@@ -195,22 +193,24 @@ class NewMachineSecondViewController: UIViewController, UICollectionViewDelegate
                 let userId : String = jsonDict["userId"] as! String
                 let title : String = jsonDict["title"] as? String ?? "null"
                 let description : String = jsonDict["description"] as? String ?? "null"
-                let address : String = jsonDict["address_machine"] as? String ?? "null"
+                let address_city : String = jsonDict["address_city"] as? String ?? "null"
+                let address_area : String = jsonDict["address_area"] as? String ?? "null"
+                let address_name : String = jsonDict["address_name"] as? String ?? "null"
                 let store_name : String = jsonDict["store_name"] as? String ?? "null"
                 let manager : String = jsonDict["manager"] as? String ?? "null"
                 let phone_no : String = jsonDict["phone_no"] as? String ?? "null"
                 let line_id : String = jsonDict["line_id"] as? String ?? "null"
                 let activity_id : Int = jsonDict["activity_id"] as? Int ?? 0
-                let remaining_push : Int = jsonDict["remaining_push"] as? Int ?? 0
+                let remaining_push : String = jsonDict["remaining_push"] as? String ?? "null"
                 let announceDate : String = jsonDict["announceDate"] as? String ?? "null"
                 let clickTime : Int = jsonDict["clickTime"] as? Int ?? 0
-                let latitude : Double = jsonDict["latitude"] as? Double ?? 0
-                let longitude : Double = jsonDict["longitude"] as? Double ?? 0
+                let latitude : String = jsonDict["latitude"] as? String ?? "0"
+                let longitude : String = jsonDict["longitude"] as? String ?? "0"
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
                 
                 // Create new Machine and set its properties
-                let machine = newMachine(isStore: isStore, id: id, userId: userId, title: title, description: description, address_machine: address, store_name: store_name, manager: manager, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let machine = newMachine(isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, store_name: store_name, manager: manager, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
                 newMachines.append(machine)
                 DispatchQueue.main.async {

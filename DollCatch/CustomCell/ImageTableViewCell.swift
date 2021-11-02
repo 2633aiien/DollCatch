@@ -36,13 +36,13 @@ class ImageTableViewCell: UITableViewCell {
 
 }
 
-extension ImageTableViewCell {
-    func setCollectionViewDataSourceDelegate
-    <D: UICollectionViewDelegate & UICollectionViewDataSource>
-    (_ dataSourceDelegate: D, forRow row: Int) {
-        secondCollectionView.delegate = dataSourceDelegate
-        secondCollectionView.dataSource = dataSourceDelegate
-        
-        secondCollectionView.reloadData()
-    }
-}
+//extension ImageTableViewCell {
+//    func setCollectionViewDataSourceDelegate
+//    <D: UICollectionViewDelegate & UICollectionViewDataSource>
+//    (_ dataSourceDelegate: D, forRow row: Int) {
+//        secondCollectionView.delegate = dataSourceDelegate
+//        secondCollectionView.dataSource = dataSourceDelegate
+//        
+//        secondCollectionView.reloadData()
+//    }
+//}

@@ -8,21 +8,7 @@
 import UIKit
 
 class FirstCustomTableViewCell: UITableViewCell {
-//    @IBOutlet weak var titleLabel: UILabel!
-//    @IBOutlet weak var pinImageView: UIImageView!
-//    @IBOutlet weak var addressLabel: UILabel!
-//    @IBOutlet weak var mapButton: UIButton!
-//    @IBOutlet weak var descriptionTextField: UITextField!
-//    @IBOutlet weak var arrowLabel: UILabel!
-    
-//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//            super.init(style: style, reuseIdentifier: reuseIdentifier)
-//            commonInit()
-//        }
-//
-//        required init?(coder: NSCoder) {
-//            fatalError("init(coder:) has not been implemented")
-//        }
+
     override func awakeFromNib() {
        super.awakeFromNib()
        //custom logic goes here
@@ -33,8 +19,8 @@ class FirstCustomTableViewCell: UITableViewCell {
         private let cellView = FirstCustomTableCellView()
         private let detailView = FirstCustomTableDetailView()
         
-        func setUI(title: String, address: String, description: String) {
-            cellView.setUI(title: title, address: address)
+    func setUI(title: String, address: String, description: String, lat: Double, lon: Double) {
+            cellView.setUI(title: title, address: address, lat: lat, lon: lon)
             detailView.setUI(description: description)
         }
         
