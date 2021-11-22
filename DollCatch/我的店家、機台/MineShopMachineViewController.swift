@@ -273,17 +273,19 @@ class MineShopMachineViewController: UIViewController, UICollectionViewDelegate,
     func iOSNotify(id: Int) {
         let url = URL(string: "https://www.surveyx.tw/funchip/noti.php")!
         var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        let json: [String: Any] = [
-//            "isStore" : "\(isStore)",
-//            "objectId" : "\(id)"
-//        ]
-//        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-//        
-//        request.httpBody = jsonData
+        request.httpMethod = "POST"
+        let json: [String: Any] = [
+            "isStore" : "\(isStore)",
+            "objectId" : "\(id)"
+        ]
+        print("isStore: \(isStore),obj: \(id)")
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        request.httpBody = jsonData
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error == nil {
+                print("iOS success: \(response)")
             }
         }
         task.resume()

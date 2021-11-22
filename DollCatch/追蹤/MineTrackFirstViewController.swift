@@ -1,29 +1,79 @@
 //
-//  MoreSecondViewController.swift
+//  MineTrackFirstViewController.swift
 //  DollCatch
 //
-//  Created by allen on 2021/9/17.
+//  Created by allen on 2021/8/25.
 //
 
 import UIKit
 import CoreData
 
-class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class MineTrackFirstViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var myCollectionView: UICollectionView!
-    
-    var userData : [UserInformationClass] = []
-    var followArr : [FollowShopMachine] = []
-    
     var width = Int(UIScreen.main.bounds.width)-40
     var height = 120
+    var shopArr : [newShop] = []
+    var userData : [UserInformationClass] = []
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return shopArr.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineTrackFirstCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
+        downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(shopArr[indexPath.row].userId)/store_photo_\(shopArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
+        cell.myTitleLabel.text = shopArr[indexPath.row].title
+        
+        cell.myLocationLabel.text = "\(shopArr[indexPath.row].address_city)\(shopArr[indexPath.row].address_area)\(shopArr[indexPath.row].address_name)"
+       
+        cell.myNameLabel.text = shopArr[indexPath.row].manager
+        let time = shopArr[indexPath.row].updateDate
+        cell.myTimeLabel.text = time
+        cell.shareBtn.setImage(UIImage(named: "12"), for: .normal)
+        
+        cell.shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
+        
+        cell.heartBtn.tag = indexPath.row
+        cell.heartBtn.addTarget(self, action: #selector(follow(_ :)), for: .touchUpInside)
+            cell.heartBtn.setImage(UIImage(named: "followed"), for: .normal)
+        
+        cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(14)
+        cell.myNameLabel.font = cell.myNameLabel.font.withSize(14)
+        cell.myTimeLabel.font = cell.myTimeLabel.font.withSize(14)
+        
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let followS = shopArr[indexPath.row]
+        if let controller = storyboard?.instantiateViewController(withIdentifier: "machineIntro") as? MachineIntroViewController {
+            controller.tempIsFollow = followS.isFollow
+            controller.tempIsStore = followS.isStore
+            controller.tempTitle = followS.title
+            controller.tempId = followS.id
+            controller.tempUserId = followS.userId
+            controller.tempAddress_city = followS.address_city
+            controller.tempAddress_area = followS.address_area
+            controller.tempAddress_name = followS.address_name
+            controller.tempDescription = followS.description
+            controller.tempManager = followS.manager
+            controller.tempLine = followS.line_id
+            controller.tempPhone = followS.phone_no
+            controller.tempBig_machine_no = followS.big_machine_no
+            controller.tempMachine_no = followS.machine_no
+            controller.tempAir_condition = followS.air_condition
+            controller.tempFan = followS.fan
+            controller.tempWifi = followS.wifi
+            controller.tempLatitude = Double(followS.latitude) ?? 0
+            controller.tempLongitude = Double(followS.longitude) ?? 0
+            let navigationController = UINavigationController(rootViewController: controller)
+            navigationController.modalPresentationStyle = .fullScreen
+            present(navigationController, animated: true, completion: nil)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         queryFromCoreData()
-        if !userData .isEmpty {
-        getFollowShopItems()
-        }
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -40,72 +90,14 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
         myCollectionView.delegate = self
         myCollectionView.dataSource = self
     }
-
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return followArr.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if !followArr .isEmpty {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineTrackFirstCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
-        downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(followArr[indexPath.row].userId)/store_photo_\(followArr[indexPath.row].id)_6")! , imageView: cell.myImageView)
-        cell.myTitleLabel.text = followArr[indexPath.row].title
-    
-        cell.myLocationLabel.text = "\(followArr[indexPath.row].address_city)\(followArr[indexPath.row].address_area)"
-            
-        cell.myNameLabel.text = followArr[indexPath.row].manager
-        let time = timeStringToDate(followArr[indexPath.row].updateDate)
-        cell.myTimeLabel.text = time
-        cell.shareBtn.setImage(UIImage(named: "12"), for: .normal)
-        
-        cell.shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
-        
-            cell.heartBtn.tag = indexPath.row
-        
-            cell.heartBtn.addTarget(self, action: #selector(follow(_ :)), for: .touchUpInside)
-        
-                cell.heartBtn.setImage(UIImage(named: "followed"), for: .normal)
-        
-        cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(14)
-        cell.myNameLabel.font = cell.myNameLabel.font.withSize(14)
-        cell.myTimeLabel.font = cell.myTimeLabel.font.withSize(14)
-        
-        return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MineTrackFirstCollectionViewCell", for: indexPath) as! SearchCollectionViewCell
-            return cell
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        shopArr.removeAll()
+        if !userData .isEmpty {
+        getNewShopItems()
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let newF = followArr[indexPath.row]
-        if let controller = storyboard?.instantiateViewController(withIdentifier: "machineIntro") as? MachineIntroViewController{
-            controller.tempIsStore = newF.isStore
-            controller.tempTitle = newF.title
-            controller.tempId = newF.id
-            controller.tempUserId = newF.userId
-            controller.tempAddress_city = newF.address_city
-            controller.tempAddress_area = newF.address_area
-            controller.tempAddress_name = newF.address_name
-            controller.tempDescription = newF.description
-            controller.tempManager = newF.manager
-            controller.tempLine = newF.line_id
-            controller.tempPhone = newF.phone_no
-            controller.tempBig_machine_no = newF.big_machine_no
-            controller.tempMachine_no = newF.machine_no
-            controller.tempAir_condition = newF.air_condition
-            controller.tempFan = newF.fan
-            controller.tempWifi = newF.wifi
-            controller.tempStoreName = newF.store_name
-            controller.tempIsFollow = newF.isFollow
-            controller.tempLatitude = Double(newF.latitude) ?? 0
-            controller.tempLongitude = Double(newF.longitude) ?? 0
-            
-            let navigationController = UINavigationController(rootViewController: controller)
-            navigationController.modalPresentationStyle = .fullScreen
-            present(navigationController, animated: true, completion: nil)
-    }
+        myCollectionView.reloadData()
     }
     func downloadImage(from url: URL, imageView: UIImageView) {
         print("Download Started")
@@ -123,22 +115,7 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
-    func queryFromCoreData() {
-        let moc = CoreDataHelper.shared.managedObjectContext()
-        
-        let fetchRequest = NSFetchRequest<UserInformationClass>(entityName: "UserInformationClass")
-        
-        moc.performAndWait {
-            do{
-                self.userData = try moc.fetch(fetchRequest)//查詢，回傳為[Note]
-            }catch{
-                print("error \(error)")
-                self.userData = []//如果有錯，回傳空陣列
-            }
-        }
-    }
-
-    func getFollowShopItems() {
+    func getNewShopItems() {
         // web service Url
         let url = URL(string: "https://www.surveyx.tw/funchip/follow_store.php")!
         // json data
@@ -156,7 +133,7 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
                     // succceeded
                     
                     // Call the parse json function on the data
-                    self.parseFollowShopJson(data: data!)
+                    self.parseNewShopJson(data: data!)
                     
                 } else {
                     print("error: \(error)")
@@ -166,7 +143,7 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
             task.resume()
         
     }
-    func parseFollowShopJson(data: Data) {
+    func parseNewShopJson(data: Data) {
         
         // Parse the data into struct
         do {
@@ -199,11 +176,12 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
                 let longitude : String = jsonDict["longitude"] as? String ?? "0"
                 let createDate : String = jsonDict["createDate"] as! String
                 let updateDate : String = jsonDict["updateDate"] as! String
+                let isFollow : Bool = jsonDict["isFollow"] as! Bool
                 
                 // Create new Machine and set its properties
-                let shop = FollowShopMachine(isFollow: true, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, store_name: "", big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id, activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
+                let shop = newShop(isFollow: isFollow, isStore: isStore, id: id, userId: userId, title: title, description: description, address_city: address_city, address_area: address_area, address_name: address_name, big_machine_no: big_machine_no, machine_no: machine_no, manager: manager, air_condition: air_condition, fan: fan, wifi: wifi, phone_no: phone_no, line_id: line_id,activity_id: activity_id, remaining_push: remaining_push, announceDate: announceDate, clickTime: clickTime, latitude: latitude, longitude: longitude, createDate: createDate, updateDate: updateDate)
                 //Add it to the array
-                followArr.append(shop)
+                shopArr.append(shop)
                 DispatchQueue.main.async {
                     self.myCollectionView.reloadData()
                 }
@@ -214,18 +192,36 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
+    func queryFromCoreData() {
+        let moc = CoreDataHelper.shared.managedObjectContext()
+        
+        let fetchRequest = NSFetchRequest<UserInformationClass>(entityName: "UserInformationClass")
+        
+        moc.performAndWait {
+            do{
+                self.userData = try moc.fetch(fetchRequest)//查詢，回傳為[Note]
+            }catch{
+                print("error \(error)")
+                self.userData = []//如果有錯，回傳空陣列
+            }
+        }
+    }
+
+    
     @objc func share() {
         let activityVC = UIActivityViewController(activityItems: ["Let me recommend you this application https://www.surveyx.tw/"], applicationActivities: nil)
             // 顯示出我們的 activityVC。
             self.present(activityVC, animated: true, completion: nil)
     }
+    
     @objc func follow(_ sender : UIButton) {
+        
         postFollow(index: sender.tag)
-        if followArr[sender.tag].isFollow == true {
-            followArr[sender.tag].isFollow = false
+        if shopArr[sender.tag].isFollow == true {
+            shopArr[sender.tag].isFollow = false
             sender.setImage(UIImage(named: "unfollow"), for: .normal)
         } else {
-            followArr[sender.tag].isFollow = true
+            shopArr[sender.tag].isFollow = true
             sender.setImage(UIImage(named: "followed"), for: .normal)
         }
     }
@@ -234,16 +230,16 @@ class MoreSecondViewController: UIViewController, UICollectionViewDelegate, UICo
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         var json: [String: Any] = [:]
-        if followArr[index].isFollow == true {
+        if shopArr[index].isFollow == true {
             json = [
                 "userId": "\(userData[0].userId)",
-                "objectId": "\(followArr[index].id)"
+                "objectId": "\(shopArr[index].id)"
             ]
         } else {
             json = [
-                "isFollow": "\(followArr[index].isFollow)",
+                "isFollow": "\(shopArr[index].isFollow)",
                 "userId": "\(userData[0].userId)",
-                "objectId": "\(followArr[index].id)"
+                "objectId": "\(shopArr[index].id)"
             ]
         }
         let jsonData = try? JSONSerialization.data(withJSONObject: json)

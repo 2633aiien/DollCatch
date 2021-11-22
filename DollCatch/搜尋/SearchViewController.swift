@@ -225,7 +225,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             countrySelectedIndex = indexPath.row
             if cell?.textLabel?.textColor == .systemGray {
                 secondSelectedArray.removeAll()
-                secondSelectedArray.append(countryArr[indexPath.row])
                 tempCountry = cell?.textLabel?.text ?? ""
             } else {
                 countrySelectedIndex = -1
@@ -244,7 +243,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             if cell?.textLabel?.textColor == .systemGray {
                 cell?.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
                 cell?.textLabel?.textColor = .black
-                if tempCountry != "" {
+                if tempCountry != "" && indexPath.row != 0 {
                     secondSelectedArray.append("\(areaArr[indexPath.row])")
                 }
                 areaIndexArr.append(indexPath.row)
@@ -263,7 +262,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 areaIndexArr = areaIndexArr.filter { $0 != indexPath.row }
                 if areaIndexArr .isEmpty {
                     secondAllBool = true
-                    secondSelectedArray.append(tempCountry)
                     areaTableView.reloadData()
                 }
             }
@@ -276,7 +274,6 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                         secondSelectedArray = secondSelectedArray.filter { $0 != str }
                     }
                 }
-                secondSelectedArray.append(tempCountry)
                 print("s1")
                 areaTableView.reloadData()
             } else if indexPath.row == 0 && secondAllBool == true{
@@ -314,7 +311,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 cell.myLocationLabel.text = "\(searchArr[indexPath.row].address_city)\(searchArr[indexPath.row].address_area)"
             
             cell.myNameLabel.text = searchArr[indexPath.row].manager
-            let time = timeStringToDate(searchArr[indexPath.row].updateDate)
+            let time = searchArr[indexPath.row].updateDate
             cell.myTimeLabel.text = time
             cell.shareBtn.setImage(UIImage(named: "12"), for: .normal)
             
@@ -343,8 +340,8 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                 cell.myLocationLabel.text = "\(searchArr[indexPath.row].address_city)\(searchArr[indexPath.row].address_area)"
             
             cell.myNameLabel.text = searchArr[indexPath.row].manager
-            let time = timeStringToDate(searchArr[indexPath.row].updateDate)
-            cell.myTimeLabel.text = time
+            
+            cell.myTimeLabel.text = searchArr[indexPath.row].updateDate
             cell.shareBtn.setImage(UIImage(named: "12"), for: .normal)
             
             cell.shareBtn.addTarget(self, action: #selector(share), for: .touchUpInside)
@@ -526,6 +523,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             "category" : thirdSelectedArray,
             "nearby_distance" : fourthDict
         ]
+        print("add: \(tempCountry)&\(secondSelectedArray)")
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
         request.httpBody = jsonData
@@ -613,7 +611,11 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
             print("Download Finished")
             // always update the UI from the main thread
             DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)
+                if UIImage(data: data) != nil {
+                    imageView.image = UIImage(data: data)
+                } else {
+                    imageView.image = UIImage(named: "withoutImage")
+                }
             }
         }
     }
@@ -723,7 +725,7 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         default:
             break
         }
-        print("結果：\(firstDict),\(secondSelectedArray),\(thirdSelectedArray),\(searchArr.count)")
+        print("結果：\(firstDict),\(secondSelectedArray),\(thirdSelectedArray),\(fourthDict),\(searchArr.count)")
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
         dropDownTableView.isHidden = true
@@ -809,8 +811,9 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
         let identifier = "MyPin"
         let w = Double(UIScreen.main.bounds.size.width)-60
         let h: Double = 120
-        let selectedTitle = "\(annotation.title ?? "")"
-        var index = 0
+        let selectedTitle = "\(annotation.title! ?? "")"
+//        var index = 0
+        print("title: \(selectedTitle)")
                if annotation.isKind(of: MKUserLocation.self) {
                return nil
                }
@@ -822,16 +825,12 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                    annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                    annotationView?.canShowCallout = true
                }
-        for i in 0...searchArr.count-1 {
-            if searchArr[i].title == selectedTitle {
-                index = i
-            }
-        }
+        
 
         var myImageView: UIImageView = {
             let imageView = UIImageView()
             imageView.contentMode = .scaleAspectFit
-            imageView.tintColor = .white
+            
             return imageView
         }()
         var myTextView: UITextView = {
@@ -849,23 +848,33 @@ class SearchViewController: UIViewController, UICollectionViewDelegate, UICollec
                                 x: w/2, y: 10, width: w/3, height: (h-20)/4))
         heartImageView = UIImageView(frame: CGRect.init(x: w-40, y: h/2+15, width: 40, height: 40))
         
-        downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(searchArr[index].userId)/store_photo_\(searchArr[index].id)_6")! , imageView: myImageView)
-        myTextView.text = "\(searchArr[index].address_city)\(searchArr[index].address_area)\(searchArr[index].address_name)\n\(searchArr[index].manager)\n\(searchArr[index].updateDate)"
         myTextView.font = myTextView.font?.withSize(17
         )
         NSLayoutConstraint.activate([
             myTextView.widthAnchor.constraint(equalToConstant: w/3),
             myTextView.heightAnchor.constraint(equalToConstant: h)
         ])
-        if searchArr[index].isFollow {
-            heartImageView.image = UIImage(named: "followed")
-        } else {
-            heartImageView.image = UIImage(named: "unfollow")
-        }
-        
         annotationView?.leftCalloutAccessoryView = myImageView
         annotationView?.detailCalloutAccessoryView = myTextView
         annotationView?.rightCalloutAccessoryView = heartImageView
+        for i in 0...searchArr.count-1 {
+            
+            if searchArr[i].title == selectedTitle {
+                downloadImage(from: URL(string: "https://www.surveyx.tw/funchip/images/userId_\(searchArr[i].userId)/store_photo_\(searchArr[i].id)_6")! , imageView: myImageView)
+                print("image: \(myImageView.image)")
+                myTextView.text = "\(searchArr[i].address_city)\(searchArr[i].address_area)\(searchArr[i].address_name)\n\(searchArr[i].manager)\n\(searchArr[i].updateDate)"
+                
+                if searchArr[i].isFollow {
+                    heartImageView.image = UIImage(named: "followed")
+                } else {
+                    heartImageView.image = UIImage(named: "unfollow")
+                }
+                break
+            }
+        }
+        
+        
+        
 
                return annotationView
         }

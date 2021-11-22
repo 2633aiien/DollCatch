@@ -23,7 +23,7 @@ class NewMachineSecondViewController: UIViewController, UICollectionViewDelegate
     
     var newMachineModel = NewMachineModel()
     var newMachines = [newMachine]()
-    var moreInt = 1
+    var moreInt = 0
     
     var userData : [UserInformationClass] = []
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -67,8 +67,7 @@ class NewMachineSecondViewController: UIViewController, UICollectionViewDelegate
         cell.myLocationLabel.font = cell.myLocationLabel.font.withSize(12)
         cell.myNameLabel.font = cell.myNameLabel.font.withSize(12)
         cell.myTimeLabel.font = cell.myTimeLabel.font.withSize(12)
-        cell.myTimeLabel.textAlignment = .right
-        
+                
         return cell
         }
     }

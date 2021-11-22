@@ -272,9 +272,9 @@ class EditMineShopViewController: UIViewController, UITableViewDelegate, UITable
             // always update the UI from the main thread
             DispatchQueue.main.async() {
                 if UIImage(data: data) != nil {
-                imageView.image = UIImage(data: data)
+                    imageView.image = UIImage(data: data)
                 } else {
-                    imageView.image = UIImage(named: "image")
+                    imageView.image = UIImage(named: "withoutImage")
                 }
             }
         }
@@ -517,7 +517,9 @@ class EditMineShopViewController: UIViewController, UITableViewDelegate, UITable
                         json = [
                     "objectName":"\(cell1.titleTextField.text!)",
                     "objectDescribe":"\(cell2.describeTextField.text!)",
-                    "address":"\(cell2.countryName)\(cell2.areaName)\(cell2.addressTextField.text!)",
+                    "address_city":"\(cell2.countryName)",
+                    "address_area":"\(cell2.areaName)",
+                    "address_name":"\(cell2.addressTextField.text!)",
                     "bigMachine":"\(cell3.bigMachineTextField.text!)",
                     "machine":"\(cell3.machineTextField.text!)",
                     "manager":"\(cell3.managerTextField.text!)",

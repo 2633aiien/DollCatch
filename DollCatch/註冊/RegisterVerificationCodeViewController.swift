@@ -104,47 +104,7 @@ class RegisterVerificationCodeViewController: UIViewController,UITextFieldDelega
                   displayNameString += tmpFactorInfo.displayName ?? ""
                   displayNameString += " "
                 }
-//                self.showTextInputPrompt(
-//                  withMessage: "Select factor to sign in\n\(displayNameString)",
-//                  completionBlock: { userPressedOK, displayName in
-//                    var selectedHint: PhoneMultiFactorInfo?
-//                    for tmpFactorInfo in resolver.hints {
-//                      if displayName == tmpFactorInfo.displayName {
-//                        selectedHint = tmpFactorInfo as? PhoneMultiFactorInfo
-//                      }
-//                    }
-//                    PhoneAuthProvider.provider()
-//                      .verifyPhoneNumber(with: selectedHint!, uiDelegate: nil,
-//                                         multiFactorSession: resolver
-//                                           .session) { verificationID, error in
-//                        if error != nil {
-//                          print(
-//                            "Multi factor start sign in failed. Error: \(error.debugDescription)"
-//                          )
-//                        } else {
-//                          self.showTextInputPrompt(
-//                            withMessage: "Verification code for \(selectedHint?.displayName ?? "")",
-//                            completionBlock: { userPressedOK, verificationCode in
-//                              let credential: PhoneAuthCredential? = PhoneAuthProvider.provider()
-//                                .credential(withVerificationID: verificationID!,
-//                                            verificationCode: verificationCode!)
-//                              let assertion: MultiFactorAssertion? = PhoneMultiFactorGenerator
-//                                .assertion(with: credential!)
-//                              resolver.resolveSignIn(with: assertion!) { authResult, error in
-//                                if error != nil {
-//                                  print(
-//                                    "Multi factor finanlize sign in failed. Error: \(error.debugDescription)"
-//                                  )
-//                                } else {
-//                                  self.navigationController?.popViewController(animated: true)
-//                                }
-//                              }
-//                            }
-//                          )
-//                        }
-//                      }
-//                  }
-//                )
+
               } else {
                 print(error.localizedDescription)
                 return

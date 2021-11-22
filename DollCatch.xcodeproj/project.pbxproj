@@ -11,7 +11,6 @@
 		9F67A6A226FC305700EF54BF /* ImageIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F67A6A126FC305600EF54BF /* ImageIntroViewController.swift */; };
 		9F6E2DED27054C2000A4DF2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F6E2DEC27054C1F00A4DF2A /* GoogleService-Info.plist */; };
 		9F6E2DF2270BE8D200A4DF2A /* myScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E2DF1270BE8D000A4DF2A /* myScrollView.swift */; };
-		9F6E2DF4270C00AD00A4DF2A /* SearchResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E2DF3270C00AB00A4DF2A /* SearchResultCollectionViewCell.swift */; };
 		9F6E2DF6270C18F300A4DF2A /* MyAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E2DF5270C18F100A4DF2A /* MyAnnotationView.swift */; };
 		9F8DCCD5270D577700250E24 /* ExtenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DCCD4270D577600250E24 /* ExtenseView.swift */; };
 		9F8DCCD7270D716400250E24 /* PlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8DCCD6270D716400250E24 /* PlanCollectionViewCell.swift */; };
@@ -41,12 +40,10 @@
 		9FA4899926D603000012E7AE /* MineTrackSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899826D603000012E7AE /* MineTrackSecondViewController.swift */; };
 		9FA4899B26D614600012E7AE /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899A26D614600012E7AE /* VideoViewController.swift */; };
 		9FA4899F26D62C6F0012E7AE /* MineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4899E26D62C6F0012E7AE /* MineCollectionViewCell.swift */; };
-		9FA489A126D7733B0012E7AE /* UnfinishViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489A026D773390012E7AE /* UnfinishViewController.swift */; };
 		9FA489A326D77C630012E7AE /* NewMachineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489A226D77C620012E7AE /* NewMachineModel.swift */; };
 		9FA489A526D77D2C0012E7AE /* JsonStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489A426D77D2C0012E7AE /* JsonStruct.swift */; };
 		9FA489A926DCB7930012E7AE /* NewMachineFirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489A826DCB78E0012E7AE /* NewMachineFirstViewController.swift */; };
 		9FA489AB26DCB7DC0012E7AE /* NewMachineSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489AA26DCB7DC0012E7AE /* NewMachineSecondViewController.swift */; };
-		9FA489AD26DCC52F0012E7AE /* NewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489AC26DCC52E0012E7AE /* NewCollectionViewCell.swift */; };
 		9FA489B226DF391A0012E7AE /* NewShopModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA489B126DF391A0012E7AE /* NewShopModel.swift */; };
 		9FA4ACE226E0819700CF06A0 /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4ACE126E0819700CF06A0 /* ForgetPasswordViewController.swift */; };
 		9FA4ACE426E08BB800CF06A0 /* RegisterVerificationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4ACE326E08BB800CF06A0 /* RegisterVerificationCodeViewController.swift */; };
@@ -111,7 +108,6 @@
 		9F6E2DEC27054C1F00A4DF2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F6E2DEE270559B300A4DF2A /* DollCatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DollCatch.entitlements; sourceTree = "<group>"; };
 		9F6E2DF1270BE8D000A4DF2A /* myScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myScrollView.swift; sourceTree = "<group>"; };
-		9F6E2DF3270C00AB00A4DF2A /* SearchResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		9F6E2DF5270C18F100A4DF2A /* MyAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAnnotationView.swift; sourceTree = "<group>"; };
 		9F8DCCD4270D577600250E24 /* ExtenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtenseView.swift; sourceTree = "<group>"; };
 		9F8DCCD6270D716400250E24 /* PlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -142,12 +138,10 @@
 		9FA4899826D603000012E7AE /* MineTrackSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineTrackSecondViewController.swift; sourceTree = "<group>"; };
 		9FA4899A26D614600012E7AE /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		9FA4899E26D62C6F0012E7AE /* MineCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineCollectionViewCell.swift; sourceTree = "<group>"; };
-		9FA489A026D773390012E7AE /* UnfinishViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfinishViewController.swift; sourceTree = "<group>"; };
 		9FA489A226D77C620012E7AE /* NewMachineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMachineModel.swift; sourceTree = "<group>"; };
 		9FA489A426D77D2C0012E7AE /* JsonStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonStruct.swift; sourceTree = "<group>"; };
 		9FA489A826DCB78E0012E7AE /* NewMachineFirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMachineFirstViewController.swift; sourceTree = "<group>"; };
 		9FA489AA26DCB7DC0012E7AE /* NewMachineSecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMachineSecondViewController.swift; sourceTree = "<group>"; };
-		9FA489AC26DCC52E0012E7AE /* NewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionViewCell.swift; sourceTree = "<group>"; };
 		9FA489B126DF391A0012E7AE /* NewShopModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShopModel.swift; sourceTree = "<group>"; };
 		9FA4ACE126E0819700CF06A0 /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
 		9FA4ACE326E08BB800CF06A0 /* RegisterVerificationCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVerificationCodeViewController.swift; sourceTree = "<group>"; };
@@ -246,7 +240,7 @@
 			path = "我的店家、機台";
 			sourceTree = "<group>";
 		};
-		9F916214270FFEDB00E2295A /* EditMineMachine */ = {
+		9F916214270FFEDB00E2295A /* 編輯我的店家、機台 */ = {
 			isa = PBXGroup;
 			children = (
 				9FE5E38326CA2FBB00170372 /* EditMineShopViewController.swift */,
@@ -259,7 +253,7 @@
 				9F916221270FFFD200E2295A /* FirstMineItemCollectionViewCell.swift */,
 				9F916223270FFFE200E2295A /* SecondMineItemCollectionViewCell.swift */,
 			);
-			path = EditMineMachine;
+			path = "編輯我的店家、機台";
 			sourceTree = "<group>";
 		};
 		9F941739271D5374007322FE /* 推播歷史 */ = {
@@ -298,6 +292,148 @@
 				9FACF73926F05D600020F23F /* FirstImageTableViewCell.swift */,
 			);
 			path = CustomCell;
+			sourceTree = "<group>";
+		};
+		9FB49BE9273509C1008D0D9A /* 主頁 */ = {
+			isa = PBXGroup;
+			children = (
+				9FB49BEE27350E3D008D0D9A /* 最新追蹤查看更多 */,
+				9FB49BED27350DAA008D0D9A /* 最新機台店家查看更多 */,
+				9FE5E35726CA159C00170372 /* HomePageViewController.swift */,
+				9F960C142726828D00690CFA /* notifyBtn.swift */,
+			);
+			path = "主頁";
+			sourceTree = "<group>";
+		};
+		9FB49BEB27350AC4008D0D9A /* CollectionCell */ = {
+			isa = PBXGroup;
+			children = (
+				9FACF73B26F43EB90020F23F /* MoreCollectionViewCell.swift */,
+				9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */,
+				9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */,
+				9F9C8B26271FD39100F7BED3 /* AdCollectionViewCell.swift */,
+				9FA4899426D4C5900012E7AE /* SearchCollectionViewCell.swift */,
+			);
+			path = CollectionCell;
+			sourceTree = "<group>";
+		};
+		9FB49BEC27350CB8008D0D9A /* 我的 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E37526CA21A300170372 /* MineManagementViewController.swift */,
+				9FA4899E26D62C6F0012E7AE /* MineCollectionViewCell.swift */,
+				9F91620F270ECB3C00E2295A /* 我的店家、機台 */,
+				9F941739271D5374007322FE /* 推播歷史 */,
+				9FD20753271E9B39003F7A77 /* 付費紀錄 */,
+			);
+			name = "我的";
+			sourceTree = "<group>";
+		};
+		9FB49BED27350DAA008D0D9A /* 最新機台店家查看更多 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E38D26CA323800170372 /* NewMachineViewController.swift */,
+				9FA489A826DCB78E0012E7AE /* NewMachineFirstViewController.swift */,
+				9FA489AA26DCB7DC0012E7AE /* NewMachineSecondViewController.swift */,
+			);
+			path = "最新機台店家查看更多";
+			sourceTree = "<group>";
+		};
+		9FB49BEE27350E3D008D0D9A /* 最新追蹤查看更多 */ = {
+			isa = PBXGroup;
+			children = (
+				9FACF73D26F46B6A0020F23F /* MoreFollowViewController.swift */,
+				9FACF73F26F46C800020F23F /* MoreFirstViewController.swift */,
+				9FACF74126F46CAC0020F23F /* MoreSecondViewController.swift */,
+			);
+			path = "最新追蹤查看更多";
+			sourceTree = "<group>";
+		};
+		9FB49BEF27350EA7008D0D9A /* 追蹤 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E39126CA326000170372 /* MineTrackViewController.swift */,
+				9FA4899626D602E70012E7AE /* MineTrackFirstViewController.swift */,
+				9FA4899826D603000012E7AE /* MineTrackSecondViewController.swift */,
+			);
+			path = "追蹤";
+			sourceTree = "<group>";
+		};
+		9FB49BF027350F4A008D0D9A /* 註冊 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E36B26CA1E6100170372 /* RegisterViewController.swift */,
+				9FA4ACE326E08BB800CF06A0 /* RegisterVerificationCodeViewController.swift */,
+				9FE5E36F26CA1F4600170372 /* VerificationCodeViewController.swift */,
+			);
+			path = "註冊";
+			sourceTree = "<group>";
+		};
+		9FB49BF127350F90008D0D9A /* 個人資料 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E36D26CA1ED900170372 /* PersonalViewController.swift */,
+				9FE5E37326CA205000170372 /* ChangePasswordViewController.swift */,
+			);
+			path = "個人資料";
+			sourceTree = "<group>";
+		};
+		9FB49BF227350FBF008D0D9A /* 登入 */ = {
+			isa = PBXGroup;
+			children = (
+				9FA4899226D361760012E7AE /* LoginViewController.swift */,
+				9FB49BF327350FE5008D0D9A /* 忘記密碼 */,
+			);
+			path = "登入";
+			sourceTree = "<group>";
+		};
+		9FB49BF327350FE5008D0D9A /* 忘記密碼 */ = {
+			isa = PBXGroup;
+			children = (
+				9FA4ACE926E0B87600CF06A0 /* ChangeForgetPwViewController.swift */,
+				9FA4ACE126E0819700CF06A0 /* ForgetPasswordViewController.swift */,
+			);
+			path = "忘記密碼";
+			sourceTree = "<group>";
+		};
+		9FB49BF42735108B008D0D9A /* 方案付費 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E37D26CA2EF100170372 /* ChoosePlanViewController.swift */,
+				9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */,
+				9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */,
+				9F8DCCD6270D716400250E24 /* PlanCollectionViewCell.swift */,
+				9FE5E38F26CA324700170372 /* WebViewController.swift */,
+			);
+			path = "方案付費";
+			sourceTree = "<group>";
+		};
+		9FB49BF5273510F5008D0D9A /* 機台詳細介紹 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E38726CA304100170372 /* MachineIntroViewController.swift */,
+				9F67A6A126FC305600EF54BF /* ImageIntroViewController.swift */,
+			);
+			path = "機台詳細介紹";
+			sourceTree = "<group>";
+		};
+		9FB49BF6273511A8008D0D9A /* MyItem */ = {
+			isa = PBXGroup;
+			children = (
+				9FA4ACE726E0B21900CF06A0 /* MyTextField.swift */,
+				9F6E2DF1270BE8D000A4DF2A /* myScrollView.swift */,
+				9F6E2DF5270C18F100A4DF2A /* MyAnnotationView.swift */,
+			);
+			path = MyItem;
+			sourceTree = "<group>";
+		};
+		9FB49BF727351208008D0D9A /* 搜尋 */ = {
+			isa = PBXGroup;
+			children = (
+				9FE5E36726CA1C1A00170372 /* SearchViewController.swift */,
+				9FACF74326FAE5E20020F23F /* SureTableViewCell.swift */,
+			);
+			path = "搜尋";
 			sourceTree = "<group>";
 		};
 		9FD20753271E9B39003F7A77 /* 付費紀錄 */ = {
@@ -356,54 +492,21 @@
 				9FACF74726FB18380020F23F /* LocalJson.swift */,
 				9FA4ACEB26E1BBEC00CF06A0 /* UserModel.xcdatamodeld */,
 				9FA4ACEE26E1BD4A00CF06A0 /* CoreDataHelper.swift */,
-				9FE5E35726CA159C00170372 /* HomePageViewController.swift */,
-				9F960C142726828D00690CFA /* notifyBtn.swift */,
-				9F9C8B26271FD39100F7BED3 /* AdCollectionViewCell.swift */,
+				9FB49BF6273511A8008D0D9A /* MyItem */,
+				9FB49BEB27350AC4008D0D9A /* CollectionCell */,
+				9FB49BE9273509C1008D0D9A /* 主頁 */,
 				9FA4896426CCB9120012E7AE /* RootViewController.swift */,
-				9FA4898E26CF80330012E7AE /* MyCollectionViewCell.swift */,
-				9FA4899026D33FF80012E7AE /* MySecondCollectionViewCell.swift */,
-				9FA4899426D4C5900012E7AE /* SearchCollectionViewCell.swift */,
-				9F6E2DF3270C00AB00A4DF2A /* SearchResultCollectionViewCell.swift */,
-				9FA4899226D361760012E7AE /* LoginViewController.swift */,
-				9FE5E36726CA1C1A00170372 /* SearchViewController.swift */,
-				9F6E2DF5270C18F100A4DF2A /* MyAnnotationView.swift */,
-				9F6E2DF1270BE8D000A4DF2A /* myScrollView.swift */,
-				9FACF74326FAE5E20020F23F /* SureTableViewCell.swift */,
-				9FE5E36B26CA1E6100170372 /* RegisterViewController.swift */,
-				9FA4ACE326E08BB800CF06A0 /* RegisterVerificationCodeViewController.swift */,
-				9FE5E36F26CA1F4600170372 /* VerificationCodeViewController.swift */,
-				9FA4ACE726E0B21900CF06A0 /* MyTextField.swift */,
-				9FE5E36D26CA1ED900170372 /* PersonalViewController.swift */,
-				9FE5E37326CA205000170372 /* ChangePasswordViewController.swift */,
-				9FA4ACE126E0819700CF06A0 /* ForgetPasswordViewController.swift */,
-				9FA4ACE926E0B87600CF06A0 /* ChangeForgetPwViewController.swift */,
-				9FE5E37526CA21A300170372 /* MineManagementViewController.swift */,
-				9FA4899E26D62C6F0012E7AE /* MineCollectionViewCell.swift */,
-				9FE5E38726CA304100170372 /* MachineIntroViewController.swift */,
-				9F67A6A126FC305600EF54BF /* ImageIntroViewController.swift */,
-				9F91620F270ECB3C00E2295A /* 我的店家、機台 */,
-				9F941739271D5374007322FE /* 推播歷史 */,
-				9FD20753271E9B39003F7A77 /* 付費紀錄 */,
-				9FE5E37D26CA2EF100170372 /* ChoosePlanViewController.swift */,
-				9FE5E37F26CA2F4F00170372 /* TermsViewController.swift */,
-				9FE5E38126CA2FA200170372 /* MachinePlanViewController.swift */,
-				9F8DCCD6270D716400250E24 /* PlanCollectionViewCell.swift */,
-				9F916214270FFEDB00E2295A /* EditMineMachine */,
+				9FB49BF727351208008D0D9A /* 搜尋 */,
+				9FB49BF027350F4A008D0D9A /* 註冊 */,
+				9FB49BF127350F90008D0D9A /* 個人資料 */,
+				9FB49BF227350FBF008D0D9A /* 登入 */,
+				9FB49BEC27350CB8008D0D9A /* 我的 */,
+				9F916214270FFEDB00E2295A /* 編輯我的店家、機台 */,
+				9FB49BF5273510F5008D0D9A /* 機台詳細介紹 */,
+				9FB49BF42735108B008D0D9A /* 方案付費 */,
 				9FD2075E271EB2C6003F7A77 /* 通知 */,
-				9FE5E38D26CA323800170372 /* NewMachineViewController.swift */,
-				9FA489A826DCB78E0012E7AE /* NewMachineFirstViewController.swift */,
-				9FA489AA26DCB7DC0012E7AE /* NewMachineSecondViewController.swift */,
-				9FACF73D26F46B6A0020F23F /* MoreFollowViewController.swift */,
-				9FACF73F26F46C800020F23F /* MoreFirstViewController.swift */,
-				9FACF74126F46CAC0020F23F /* MoreSecondViewController.swift */,
-				9FE5E38F26CA324700170372 /* WebViewController.swift */,
-				9FA489AC26DCC52E0012E7AE /* NewCollectionViewCell.swift */,
-				9FACF73B26F43EB90020F23F /* MoreCollectionViewCell.swift */,
-				9FE5E39126CA326000170372 /* MineTrackViewController.swift */,
-				9FA4899626D602E70012E7AE /* MineTrackFirstViewController.swift */,
-				9FA4899826D603000012E7AE /* MineTrackSecondViewController.swift */,
+				9FB49BEF27350EA7008D0D9A /* 追蹤 */,
 				9FA4899A26D614600012E7AE /* VideoViewController.swift */,
-				9FA489A026D773390012E7AE /* UnfinishViewController.swift */,
 				9F8DCCD4270D577600250E24 /* ExtenseView.swift */,
 				9FE5E35926CA159C00170372 /* Main.storyboard */,
 				9FE5E35C26CA159F00170372 /* Assets.xcassets */,
@@ -558,7 +661,6 @@
 				9FA4896526CCB9120012E7AE /* RootViewController.swift in Sources */,
 				9F8DCCD5270D577700250E24 /* ExtenseView.swift in Sources */,
 				9F916224270FFFE200E2295A /* SecondMineItemCollectionViewCell.swift in Sources */,
-				9FA489A126D7733B0012E7AE /* UnfinishViewController.swift in Sources */,
 				9FE5E38426CA2FBB00170372 /* EditMineShopViewController.swift in Sources */,
 				9FE5E36C26CA1E6100170372 /* RegisterViewController.swift in Sources */,
 				9F91621E270FFF9A00E2295A /* FifthMineItemTableViewCell.swift in Sources */,
@@ -580,7 +682,6 @@
 				9FA4899B26D614600012E7AE /* VideoViewController.swift in Sources */,
 				9FD20759271E9F29003F7A77 /* PayRecordViewController.swift in Sources */,
 				9FA489A326D77C630012E7AE /* NewMachineModel.swift in Sources */,
-				9FA489AD26DCC52F0012E7AE /* NewCollectionViewCell.swift in Sources */,
 				9F916222270FFFD200E2295A /* FirstMineItemCollectionViewCell.swift in Sources */,
 				9FE5E38826CA304100170372 /* MachineIntroViewController.swift in Sources */,
 				9FA4ACF226E88A5800CF06A0 /* FirstCustomTableViewCell.swift in Sources */,
@@ -588,7 +689,6 @@
 				9FACF74826FB18380020F23F /* LocalJson.swift in Sources */,
 				9FE5E37A26CA265200170372 /* NotificationHistoryViewController.swift in Sources */,
 				9FE5E38226CA2FA200170372 /* MachinePlanViewController.swift in Sources */,
-				9F6E2DF4270C00AD00A4DF2A /* SearchResultCollectionViewCell.swift in Sources */,
 				9FE5E38E26CA323800170372 /* NewMachineViewController.swift in Sources */,
 				9FE5E37E26CA2EF100170372 /* ChoosePlanViewController.swift in Sources */,
 				9FA4ACEA26E0B87600CF06A0 /* ChangeForgetPwViewController.swift in Sources */,
@@ -775,7 +875,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.funclip.DollCatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -800,7 +900,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.funclip.DollCatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

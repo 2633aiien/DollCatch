@@ -103,6 +103,7 @@ class ThirdMineItemTableViewCell: UITableViewCell, UITableViewDelegate, UITableV
                     
                     areaTableView.reloadData()
                     countryTableView.reloadData()
+                    print("areaArray: \(areaArray)")
                 }
             }
         }
